@@ -1,0 +1,162 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
+    <link rel="next" title="Notation" href="notation.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="notation.html" title="Notation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="notation.html"
+                        title="next chapter">Notation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The commands written here assume you are running a Ubuntu-based distribution of
+Linux. Although the basic steps should be similar for all Linux distributions, you
+should adapt the specific commands to your system in case you are using any other Linux distro.</p>
+</div>
+<p>In order to install Pymicra the <code class="docutils literal"><span class="pre">setuptools</span></code> Python package should be
+installed. If you don&#8217;t have it installed already you can install it with
+<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python-setuptools</span></code> or <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">setuptools</span></code>.</p>
+<p>Download the package an unpack in somewhere. Then open a terminal and
+move to the directory created, whose name should be <code class="docutils literal"><span class="pre">pymicra</span></code>. Then
+run <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>. This should be enough to install
+the package.</p>
+<p>First download the zipped file at the href{github.com/tomchor/pymicra}{Pymicra
+github page} and unzip it somewhere. Then, using a
+terminal, move to the unzipped directory and run the setup file
+(texttt{setup.py}) with
+root access: texttt{sudo python setup.py install}. For this to work you must
+have setuptools installed, which can be promptly done using texttt{sudo apt-get
+install python-setuptools}. This should successfully install Pymicra. The only
+requirements are Pandas and Pint. Version 0.17 of Pandas is suggested, but it
+should work fine will any distribution from 0.13 up to 0.17.1 (0.18 is not
+supported because of changed in the rolling functions API).</p>
+<p>Although fairly general, I have tested the setup program on a limited number of
+computers so far, so it is possible that an error occurs depending on the
+version of some auxiliary packages you have installed. If that happens and the
+installation fails for some reason, please contact me through email or creating
+a github issue detailing your problem and I will improve the setup file.</p>
+<p>Alternatively, while the installation cannot be done, you can add the package
+manually to your Python path by adding the following lines to the beginning of your
+Python code:</p>
+<p>begin{lstlisting}
+import sys
+sys.path.append(&#8216;/full/path/to/pymicra&#8217;)
+end{lstlisting}</p>
+<p>and then proceed to import Pymicra normally.</p>
+<p>To remove Pymicra, the easiest way is to use pip
+(<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-pip</span></code>) with the command
+<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pymicra</span></code>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="notation.html" title="Notation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-21.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
+    <link rel="next" title="Installation" href="install.html" />
+    <link rel="prev" title="Pymicra - A Python tool for Micrometeorological Analyses" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Pymicra - A Python tool for Micrometeorological Analyses"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Pymicra - A Python tool for Micrometeorological Analyses</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="next chapter">Installation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/intro.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>section{Presentation}</p>
+<p>This material is meant to be a quick introduction to the Python tool for
+Micrometeorological Analyses (Pymicra). Since the package is currently in an
+experimental state, it is impossible for me to include 100% of the
+functions contained in Pymicra in this guide because new functions are
+constantly being created. However, the most important classes, functions and
+capabilities are described here and the user is encouraged to interactively use
+the Pymicra and refer to the docstrings in the code to learn more.</p>
+<p>Pymicra is a Python package that was created to condense many of the knowledge
+of the micrometeorological community in one single fast-to-implement software
+that is freely available to anyone. Because of that, I made an effort to include
+a detailed docstring along with every function and class, so if you import the
+package and run texttt{help(pymicra.timeSeries)}, for example, you will see a
+detailed description of what the function texttt{timeSeries} does and so on for
+any other functions. It is a good idea to import Pymicra using the IPython
+terminal and use its autocomplete function by hitting tab after typing
+texttt{pymicra.} to see and explore the available functions.</p>
+<p>Since Pymicra is meant to be a community package, improvements, suggestions of
+improvement, and any kind of feedback are highly appreciated. The code is
+available at href{<a class="reference external" href="https://github.com/tomchor/pymicra">https://github.com/tomchor/pymicra</a>}{its github page} and any
+contact can be made through there (possibly creating an issue) or via e-mail.</p>
+<p>section{Description and suggestions}</p>
+<p>In order for the user to program fast and effectively (and to reduce the time it
+takes me to write its code), Pymicra was written on top of the
+href{<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>}{Pandas package}, so that it is faster to run
+the same code using Pymicra than it is running pure Python. As a consequence,
+Pymicra makes extensive use of Pandas&#8217; DataFrame class, which is a very useful
+2-D data structure optimized for performance and for timestamp-indexed data.</p>
+<p>It is possible to use Pymicra without having to be familiar with Pandas, but
+because Pymicra depends on Pandas, I suggest at the very least that the user
+take a quick look at a Pandas tutorial
+(href{<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/10min.html">http://pandas.pydata.org/pandas-docs/stable/10min.html</a>}{this one for
+example}) so that one can be familiarized with the many functionalities that
+Pandas offers in order to take full advantage of Pymicra.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Pymicra - A Python tool for Micrometeorological Analyses"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-21.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

@@ -98,14 +98,6 @@
 <dd><p>Integral Monin-Obukhov scale or deviation function, which is the deviation of a
 variable (x) in relation nto their logarithmic profiles due the stability zeta != 0</p>
 <p>Taken from Simpson.ea1998&#8211;the.validity.of.similarity.theory;.in.the.roughness.sublayer</p>
-<dl class="docutils">
-<dt>zeta: float</dt>
-<dd>the stability variable</dd>
-<dt>x: string</dt>
-<dd>the variable. Options are &#8216;tau&#8217;, &#8216;H&#8217;, &#8216;E&#8217;, &#8216;F&#8217;</dd>
-<dt>zeta0: float</dt>
-<dd>value of zeta_{0 x}. Only used for the stable case</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -133,11 +125,6 @@ phi_E(zeta) = kappa*(z-d)*dqdz/q_star</p>
 <dd><p>Returns the Relative Transfer Efficiency in the time domain, rte
 according to Cancelli, Dias, Chamecki. Dimensionless criteria for the production-dissipation equilibrium
 of scalar fluctuations and their implications for scalar similarity, Water Resources Research, 2012</p>
-<dl class="docutils">
-<dt>order: 2-elements list</dt>
-<dd>order of variables: if its rte_ab should be [a,b], if its rte_ba should [b,a]</dd>
-</dl>
-<p>NEEDS TO BE VALIDATED!</p>
 </dd></dl>
 
 <dl class="function">
@@ -146,12 +133,6 @@ of scalar fluctuations and their implications for scalar similarity, Water Resou
 <dd><p>Returns the Symmetric Transfer Efficiency in the time domain, ste
 according to Cancelli, Dias, Chamecki. Dimensionless criteria for the production-dissipation equilibrium
 of scalar fluctuations and their implications for scalar similarity, Water Resources Research, 2012</p>
-<dl class="docutils">
-<dt>data: pandas dataframe</dt>
-<dd>a three-columns dataframe, where one of them should be the vertical velocity fluctuations</dd>
-<dt>w_fluctuations: str</dt>
-<dd>the name of the vertical velocity fluctuations</dd>
-</dl>
 </dd></dl>
 
 </div>
@@ -214,17 +195,6 @@ and L_m is the Monin-Obukhov Length.</p>
 <dd><p>Calculates characteristic lengths for data</p>
 <p>The names of the variables are retrived out the dictionary. You can update the dictionary
 and change the names by using the notation_defs keyworkd, which is a notation object</p>
-<dl class="docutils">
-<dt>data: pandas.DataFrame</dt>
-<dd>dataset to be used. It must either be the raw and turbulent data, or the covariances of such data</dd>
-<dt>siteConf: pymicra.siteConfig object</dt>
-<dd>has the site configurations to calculate the obukhovLen</dd>
-<dt>units: dict</dt>
-<dd>dict units for the input data</dd>
-<dt>output_as_df: boolean</dt>
-<dd>True if you want the output to be a one-line pandas.DataFrame. A pd.Series
-will be output if False.</dd>
-</dl>
 </dd></dl>
 
 </div>
@@ -234,10 +204,6 @@ will be output if False.</dd>
 <dt id="pymicra.micro.spectral.Ogive">
 <code class="descclassname">pymicra.micro.spectral.</code><code class="descname">Ogive</code><span class="sig-paren">(</span><em>df</em>, <em>no_nan=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.Ogive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Integrates the Ogive from Coespectra</p>
-<dl class="docutils">
-<dt>df: dataframe</dt>
-<dd>cospectrum to be integrated</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -253,12 +219,6 @@ vertical wind velocity has lag 0.</p>
 <dd><p>Applies correction to high frequencies using the quadrature.
 Xab_ab = Co_ab - i Qu_ab</p>
 <p>Co_recovered = Co_ab + 2*pi*n*T*Qu_ab</p>
-<dl class="docutils">
-<dt>cross_spec: series of dataframe</dt>
-<dd>the cross spectrum whose coespectrum you&#8217;d like to correct</dd>
-<dt>T: float</dt>
-<dd>response time to use</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -271,18 +231,6 @@ Xab_ab = Co_ab - i Qu_ab</p>
 <code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_zeroQuad</code><span class="sig-paren">(</span><em>slow_spec</em>, <em>freqs</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.hfc_zeroQuad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies a correction factor to the spectrum of a slow-measured variable
 based on the response-time T. Quadrature must be analytically zero!</p>
-<dl class="docutils">
-<dt>slow_spec: numpy.array or series</dt>
-<dd>the spectrum to be corrected (not cross-spectrum!)</dd>
-<dt>freqs: numpy.array</dt>
-<dd>frequencies</dd>
-<dt>T: float</dt>
-<dd>the response-time</dd>
-</dl>
-<dl class="docutils">
-<dt>spec: numpy.array</dt>
-<dd>the recovered array</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -303,24 +251,6 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <dt id="pymicra.micro.util.eddyCovariance">
 <code class="descclassname">pymicra.micro.util.</code><code class="descname">eddyCovariance</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>wpl=True</em>, <em>get_turbulent_scales=True</em>, <em>site_config=None</em>, <em>output_as_df=True</em>, <em>notation=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>inplace=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.eddyCovariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get fluxes from the turbulent fluctuations</p>
-<dl class="docutils">
-<dt>data: pandas.DataFrame</dt>
-<dd>dataframe with the characteristic lengths calculated</dd>
-<dt>units: dict</dt>
-<dd>units dictionary</dd>
-<dt>wpl: boolean</dt>
-<dd>whether or not to apply WPL correction on the latent heat flux and solutes flux</dd>
-<dt>get_turbulent_scales: bool</dt>
-<dd>whether or not to use getScales to return turbulent scales</dd>
-<dt>site_config: pymica.siteConfig</dt>
-<dd>siteConfig object to pass to getScales if get_turbulent_scales==True</dd>
-<dt>notation: pymicra.Notation</dt>
-<dd>object that holds the notation used in the dataframe</dd>
-<dt>inplace: bool</dt>
-<dd>whether or not to treat the units inplace</dd>
-<dt>solutes: list</dt>
-<dd>list that holds every solute considered for flux</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -328,28 +258,6 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <code class="descclassname">pymicra.micro.util.</code><code class="descname">preProcess</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>use_means=False</em>, <em>rho_air_from_theta_v=True</em>, <em>inplace=True</em>, <em>theta=None</em>, <em>theta_unit=None</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.preProcess" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates moist and dry air densities, specific humidity mass density and other 
 important variables using the variables provided in the input DataFrame.</p>
-<dl class="docutils">
-<dt>data: pandas.DataFrame</dt>
-<dd>dataframe with micrometeorological measurements</dd>
-<dt>units: dict</dt>
-<dd>units dictionary with the columns of data as keys</dd>
-<dt>notation: pymicra.notation</dt>
-<dd>defining notation used in data</dd>
-<dt>rho_air_from_theta_v: bool</dt>
-<dd>whether to use theta_v to calculate air density or theta</dd>
-<dt>inplace: bool</dt>
-<dd>treat units inplace or not</dd>
-<dt>theta: pandas.Series</dt>
-<dd>auxiliar theta measurement to be used if rho_air_from_theta_v==False</dd>
-<dt>theta_unit: pint.quantity</dt>
-<dd>auxiliar theta measurement&#8217;s unit to be used if rho_air_from_theta_v==False</dd>
-<dt>solutes: list</dt>
-<dd>list of string where each string is a solute to be considered</dd>
-</dl>
-<dl class="docutils">
-<dt>data: pandas.DataFrame</dt>
-<dd>dataframe with original columns and new calculated ones</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
