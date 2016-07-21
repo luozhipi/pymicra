@@ -54,8 +54,6 @@
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Pymicra - A Python tool for Micrometeorological Analyses</a><ul>
-<li><a class="reference internal" href="#required-packages">Required Packages</a></li>
-<li><a class="reference internal" href="#main-features">Main Features</a></li>
 <li><a class="reference internal" href="#contents">Contents:</a></li>
 </ul>
 </li>
@@ -92,30 +90,13 @@
             
   <div class="section" id="pymicra-a-python-tool-for-micrometeorological-analyses">
 <h1>Pymicra - A Python tool for Micrometeorological Analyses<a class="headerlink" href="#pymicra-a-python-tool-for-micrometeorological-analyses" title="Permalink to this headline">¶</a></h1>
-<p>This package was designed to make it easier to work with
-micrometeorological data. Pymicra is currently fully written in python
-and it&#8217;s aimed towards aggregating all of functionality that is commonly
-needed to work with micrometeorological data into one
-productivity-enhancing tool.</p>
-<p>The package is extensively (almost entirely) based on Pandas, mostly the
-<code class="docutils literal"><span class="pre">pandas.DataFrame</span></code> class. We use Pint for units control and
-(generally) Numpy or Scipy for some numerical functions not contained in
-Pandas.</p>
-<div class="section" id="required-packages">
-<h2>Required Packages<a class="headerlink" href="#required-packages" title="Permalink to this headline">¶</a></h2>
-<p>Most required packages already come with python. However, packages that
-generally have to be manually installed beforehand are:</p>
-<ul class="simple">
-<li>Pandas</li>
-<li>Pint</li>
-<li>Numpy</li>
-<li>Scipy</li>
-<li>setuptools (for installation only)</li>
-</ul>
-</div>
-<div class="section" id="main-features">
-<h2>Main Features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h2>
-<p>Currently, this is a sum up of what Pymicra does:</p>
+<p>Pymicra is a Python package designed to make it easier to work with
+micrometeorological datasets. It is aimed at improving the productivity and
+allowing us to focus on the micrometeorological, rather than programming
+issues.</p>
+<p>Please check out the <a class="reference external" href="https://github.com/tomchor/pymicra">Github page</a> and the
+<a class="reference external" href="http://tomchor.github.io/pymicra/">documentation</a>.</p>
+<p>Here&#8217;s a quick (incomplete!) list of what Pymicra does:</p>
 <ul class="simple">
 <li>Reading, separating and understanding micrometeorological data in
 virtually any column-separated ASCII format (thanks to pandas).</li>
@@ -125,17 +106,18 @@ reverse-arrangement test and etc..</li>
 <li>Detrending of data in the most common ways (block averages, moving
 averages and polynomial detrending).</li>
 <li>Correction of sensor drift.</li>
-<li>Automatic calculation of most auxiliary variables based on actual
+<li>Automatic calculation of most auxiliary variables based on
 measurements (air density, dry air density, etc.).</li>
 <li>Calculation of spectra and cross-spectra.</li>
-<li>Calculation fluxes and characteristic scales.</li>
-<li>WPL correction.</li>
-<li>Provide all the common constants generally used in micrometeorology.</li>
+<li>Calculation fluxes and characteristic scales with or without WPL correction.</li>
+<li>Provide common constants generally used in atmospheric sciences.</li>
 <li>Plus all native features of Pandas (interpolation, resampling,
 grouping, statistical tests, slicing, handling of missing data and
-etc.)</li>
+etc.).</li>
 </ul>
-</div>
+<p>The package is extensively (almost entirely) based on Pandas, mostly the
+<code class="docutils literal"><span class="pre">pandas.DataFrame</span></code> class. We use Pint for units control and (generally) Numpy
+or Scipy for some numerical functions not contained in Pandas.</p>
 <div class="section" id="contents">
 <h2>Contents:<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
