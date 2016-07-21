@@ -33,6 +33,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,20 +50,436 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="pymicra-algs-auxiliar-module">
-<h2>pymicra.algs.auxiliar module<a class="headerlink" href="#pymicra-algs-auxiliar-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pymicra.algs.auxiliar">
+<span id="pymicra-algs-auxiliar-module"></span><h2>pymicra.algs.auxiliar module<a class="headerlink" href="#module-pymicra.algs.auxiliar" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pymicra.algs.auxiliar.applyResult">
+<code class="descclassname">pymicra.algs.auxiliar.</code><code class="descname">applyResult</code><span class="sig-paren">(</span><em>result</em>, <em>failed</em>, <em>df</em>, <em>control=None</em>, <em>testname=None</em>, <em>filename=None</em>, <em>falseshow=False</em>, <em>index_n=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.auxiliar.applyResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auxiliar function to be used with util.qcontrol</p>
+<dl class="docutils">
+<dt>result: bool</dt>
+<dd>whether the test failed and succeeded</dd>
+<dt>failed: list</dt>
+<dd>list of failed variables. None object if the test was successful</dd>
+<dt>control: dictionary</dt>
+<dd>dictionary whose keys are the names of the tests and items are lists</dd>
+<dt>testname: string</dt>
+<dd>name of the test (has to match control dict)</dd>
+<dt>filename: string</dt>
+<dd>name or path or identifier of the file tested</dd>
+<dt>falseshow: bool</dt>
+<dd>whether to show the failed variables or not</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.auxiliar.completeHM">
+<code class="descclassname">pymicra.algs.auxiliar.</code><code class="descname">completeHM</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.auxiliar.completeHM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completes %H%M strings for cases when 2hours 0 minutes appear
+as 020. Should be dropped eventually because this is pretty much a hack that
+corrects for file configuration</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.auxiliar.first_last">
+<code class="descclassname">pymicra.algs.auxiliar.</code><code class="descname">first_last</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.auxiliar.first_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns first and last lines of a file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.auxiliar.lenYear">
+<code class="descclassname">pymicra.algs.auxiliar.</code><code class="descname">lenYear</code><span class="sig-paren">(</span><em>year</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.auxiliar.lenYear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the length of a year in days
+Useful to figure out if a certain year is a leap year</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.auxiliar.stripDown">
+<code class="descclassname">pymicra.algs.auxiliar.</code><code class="descname">stripDown</code><span class="sig-paren">(</span><em>str, final='', args=['_', '-']</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.auxiliar.stripDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auxiliar function to strip down keywords from symbols</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.auxiliar.testValid">
+<code class="descclassname">pymicra.algs.auxiliar.</code><code class="descname">testValid</code><span class="sig-paren">(</span><em>df_valid</em>, <em>testname=''</em>, <em>falseverbose=True</em>, <em>trueverbose=True</em>, <em>filepath=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.auxiliar.testValid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests a boolean DataFrane obtained from the test and prints standard output</p>
+<dl class="docutils">
+<dt>df_valid: pandas.Series</dt>
+<dd>series contaning only True or False values for each of the variables, which should be the indexes</dd>
+<dt>testname: string</dt>
+<dd>the name of the test that generated the True/False values</dd>
+<dt>falseverbose: bool</dt>
+<dd>whether to return which variables caused a false result</dd>
+<dt>trueverbose: bool</dt>
+<dd>whether to print something successful cases</dd>
+</dl>
+<dl class="docutils">
+<dt>result: bool</dt>
+<dd>True if the run passed the passed</dd>
+<dt>failed: list</dt>
+<dd>list of failed variables if result==False. None otherwise.</dd>
+</dl>
+</dd></dl>
+
 </div>
-<div class="section" id="pymicra-algs-general-module">
-<h2>pymicra.algs.general module<a class="headerlink" href="#pymicra-algs-general-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pymicra.algs.general">
+<span id="pymicra-algs-general-module"></span><h2>pymicra.algs.general module<a class="headerlink" href="#module-pymicra.algs.general" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pymicra.algs.general.classbin">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">classbin</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>bins_number=100</em>, <em>function=&lt;function mean&gt;</em>, <em>xfunction=&lt;function mean&gt;</em>, <em>logscale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.classbin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Separates x and y inputs into bins based on the x array.
+x and y do not have to be ordered.</p>
+<dl class="docutils">
+<dt>x: np.array</dt>
+<dd>independent variable</dd>
+<dt>y: np.array</dt>
+<dd>dependent variable</dd>
+<dt>bins_number: int</dt>
+<dd>number of classes (or bins) desired</dd>
+<dt>function: callable</dt>
+<dd>funtion to be applied to both x and y-bins in order to smooth the data</dd>
+<dt>logscale: boolean</dt>
+<dd>whether or not to use a log-spaced scale to set the bins</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.diff_central">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">diff_central</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.diff_central" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the central finite difference scheme</p>
+<dl class="docutils">
+<dt>x: array</dt>
+<dd>independent variable</dd>
+<dt>y: array</dt>
+<dd>dependent variable</dd>
+</dl>
+<dl class="docutils">
+<dt>dydx: array</dt>
+<dd>the dependent variable differentiated</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.file_len">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">file_len</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.file_len" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns length of a file through piping bash&#8217;s function wc</p>
+<dl class="docutils">
+<dt>fname: string</dt>
+<dd>path of the file</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.find_nearest">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">find_nearest</code><span class="sig-paren">(</span><em>array</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.find_nearest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smart and small function to find the index of the nearest value, in an array, of some other value</p>
+<dl class="docutils">
+<dt>array: array</dt>
+<dd>list or array</dd>
+<dt>value: float</dt>
+<dd>value to look for in the array</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.fitByDate">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">fitByDate</code><span class="sig-paren">(</span><em>data</em>, <em>degree=1</em>, <em>rule=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.fitByDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a pandas DataFrame with the index as datetime, this routine
+fit a n-degree polynomial to the dataset</p>
+<dl class="docutils">
+<dt>data: pd.DataFrame, pd.Series</dt>
+<dd>dataframe whose columns have to be fitted</dd>
+<dt>degree: int</dt>
+<dd>degree of the polynomial. Default is 1.</dd>
+<dt>rule: str</dt>
+<dd>pandas offside string. Ex.: &#8220;10min&#8221;.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.fitWrap">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">fitWrap</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>degree=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.fitWrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper to numpy.polyfit and numpy.polyval that fits data given an x and y arrays.
+This is specifically designed to be used with by pandas.DataFrame.apply method</p>
+<p>x: array, list
+y: array, list
+degree: int</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.get_index">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">get_index</code><span class="sig-paren">(</span><em>x</em>, <em>to_look_for</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.get_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just like the .index method of lists, except it works for multiple values</p>
+<p>Parameter:
+x: list or array</p>
+<blockquote>
+<div>the main array</div></blockquote>
+<dl class="docutils">
+<dt>to_look_for: list of array</dt>
+<dd>the subset of the main whose indexes are desired</dd>
+</dl>
+<dl class="docutils">
+<dt>indexes: np.array</dt>
+<dd>array with the indexes of each element in y</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.get_notation">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">get_notation</code><span class="sig-paren">(</span><em>notation_def</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.get_notation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auxiliar function ro retrieve notation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.inverse_normal_cdf">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">inverse_normal_cdf</code><span class="sig-paren">(</span><em>mu</em>, <em>sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.inverse_normal_cdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applied the inverse normal cumulative distribution</p>
+<p>mu: mean
+sigma: standard deviation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.latexify">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">latexify</code><span class="sig-paren">(</span><em>variables</em>, <em>math_mode=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.latexify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.limitedSubs">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">limitedSubs</code><span class="sig-paren">(</span><em>data</em>, <em>max_interp=3</em>, <em>func=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.limitedSubs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Substitute elements for NaNs if a certain conditions given by fund is met at 
+a maximum of max_interp times in a row.
+If there are more than that number in a row, then they are not substituted.</p>
+<dl class="docutils">
+<dt>data: pandas.dataframe</dt>
+<dd>data to be interpolated</dd>
+<dt>max_interp: int</dt>
+<dd>number of maximum NaNs in a row to interpolate</dd>
+<dt>func: function</dt>
+<dd>function of x only that determines the which elements become NaNs. Should return
+only True or False.</dd>
+</dl>
+<dl class="docutils">
+<dt>df: pandas.dataframe</dt>
+<dd>dataframe with the elements substituted</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.limited_interpolation">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">limited_interpolation</code><span class="sig-paren">(</span><em>data</em>, <em>maxcount=3</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.limited_interpolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolates linearly but only if gap is smaller of equal to maxcout</p>
+<dl class="docutils">
+<dt>data: pandas.DataFrame</dt>
+<dd>dataset to interpolate</dd>
+<dt>maxcount: int</dt>
+<dd>maximum number of consecutive NaNs to interpolate. If the number is smaller than that, nothing is done with the points.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.line2date">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">line2date</code><span class="sig-paren">(</span><em>line</em>, <em>dlconfig</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.line2date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a date from a line of file according to dataloggerConfig object.</p>
+<dl class="docutils">
+<dt>line: string</dt>
+<dd>line of file with date inside</dd>
+<dt>dlconfig: pymicra.dataloggerConfig</dt>
+<dd>configuration of the datalogger</dd>
+</dl>
+<p>timestamp: datetime object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.mad">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">mad</code><span class="sig-paren">(</span><em>data</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.mad" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.name2date">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">name2date</code><span class="sig-paren">(</span><em>filename</em>, <em>dlconfig</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.name2date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a date from a the name of the file according to a datalogger config object</p>
+<dl class="docutils">
+<dt>filename: string</dt>
+<dd>the (base) name of the file</dd>
+<dt>dlconfig: pymicra.dataloggerConfig</dt>
+<dd>configuration of the datalogger</dd>
+</dl>
+<p>cdate: datetime object</p>
+<p>Warning:
+Needs to be optimized in order to read question markers also after the date</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.parseDates">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">parseDates</code><span class="sig-paren">(</span><em>data</em>, <em>dataloggerConfig=None</em>, <em>date_col_names=None</em>, <em>clean=True</em>, <em>correct_fracs=None</em>, <em>complete_zeroes=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.parseDates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Author: Tomas Chor
+date: 2015-08-10
+This routine parses the date from a pandas DataFrame when it is divided into several columns</p>
+<dl class="docutils">
+<dt>data: pandas DataFrame</dt>
+<dd>dataFrame whose dates have to be parsed</dd>
+<dt>date_col_names: list</dt>
+<dd>A list of the names of the columns in which the date is divided
+the naming of the date columns must be in accordance with the datetime directives,
+so if the first column is only the year, its name must be <cite>%Y</cite> and so forth.
+see <a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior</a></dd>
+<dt>connector: string</dt>
+<dd>should be used only when the default connector causes some conflit</dd>
+<dt>first_time_skip: int</dt>
+<dd>the offset (mostly because of the bad converting done by LBA</dd>
+<dt>clean: bool</dt>
+<dd>remove date columns from data after it is introduced as index</dd>
+</dl>
+<p>correct_fracs: bool</p>
+<dl class="docutils">
+<dt>complete_zeroes: list</dt>
+<dd>list of columns that need to be padded with zeroes</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.resample">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">resample</code><span class="sig-paren">(</span><em>df</em>, <em>rule</em>, <em>how=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.resample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends pandas resample methods to index made of integers</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.general.splitData">
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">splitData</code><span class="sig-paren">(</span><em>data</em>, <em>rule='30min'</em>, <em>return_index=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.splitData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits a given pandas DataFrame into a series of &#8220;rule&#8221;-spaced DataFrames</p>
+<dl class="docutils">
+<dt>data: pandas dataframe</dt>
+<dd>data to be split</dd>
+<dt>rule: str or int </dt>
+<dd><dl class="first docutils">
+<dt>If it is a string, it should be a pandas string offset.</dt>
+<dd>Some possible values (that should be followed by an integer) are:
+D   calendar day frequency
+W   weekly frequency
+M   month end frequency
+MS  month start frequency
+Q   quarter end frequency
+BQ  business quarter endfrequency
+QS  quarter start frequency
+A   year end frequency
+AS  year start frequency
+H   hourly frequency
+T   minutely frequency
+Min minutely frequency
+S   secondly frequency
+L   milliseconds
+U   microseconds</dd>
+</dl>
+<p>If it is a int, it should be the number of lines desired in each separated piece.</p>
+<p>If it is None, then the dataframe isn&#8217;t separated and a list containing only the
+full dataframe is returned.</p>
+<p class="last">check it complete at <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html#offset-aliases">http://pandas.pydata.org/pandas-docs/stable/timeseries.html#offset-aliases</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
-<div class="section" id="pymicra-algs-numeric-module">
-<h2>pymicra.algs.numeric module<a class="headerlink" href="#pymicra-algs-numeric-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pymicra.algs.numeric">
+<span id="pymicra-algs-numeric-module"></span><h2>pymicra.algs.numeric module<a class="headerlink" href="#module-pymicra.algs.numeric" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="pymicra-algs-units-module">
-<h2>pymicra.algs.units module<a class="headerlink" href="#pymicra-algs-units-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pymicra.algs.units">
+<span id="pymicra-algs-units-module"></span><h2>pymicra.algs.units module<a class="headerlink" href="#module-pymicra.algs.units" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pymicra.algs.units.add">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">add</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add elements considering their units</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.convert_cols">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_cols</code><span class="sig-paren">(</span><em>data</em>, <em>guide</em>, <em>units</em>, <em>inplace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts data from one unit to the other</p>
+<dl class="docutils">
+<dt>data: pandas.DataFrame</dt>
+<dd>to be chanhed from one unit to the other</dd>
+<dt>guide: dict</dt>
+<dd>{names of columns : units to converted to}</dd>
+<dt>units: dict</dt>
+<dd>units dictionary</dd>
+<dt>inplace: bool </dt>
+<dd>if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.convert_indexes">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_indexes</code><span class="sig-paren">(</span><em>data</em>, <em>guide</em>, <em>units</em>, <em>inplace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_indexes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts data from one unit to the other</p>
+<dl class="docutils">
+<dt>data: pandas.Series</dt>
+<dd>to be chanhed from one unit to the other</dd>
+<dt>guide: dict</dt>
+<dd>{names of columns : units to converted to}</dd>
+<dt>units: dict</dt>
+<dd>units dictionary</dd>
+<dt>inplace: bool </dt>
+<dd>if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.convert_to">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_to</code><span class="sig-paren">(</span><em>data</em>, <em>inunit</em>, <em>outunit</em>, <em>inplace=False</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts data from one unit to the other</p>
+<dl class="docutils">
+<dt>data: pandas.series </dt>
+<dd>to be chanhed from one unit to the other</dd>
+<dt>inunit: pint.quantity or dict </dt>
+<dd>unit(s) that the data is in</dd>
+<dt>outunit: str </dt>
+<dd>convert to this unit</dd>
+<dt>inplace: bool </dt>
+<dd>if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</dd>
+<dt>key: str </dt>
+<dd>if inunit is a dict, it is the name of the variable to be changed</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.divide">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">divide</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.divide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide elements considering their units</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.multiply">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">multiply</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.multiply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply elements considering their units</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.operate">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">operate</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em>, <em>operation='+'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.operate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operate on elements considering their units</p>
+<dl class="docutils">
+<dt>elems: list, tuple</dt>
+<dd>list of pandas.Series</dd>
+<dt>units: list, tuple</dt>
+<dd>list of pint.units ordered as the elems list</dd>
+<dt>inplace: bool</dt>
+<dd>sets dictionary inplace</dd>
+<dt>unitdict: dict</dt>
+<dd>dict to be set inplace</dd>
+<dt>key: str</dt>
+<dd>name of variables to be set inplace as dict key</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.algs.units.parseUnits">
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">parseUnits</code><span class="sig-paren">(</span><em>unitstr</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.parseUnits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets unit from string, list of strings, or dict&#8217;s values, using the UnitRegistry
+defined in __init__.py</p>
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pymicra.algs">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pymicra.algs" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -74,11 +493,11 @@
   <ul>
 <li><a class="reference internal" href="#">pymicra.algs package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#pymicra-algs-auxiliar-module">pymicra.algs.auxiliar module</a></li>
-<li><a class="reference internal" href="#pymicra-algs-general-module">pymicra.algs.general module</a></li>
-<li><a class="reference internal" href="#pymicra-algs-numeric-module">pymicra.algs.numeric module</a></li>
-<li><a class="reference internal" href="#pymicra-algs-units-module">pymicra.algs.units module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-pymicra.algs.auxiliar">pymicra.algs.auxiliar module</a></li>
+<li><a class="reference internal" href="#module-pymicra.algs.general">pymicra.algs.general module</a></li>
+<li><a class="reference internal" href="#module-pymicra.algs.numeric">pymicra.algs.numeric module</a></li>
+<li><a class="reference internal" href="#module-pymicra.algs.units">pymicra.algs.units module</a></li>
+<li><a class="reference internal" href="#module-pymicra.algs">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -110,6 +529,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
