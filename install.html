@@ -100,13 +100,13 @@
 <p class="first admonition-title">Warning</p>
 <p class="last">The commands written here assume you are running a Ubuntu-based distribution of
 Linux. Although the basic steps should be similar for all Linux distributions, you
-should adapt the specific commands to your system in case you are using any other Linux distro.</p>
+should adapt the specific commands to your system in case you are using any other OS.</p>
 </div>
 <p>Most of the required packages already come with python. However, packages that
 generally have to be manually installed beforehand are:</p>
 <ul class="simple">
-<li>Pandas</li>
-<li>Pint</li>
+<li>Pandas (recommended 0.17.1)</li>
+<li>Pint (0.7.2)</li>
 <li>Numpy</li>
 <li>Scipy</li>
 <li>setuptools (for installation only)</li>
@@ -114,17 +114,11 @@ generally have to be manually installed beforehand are:</p>
 <p>In order to install Pymicra the <code class="docutils literal"><span class="pre">setuptools</span></code> Python package should be
 installed. If you don&#8217;t have it installed already you can install it with
 <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python-setuptools</span></code> or <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">setuptools</span></code>.</p>
-<p>Download the package an unpack in somewhere. Then open a terminal and
-move to the directory created, whose name should be <code class="docutils literal"><span class="pre">pymicra</span></code>. Then
-run <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>. This should be enough to install
-the package.</p>
-<p>First download the zipped file at the href{github.com/tomchor/pymicra}{Pymicra
-github page} and unzip it somewhere. Then, using a
-terminal, move to the unzipped directory and run the setup file
-(texttt{setup.py}) with
-root access: texttt{sudo python setup.py install}. For this to work you must
-have setuptools installed, which can be promptly done using texttt{sudo apt-get
-install python-setuptools}. This should successfully install Pymicra. The only
+<p>Download the package from the <a class="reference external" href="https://github.com/tomchor/pymicra">Github repo</a> and unpack it somewhere. Then open a
+terminal and move to the directory created, whose name should be <code class="docutils literal"><span class="pre">pymicra</span></code>.
+Then run <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>. This should be enough to install the
+package.</p>
+<p>This should successfully install Pymicra. The only
 requirements are Pandas and Pint. Version 0.17 of Pandas is suggested, but it
 should work fine will any distribution from 0.13 up to 0.17.1 (0.18 is not
 supported because of changed in the rolling functions API).</p>
@@ -133,14 +127,10 @@ computers so far, so it is possible that an error occurs depending on the
 version of some auxiliary packages you have installed. If that happens and the
 installation fails for some reason, please contact me through email or creating
 a github issue detailing your problem and I will improve the setup file.</p>
-<p>Alternatively, while the installation cannot be done, you can add the package
-manually to your Python path by adding the following lines to the beginning of your
-Python code:</p>
-<p>begin{lstlisting}
-import sys
-sys.path.append(&#8216;/full/path/to/pymicra&#8217;)
-end{lstlisting}</p>
-<p>and then proceed to import Pymicra normally.</p>
+<p>In case errors arise, please try to manually install versions 1.11.0 of Numpy
+and 0.17.0 of Scipy and then running <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> again. If
+still installation fails, please create a <a class="reference external" href="https://github.com/tomchor/pymicra/issues">Github issue</a> stating your OS, Python
+version and any relevant information.</p>
 <p>To remove Pymicra, the easiest way is to use pip
 (<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-pip</span></code>) with the command
 <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pymicra</span></code>.</p>
