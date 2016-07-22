@@ -1,0 +1,645 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.micro.util &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.micro.util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Maybe add</span>
+
+<span class="sd">molecular_weight of moist air</span>
+<span class="sd">water vapor partial pressure</span>
+<span class="sd">water vapor partial pressure at saturation</span>
+<span class="sd">relative humidity?</span>
+<span class="sd">dew point temperature?</span>
+<span class="sd">partial pressure of dry air</span>
+<span class="sd">dry air molar volume?</span>
+<span class="sd">dry air heat capacity at constant pressure?</span>
+<span class="sd">water vapor heat capacity at constant pressure?</span>
+<span class="sd">refining ambient temperature?</span>
+<span class="sd">moist air heat capacity at constant pressure?</span>
+<span class="sd">specific evaporation heat?</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="preProcess"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.util.preProcess">[docs]</a><span class="k">def</span> <span class="nf">preProcess</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_means</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">rho_air_from_theta_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">solutes</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates moist and dry air densities, specific humidity mass density and other </span>
+<span class="sd">    important variables using the variables provided in the input DataFrame.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        dataframe with micrometeorological measurements</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        units dictionary with the columns of data as keys</span>
+<span class="sd">    notation: pymicra.notation</span>
+<span class="sd">        defining notation used in data</span>
+<span class="sd">    rho_air_from_theta_v: bool</span>
+<span class="sd">        whether to use theta_v to calculate air density or theta</span>
+<span class="sd">    inplace: bool</span>
+<span class="sd">        treat units inplace or not</span>
+<span class="sd">    theta: pandas.Series</span>
+<span class="sd">        auxiliar theta measurement to be used if rho_air_from_theta_v==False</span>
+<span class="sd">    theta_unit: pint.quantity</span>
+<span class="sd">        auxiliar theta measurement&#39;s unit to be used if rho_air_from_theta_v==False</span>
+<span class="sd">    solutes: list</span>
+<span class="sd">        list of string where each string is a solute to be considered</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        dataframe with original columns and new calculated ones</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">physics</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">Rh2o</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span>
+    <span class="n">Mh2o</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">molar_mass</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span>
+    <span class="n">molar_mass_unit</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;molar_mass&#39;</span><span class="p">]</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Define useful notation to look for</span>
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Beginning of pre-processing ...&#39;</span><span class="p">)</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># First convert any temperature if it is still in Celsius</span>
+    <span class="n">temps</span> <span class="o">=</span> <span class="p">{</span> <span class="n">col</span><span class="p">:</span><span class="s1">&#39;kelvin&#39;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span><span class="p">,</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp</span><span class="p">,</span> <span class="n">defs</span><span class="o">.</span><span class="n">sonic_temp</span><span class="p">,</span> <span class="n">defs</span><span class="o">.</span><span class="n">potential_temp</span><span class="p">]</span> <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Converting </span><span class="si">{}</span><span class="s1"> to kelvin ... &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; and &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Check for h2o mass density</span>
+    <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Didn&#39;t locate mass density of h2o. Trying to calculate it ... &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span><span class="o">*</span><span class="n">Mh2o</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span><span class="o">*</span><span class="n">molar_mass_unit</span> <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">({</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span><span class="p">:</span><span class="s1">&#39;kg/m**3&#39;</span><span class="p">},</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Check for h2o molar density</span>
+    <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Didn&#39;t locate molar density of h2o. Trying to calculate it ... &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span><span class="o">/</span><span class="n">Mh2o</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span><span class="o">/</span><span class="n">molar_mass_unit</span> <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of rho_air is done here</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Moist air density not present in dataset&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rho_air_from_theta_v</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating rho_air = p/(Rdry * theta_v) ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">physics</span><span class="o">.</span><span class="n">airDensity_from_theta_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="n">defs</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_means</span><span class="o">=</span><span class="n">use_means</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">theta</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trying to calculate rho_air using auxiliar theta measurement ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">physics</span><span class="o">.</span><span class="n">airDensity_from_theta</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="n">defs</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_means</span><span class="o">=</span><span class="n">use_means</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">theta_unit</span><span class="o">=</span><span class="n">theta_unit</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trying to calculate rho_air using theta from this dataset ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">physics</span><span class="o">.</span><span class="n">airDensity_from_theta</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="n">defs</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_means</span><span class="o">=</span><span class="n">use_means</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of dry air mass density is done here</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating dry_air mass_density = rho_air - rho_h2o ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">add</span><span class="p">([</span> <span class="n">data</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span><span class="p">],</span> <span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span><span class="p">]</span> <span class="p">],</span> 
+                        <span class="p">[</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span><span class="p">],</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span><span class="p">]</span> <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unitdict</span><span class="o">=</span><span class="n">units</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of dry air molar density is done here</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Dry air molar density not in dataset&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Can&#39;t calculate it. Dry air mass density not present&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating dry_air molar_density = rho_dry / dry_air_molar_mass ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span><span class="o">/</span><span class="n">constants</span><span class="o">.</span><span class="n">molar_mass</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span><span class="o">/</span><span class="n">molar_mass_unit</span> <span class="p">})</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">({</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span><span class="p">:</span><span class="s1">&#39;mole/m**3&#39;</span><span class="p">},</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+ 
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of specific humidity is done here</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating specific humidity = rho_h2o / rho_air ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of h2o mass mixing ratio is done here</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_mixing_ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating h2o mass mixing ratio = rho_h2o / rho_dry ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_mixing_ratio</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_mixing_ratio</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span> <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of h2o mass mixing ratio is done here</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating h2o mass mixing ratio = rho_h2o / rho_dry ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span> <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Converting dry_air_molar_density and dry_air_molar_mixing_ratio to mol/meter**3 and mole/mole, respectively</span>
+    <span class="n">convert_to</span><span class="o">=</span><span class="p">{</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span> <span class="p">:</span> <span class="s1">&#39;mole/mole&#39;</span><span class="p">,</span>
+                <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">:</span> <span class="s1">&#39;mole/meter**3&#39;</span><span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">(</span><span class="n">convert_to</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculation of h2o molar concentration is done here</span>
+    <span class="c1">#if (defs.h2o_molar_concentration not in data.columns):</span>
+    <span class="c1">#    print(&#39;Calculating h2o molar concentration = mrho_h2o / mrho_air ... &#39;, end=&#39;&#39;)</span>
+    <span class="c1">#    data.loc[:, defs.h2o_molar_concentration] = data[ defs.h2o_molar_density ] / data[ defs.moist_air_molar_density ]</span>
+    <span class="c1">#    units.update({ defs.h2o_molar_concentration : units[ defs.h2o_molar_density ] / units[ defs.moist_air_molar_density ] })</span>
+    <span class="c1">#    print(&#39;Done!&#39;)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Here we deal with the SOLUTES!</span>
+    <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span><span class="p">:</span>
+        <span class="n">sol_mass_density</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;defs.</span><span class="si">{}</span><span class="s1">_mass_density&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">))</span>
+        <span class="n">sol_molar_density</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;defs.</span><span class="si">{}</span><span class="s1">_molar_density&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">))</span>
+        <span class="n">sol_mass_concentration</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;defs.</span><span class="si">{}</span><span class="s1">_mass_concentration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">))</span>
+        <span class="n">sol_mass_mixing_ratio</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;defs.</span><span class="si">{}</span><span class="s1">_mass_mixing_ratio&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">))</span>
+        <span class="n">sol_molar_mixing_ratio</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;defs.</span><span class="si">{}</span><span class="s1">_molar_mixing_ratio&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">))</span>
+        <span class="n">M_sol</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">molar_mass</span><span class="p">[</span><span class="n">solute</span><span class="p">]</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Check for solute mass density</span>
+        <span class="k">if</span> <span class="n">sol_mass_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Didn&#39;t locate mass density of </span><span class="si">{}</span><span class="s2">. Trying to calculate it ... &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_molar_density</span> <span class="p">]</span><span class="o">*</span><span class="n">M_sol</span>
+            <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">sol_mass_density</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">sol_molar_density</span> <span class="p">]</span><span class="o">*</span><span class="n">molar_mass_unit</span> <span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">({</span><span class="n">sol_mass_density</span><span class="p">:</span><span class="s1">&#39;kg/m**3&#39;</span><span class="p">},</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+    
+        <span class="c1">#---------</span>
+        <span class="c1"># Check for solute molar density</span>
+        <span class="k">if</span> <span class="n">sol_molar_density</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Didn&#39;t locate molar density of </span><span class="si">{}</span><span class="s2">. Trying to calculate it&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">))</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_molar_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_mass_density</span> <span class="p">]</span><span class="o">/</span><span class="n">M_sol</span>
+            <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">sol_molar_density</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">sol_mass_density</span> <span class="p">]</span><span class="o">/</span><span class="n">molar_mass_unit</span> <span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Calculation of SOLUTE MASS concentration (g/g) is done here</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sol_mass_concentration</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating </span><span class="si">{0}</span><span class="s1"> mass concentration (g/g) = rho_</span><span class="si">{0}</span><span class="s1"> / rho_air ... &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_mass_concentration</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">sol_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span>
+            <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">sol_mass_concentration</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">sol_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+            
+    
+        <span class="c1">#---------</span>
+        <span class="c1"># Calculation of SOLUTE MASS mixing ratio is done here</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sol_mass_mixing_ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating </span><span class="si">{0}</span><span class="s1"> mass mixing ratio = rho_</span><span class="si">{0}</span><span class="s1"> / rho_dry ... &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_mass_mixing_ratio</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">sol_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span>
+            <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">sol_mass_mixing_ratio</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">sol_mass_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span> <span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Calculation of SOLUTE MOLAR mixing ratio is done here</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sol_molar_mixing_ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating </span><span class="si">{0}</span><span class="s1"> molar mixing ratio = mrho_</span><span class="si">{0}</span><span class="s1"> / mrho_dry ... &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">sol_molar_mixing_ratio</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">sol_molar_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span>
+            <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">sol_molar_mixing_ratio</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">sol_molar_density</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span> <span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Converting molar, mass mixing ratio and mass concentration to unitless</span>
+        <span class="n">convert_to</span><span class="o">=</span><span class="p">{</span><span class="n">sol_molar_mixing_ratio</span> <span class="p">:</span> <span class="s1">&#39;mole/mole&#39;</span><span class="p">,</span>
+                    <span class="n">sol_mass_mixing_ratio</span> <span class="p">:</span> <span class="s1">&#39;g/g&#39;</span><span class="p">,</span>
+                    <span class="n">sol_mass_concentration</span> <span class="p">:</span> <span class="s1">&#39;g/g&#39;</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">(</span><span class="n">convert_to</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+ 
+    <span class="c1">#---------</span>
+        
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pre-processing complete.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">units</span></div>
+
+
+<div class="viewcode-block" id="eddyCovariance"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.util.eddyCovariance">[docs]</a><span class="k">def</span> <span class="nf">eddyCovariance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">wpl</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">get_turbulent_scales</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">site_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_as_df</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_fluct_from_theta_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">solutes</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get fluxes from the turbulent fluctuations</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        dataframe with the characteristic lengths calculated</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        units dictionary</span>
+<span class="sd">    wpl: boolean</span>
+<span class="sd">        whether or not to apply WPL correction on the latent heat flux and solutes flux</span>
+<span class="sd">    get_turbulent_scales: bool</span>
+<span class="sd">        whether or not to use getScales to return turbulent scales</span>
+<span class="sd">    site_config: pymica.siteConfig</span>
+<span class="sd">        siteConfig object to pass to getScales if get_turbulent_scales==True</span>
+<span class="sd">    notation: pymicra.Notation</span>
+<span class="sd">        object that holds the notation used in the dataframe</span>
+<span class="sd">    inplace: bool</span>
+<span class="sd">        whether or not to treat the units inplace</span>
+<span class="sd">    solutes: list</span>
+<span class="sd">        list that holds every solute considered for flux</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">ureg</span>
+
+    <span class="n">cp</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">cp_dry</span>
+    <span class="n">lamb</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">latent_heat_water</span>
+    <span class="n">Mh2o</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">molar_mass</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">defsdic</span> <span class="o">=</span> <span class="n">defs</span><span class="o">.</span><span class="n">__dict__</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">inplace</span><span class="p">)</span> <span class="ow">and</span> <span class="n">units</span><span class="p">:</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">cunits</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">units</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Beginning Eddy Covariance method...&#39;</span><span class="p">)</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Define name of variables to look for based on the notation</span>
+    <span class="n">u_fluc</span>          <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">u_fluctuations</span>
+    <span class="n">w_fluc</span>          <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">w_fluctuations</span>
+    <span class="n">mrho_h2o_fluc</span>   <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density_fluctuations</span>
+    <span class="n">rho_h2o_fluc</span>    <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density_fluctuations</span>
+    <span class="n">theta_fluc</span>      <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp_fluctuations</span>
+    <span class="n">theta_v_fluc</span>    <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp_fluctuations</span>
+    <span class="n">q_fluc</span>          <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_fluctuations</span>
+    <span class="n">solutesf</span>        <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density_fluctuations&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="n">solutefluxes</span>    <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_flux&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="n">solutestars</span>     <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density_star&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="n">concsolutestars</span> <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_mass_concentration_star&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Now we try to calculate or identify the fluctuations of theta</span>
+    <span class="n">theta_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">theta_fluc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="ow">or</span> <span class="n">theta_fluct_from_theta_v</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fluctuations of theta not found. Will try to calculate it ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+        <span class="c1"># We check the units of theta_v and theta</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span><span class="o">==</span><span class="n">ureg</span><span class="p">[</span><span class="s1">&#39;kelvin&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span><span class="o">==</span><span class="n">ureg</span><span class="p">[</span><span class="s1">&#39;kelvin&#39;</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Units for both the virtual temp fluctuations and the thermodynamic temperature must be Kelvin&#39;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Estimate theta fluctuations from theta_v</span>
+        <span class="n">data_q_mean</span> <span class="o">=</span>   <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">data</span><span class="p">[</span> <span class="n">theta_fluc</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">theta_v_fluc</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.61</span><span class="o">*</span><span class="n">theta_mean</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">q_fluc</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="mf">0.61</span><span class="o">*</span><span class="n">data_q_mean</span><span class="p">)</span>
+        <span class="n">theta_fluc_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># First we construct the covariance matrix (slower but more readable than doing it separately)</span>
+    <span class="c1"># maybe figure out later a way that is both faster and more readable</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">u_fluc</span><span class="p">,</span> <span class="n">w_fluc</span><span class="p">,</span> <span class="n">theta_v_fluc</span><span class="p">,</span> <span class="n">mrho_h2o_fluc</span><span class="p">,</span> <span class="n">rho_h2o_fluc</span><span class="p">,</span> <span class="n">theta_fluc</span><span class="p">]</span> <span class="o">+</span> <span class="n">solutesf</span> <span class="p">]</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Define auxiliar variables</span>
+    <span class="n">rho_air_mean</span>    <span class="o">=</span>   <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">rho_dry_mean</span>    <span class="o">=</span>   <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculate the fluxes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating fluxes ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">idx0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">idx0</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">momentum_flux</span> <span class="p">]</span>               <span class="o">=</span> <span class="o">-</span><span class="n">rho_air_mean</span> <span class="o">*</span> <span class="n">cov</span><span class="p">[</span> <span class="n">u_fluc</span> <span class="p">][</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">sensible_heat_flux</span> <span class="p">]</span>          <span class="o">=</span> <span class="n">rho_air_mean</span> <span class="o">*</span> <span class="n">cp</span> <span class="o">*</span> <span class="n">cov</span><span class="p">[</span><span class="n">theta_fluc</span><span class="p">][</span><span class="n">w_fluc</span><span class="p">]</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_sensible_heat_flux</span> <span class="p">]</span>  <span class="o">=</span> <span class="n">rho_air_mean</span> <span class="o">*</span> <span class="n">cp</span> <span class="o">*</span> <span class="n">cov</span><span class="p">[</span><span class="n">theta_v_fluc</span><span class="p">][</span><span class="n">w_fluc</span><span class="p">]</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span>            <span class="o">=</span> <span class="n">cov</span><span class="p">[</span><span class="n">mrho_h2o_fluc</span><span class="p">][</span><span class="n">w_fluc</span><span class="p">]</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">latent_heat_flux</span> <span class="p">]</span>            <span class="o">=</span> <span class="n">lamb</span><span class="p">(</span><span class="n">theta_mean</span><span class="p">)</span> <span class="o">*</span> <span class="n">cov</span><span class="p">[</span><span class="n">rho_h2o_fluc</span><span class="p">][</span><span class="n">w_fluc</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#-----------------</span>
+    <span class="c1"># And then the flux units</span>
+    <span class="n">fluxunits</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">momentum_flux</span> <span class="p">]</span>         <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">u_fluc</span> <span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">sensible_heat_flux</span> <span class="p">]</span>    <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="o">*</span> <span class="n">cunits</span><span class="p">[</span><span class="s1">&#39;cp_water&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">theta_fluc_unit</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_sensible_heat_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="o">*</span> <span class="n">cunits</span><span class="p">[</span><span class="s1">&#39;cp_water&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span>      <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">latent_heat_flux</span> <span class="p">]</span>      <span class="o">=</span> <span class="n">cunits</span><span class="p">[</span> <span class="s1">&#39;latent_heat_water&#39;</span> <span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">rho_h2o_fluc</span> <span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="c1">#-----------------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculate flux for each solute</span>
+    <span class="k">for</span> <span class="n">sol_flux</span><span class="p">,</span> <span class="n">solute</span><span class="p">,</span> <span class="n">solutef</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solutefluxes</span><span class="p">,</span> <span class="n">solutes</span><span class="p">,</span> <span class="n">solutesf</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span> <span class="o">=</span>  <span class="n">cov</span><span class="p">[</span> <span class="n">solutef</span> <span class="p">][</span> <span class="n">w_fluc</span> <span class="p">]</span>
+        <span class="n">fluxunits</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">solutef</span> <span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#------------------------</span>
+    <span class="c1"># APPLY WPL CORRECTION. PAGES 34-35 OF MICRABORDA</span>
+    <span class="k">if</span> <span class="n">wpl</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Applying WPL correction for water vapor flux ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">mrho_h2o_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># If there are solutes to correct we save the original E to use in the calculation</span>
+        <span class="n">E_orig</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">E_orig_unit</span> <span class="o">=</span> <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># If water vapor mixing ratio is present, use it. Otherwise we try to calculate it</span>
+        <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">mr_h2o</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">mr_h2o</span> <span class="o">=</span> <span class="p">(</span><span class="n">mr_h2o</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_mixing_ratio</span> <span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+
+        <span class="k">elif</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">mr_h2o</span> <span class="o">=</span> <span class="p">(</span><span class="n">mrho_h2o_mean</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span> <span class="o">/</span> 
+                    <span class="p">(</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Either water molar mixing ratio should be provided, or dry air and water density should be the same&#39;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+        
+        <span class="c1">#---------</span>
+        <span class="c1"># We calculate WPL little by little to make it easy to handle the units</span>
+        <span class="n">aux1</span> <span class="o">=</span> <span class="n">E_orig</span>
+        <span class="n">unt1</span> <span class="o">=</span> <span class="n">E_orig_unit</span>
+
+        <span class="n">aux2</span> <span class="o">=</span> <span class="n">mrho_h2o_mean</span> <span class="o">*</span> <span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="n">theta_fluc</span><span class="p">][</span><span class="n">w_fluc</span><span class="p">]</span><span class="o">/</span><span class="n">theta_mean</span><span class="p">)</span>
+        <span class="n">unt2</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density</span> <span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+
+        <span class="n">aux3</span> <span class="o">=</span> <span class="n">aux1</span><span class="o">*</span><span class="n">unt1</span> <span class="o">+</span> <span class="n">aux2</span><span class="o">*</span><span class="n">unt2</span>
+        <span class="n">unt3</span> <span class="o">=</span> <span class="p">(</span><span class="n">aux3</span><span class="o">/</span><span class="n">aux3</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="o">.</span><span class="n">u</span>
+        <span class="n">aux3</span> <span class="o">=</span> <span class="n">aux3</span><span class="o">.</span><span class="n">magnitude</span>
+
+        <span class="n">out</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">mr_h2o</span><span class="p">)</span><span class="o">*</span> <span class="n">aux3</span>
+        <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">unt3</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Now we re-calculate LE based on the corrected E</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Applying WPL correction for latent heat flux ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">latent_heat_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">lamb</span><span class="p">(</span><span class="n">theta_mean</span><span class="p">)</span> <span class="o">*</span> <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span> <span class="o">*</span> <span class="n">constants</span><span class="o">.</span><span class="n">molar_mass</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span>
+        <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">latent_heat_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">cunits</span><span class="p">[</span> <span class="s1">&#39;latent_heat_water&#39;</span> <span class="p">]</span> <span class="o">*</span> <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span> <span class="o">*</span> <span class="n">cunits</span><span class="p">[</span><span class="s1">&#39;molar_mass&#39;</span><span class="p">]</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Recalculating covs with WPL</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Re-calculating cov(</span><span class="si">%s</span><span class="s2">, w&#39;) according to WPL correction ... &quot;</span> <span class="o">%</span> <span class="n">mrho_h2o_fluc</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">wplcov</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">w_h2o_units</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">mrho_h2o_fluc</span> <span class="p">]</span>
+        <span class="n">wplcov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">mrho_h2o_fluc</span><span class="p">,</span> <span class="n">w_fluc</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">]</span> <span class="o">*</span> <span class="n">fluxunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">w_h2o_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">wplcov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">w_fluc</span><span class="p">,</span> <span class="n">mrho_h2o_fluc</span> <span class="p">]</span> <span class="o">=</span> <span class="n">wplcov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">mrho_h2o_fluc</span><span class="p">,</span> <span class="n">w_fluc</span> <span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># NEEDS IMPROVEMENT</span>
+        <span class="k">for</span> <span class="n">sol_flux</span><span class="p">,</span> <span class="n">solutef</span><span class="p">,</span> <span class="n">solute</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solutefluxes</span><span class="p">,</span> <span class="n">solutesf</span><span class="p">,</span> <span class="n">solutes</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Applying WPL correction for </span><span class="si">{}</span><span class="s1"> ... &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sol_flux</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">sol_molar_density_mean</span>    <span class="o">=</span>   <span class="n">data</span><span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+            <span class="c1">#---------</span>
+            <span class="c1"># Obtaining solute mass mixing ratio</span>
+            <span class="k">if</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_mixing_ratio&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">mr_sol</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_mixing_ratio&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="n">mr_sol_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_mixing_ratio&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="p">]</span>
+
+            <span class="k">elif</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">mr_sol</span> <span class="o">=</span> <span class="n">sol_molar_density_mean</span><span class="o">/</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span>
+                <span class="n">mr_sol_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_molar_density</span> <span class="p">]</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Either water mixing ratio should be provided, or dry air molar density&#39;</span><span class="p">)</span>
+            <span class="c1">#---------</span>
+
+            <span class="c1">#---------</span>
+            <span class="c1"># Again, we calculate WPL little by little to make it easy to handle the units</span>
+            <span class="n">aux1</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span>
+            <span class="n">unt1</span> <span class="o">=</span> <span class="n">fluxunits</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span>
+
+            <span class="n">aux2</span> <span class="o">=</span> <span class="n">sol_molar_density_mean</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">mr_h2o</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="n">theta_fluc</span><span class="p">][</span><span class="n">w_fluc</span><span class="p">])</span><span class="o">/</span><span class="n">theta_mean</span>
+            <span class="n">unt2</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span>
+
+            <span class="n">aux3</span> <span class="o">=</span> <span class="n">mr_sol</span><span class="o">*</span> <span class="n">E_orig</span>
+            <span class="n">unt3</span> <span class="o">=</span> <span class="n">mr_sol_unit</span> <span class="o">*</span> <span class="n">E_orig_unit</span>
+ 
+            <span class="n">aux4</span> <span class="o">=</span> <span class="n">aux1</span><span class="o">*</span><span class="n">unt1</span> <span class="o">+</span> <span class="n">aux2</span><span class="o">*</span><span class="n">unt2</span> <span class="o">+</span> <span class="n">aux3</span><span class="o">*</span><span class="n">unt3</span>
+            <span class="n">unt4</span> <span class="o">=</span> <span class="p">(</span><span class="n">aux4</span><span class="o">/</span><span class="n">aux4</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="o">.</span><span class="n">u</span>
+            <span class="n">aux4</span> <span class="o">=</span> <span class="n">aux4</span><span class="o">.</span><span class="n">magnitude</span>
+
+            <span class="n">out</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">aux4</span>
+            <span class="n">fluxunits</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span> <span class="o">=</span> <span class="n">unt4</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Re-calculating cov(</span><span class="si">%s</span><span class="s2">, w&#39;) according to WPL correction ... &quot;</span> <span class="o">%</span> <span class="n">solutef</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">w_sol_units</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">w_fluc</span> <span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">solutef</span> <span class="p">]</span>
+            <span class="n">wplcov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">solutef</span><span class="p">,</span> <span class="n">w_fluc</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">]</span> <span class="o">*</span> <span class="n">fluxunits</span><span class="p">[</span> <span class="n">sol_flux</span> <span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">w_sol_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="n">wplcov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">w_fluc</span><span class="p">,</span> <span class="n">solutef</span> <span class="p">]</span> <span class="o">=</span> <span class="n">wplcov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">solutef</span><span class="p">,</span> <span class="n">w_fluc</span> <span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+            <span class="c1">#---------</span>
+        <span class="c1">#---------</span>
+    <span class="c1">#------------</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># Here we convert the units to watts/m**2</span>
+    <span class="n">convert_to</span> <span class="o">=</span><span class="p">{</span><span class="n">defs</span><span class="o">.</span><span class="n">latent_heat_flux</span> <span class="p">:</span> <span class="s1">&#39;watts/meter**2&#39;</span><span class="p">,</span>
+                <span class="n">defs</span><span class="o">.</span><span class="n">virtual_sensible_heat_flux</span> <span class="p">:</span> <span class="s1">&#39;watts/meter**2&#39;</span><span class="p">,</span>
+                <span class="n">defs</span><span class="o">.</span><span class="n">sensible_heat_flux</span> <span class="p">:</span> <span class="s1">&#39;watts/meter**2&#39;</span><span class="p">}</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">convert_indexes</span><span class="p">(</span><span class="n">convert_to</span><span class="p">,</span> <span class="n">fluxunits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#------------</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># We calculate the turbulent scales</span>
+    <span class="k">if</span> <span class="n">get_turbulent_scales</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">site_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Must provide site_config keyword if get_turbulent_scales==True&#39;</span>
+        <span class="kn">from</span> <span class="nn">..micro</span> <span class="k">import</span> <span class="n">turbulentScales</span>
+        <span class="n">theta_v_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">scales</span><span class="p">,</span> <span class="n">scaleunits</span> <span class="o">=</span> <span class="n">turbulentScales</span><span class="p">(</span><span class="n">wplcov</span><span class="p">,</span> <span class="n">site_config</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="n">defs</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                                <span class="n">solutes</span><span class="o">=</span><span class="n">solutes</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="o">=</span><span class="n">theta_v_mean</span><span class="p">,</span> <span class="n">theta_v_mean_unit</span><span class="o">=</span><span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">virtual_temperature</span><span class="p">],</span> <span class="n">output_as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1">#-------</span>
+        <span class="c1"># Here we calculate q_star and solute_star with WPL</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating turbulent scales of mass concentration ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">scales</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density_star</span> <span class="p">]</span><span class="o">*</span><span class="n">Mh2o</span> <span class="o">/</span> <span class="n">rho_air_mean</span>
+        <span class="n">scaleunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">scaleunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density_star</span> <span class="p">]</span><span class="o">*</span><span class="n">cunits</span><span class="p">[</span><span class="s1">&#39;molar_mass&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">solute</span><span class="p">,</span> <span class="n">sol_star</span><span class="p">,</span> <span class="n">concsol_star</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solutes</span><span class="p">,</span> <span class="n">solutestars</span><span class="p">,</span> <span class="n">concsolutestars</span><span class="p">):</span>
+            <span class="n">Msol</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">molar_mass</span><span class="p">[</span><span class="n">solute</span><span class="p">]</span>
+            <span class="n">scales</span><span class="p">[</span> <span class="n">concsol_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span> <span class="n">sol_star</span> <span class="p">]</span> <span class="o">*</span> <span class="n">Msol</span> <span class="o">/</span> <span class="n">rho_air_mean</span>
+            <span class="n">scaleunits</span><span class="p">[</span> <span class="n">concsol_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">scaleunits</span><span class="p">[</span> <span class="n">sol_star</span> <span class="p">]</span> <span class="o">*</span> <span class="n">cunits</span><span class="p">[</span><span class="s1">&#39;molar_mass&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span><span class="p">]</span>
+
+        <span class="c1">#-------</span>
+
+        <span class="n">toconvert</span> <span class="o">=</span> <span class="p">{</span> <span class="n">star</span><span class="p">:</span><span class="s1">&#39;dimensionless&#39;</span> <span class="k">for</span> <span class="n">star</span> <span class="ow">in</span> <span class="p">([</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_star</span><span class="p">]</span><span class="o">+</span><span class="n">concsolutestars</span><span class="p">)</span> <span class="p">}</span>
+        <span class="n">scales</span> <span class="o">=</span> <span class="n">scales</span><span class="o">.</span><span class="n">convert_indexes</span><span class="p">(</span><span class="n">toconvert</span><span class="p">,</span> <span class="n">scaleunits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">out</span><span class="p">,</span> <span class="n">scales</span><span class="p">])</span>
+        <span class="n">fluxunits</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">scaleunits</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+    <span class="c1">#------------</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># Crate a one-row dataframe if output_as_df is True</span>
+    <span class="k">if</span> <span class="n">output_as_df</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx0</span><span class="p">]</span>
+    <span class="c1">#------------</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done with Eddy Covariance.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fluxunits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">fluxunits</span></div>
+
+
+<div class="viewcode-block" id="rotateCoor"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.util.rotateCoor">[docs]</a><span class="k">def</span> <span class="nf">rotateCoor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;2d&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">data</span> <span class="k">as</span> <span class="n">pmdata</span>
+
+    <span class="k">if</span> <span class="n">how</span><span class="o">==</span><span class="s1">&#39;2d&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">rotate2D</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="n">notation</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

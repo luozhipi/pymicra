@@ -1,0 +1,256 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.micro.spectral &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.micro.spectral</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<div class="viewcode-block" id="correctLag"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.correctLag">[docs]</a><span class="k">def</span> <span class="nf">correctLag</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lag_bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identifies and correct lags between data, assuming the </span>
+<span class="sd">    vertical wind velocity has lag 0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+
+    <span class="n">variables</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">defs</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">Co</span><span class="p">,</span> <span class="n">Qu</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">crossSpectrum</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="n">defs</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">variable</span><span class="p">]],</span> <span class="n">frequency</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">anti_aliasing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="phaseCorrection"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.phaseCorrection">[docs]</a><span class="k">def</span> <span class="nf">phaseCorrection</span><span class="p">(</span><span class="n">cross_spec</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">hfc_Dias_ea_16</span><span class="p">(</span><span class="n">cross_spec</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="hfc_Dias_ea_16"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.hfc_Dias_ea_16">[docs]</a><span class="k">def</span> <span class="nf">hfc_Dias_ea_16</span><span class="p">(</span><span class="n">cross_spec</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies correction to high frequencies using the quadrature.</span>
+<span class="sd">    Xab_ab = Co_ab - i Qu_ab</span>
+
+<span class="sd">    Co_recovered = Co_ab + 2*pi*n*T*Qu_ab</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    cross_spec: series of dataframe</span>
+<span class="sd">        the cross spectrum whose coespectrum you&#39;d like to correct</span>
+<span class="sd">    T: float</span>
+<span class="sd">        response time to use</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">Co</span> <span class="o">=</span> <span class="n">cross_spec</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+    <span class="n">Qu</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_spec</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cross_spec</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Co</span> <span class="o">+</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">T</span><span class="o">*</span><span class="n">Qu</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="hfc_Massman_Ibrom_08"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.hfc_Massman_Ibrom_08">[docs]</a><span class="k">def</span> <span class="nf">hfc_Massman_Ibrom_08</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="k">pass</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="hfc_zeroQuad"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.hfc_zeroQuad">[docs]</a><span class="k">def</span> <span class="nf">hfc_zeroQuad</span><span class="p">(</span><span class="n">slow_spec</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies a correction factor to the spectrum of a slow-measured variable</span>
+<span class="sd">    based on the response-time T. Quadrature must be analytically zero!</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    slow_spec: numpy.array or series</span>
+<span class="sd">        the spectrum to be corrected (not cross-spectrum!)</span>
+<span class="sd">    freqs: numpy.array</span>
+<span class="sd">        frequencies</span>
+<span class="sd">    T: float</span>
+<span class="sd">        the response-time</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    spec: numpy.array</span>
+<span class="sd">        the recovered array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">slow_spec</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">freqs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">slow_spec</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">4.</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">freqs</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span><span class="o">**</span><span class="mf">2.</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Ogive"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.Ogive">[docs]</a><span class="k">def</span> <span class="nf">Ogive</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">no_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Integrates the Ogive from Coespectra</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df: dataframe</span>
+<span class="sd">        cospectrum to be integrated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="k">if</span> <span class="n">no_nan</span><span class="p">:</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+            <span class="n">og</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">y</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">c</span><span class="p">]</span><span class="o">=-</span><span class="n">og</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dfs</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">ser</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ser</span><span class="p">)</span>
+            <span class="n">og</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">y</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=-</span><span class="n">og</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">x</span><span class="p">)</span> <span class="p">)</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">dfs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">dfs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">dfs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+
+<div class="viewcode-block" id="recspeAux"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.spectral.recspeAux">[docs]</a><span class="k">def</span> <span class="nf">recspeAux</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper to make hfc_zeroQuad work in a pandas.DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">freqs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">spec</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">=</span><span class="n">hfc_zeroQuad</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="k">def</span> <span class="nf">_anti_aliasing</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Minimizes aliasing effects on spectra and cross-spectra</span>
+
+<span class="sd">    df: pandas.DataFrame</span>
+<span class="sd">        containing spectrum or cross-spectrum</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">RA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">1.</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">k</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+    <span class="k">return</span> <span class="n">spec</span> <span class="o">*</span> <span class="n">RA</span><span class="o">**</span><span class="mf">2.</span>
+
+
+<span class="k">def</span> <span class="nf">_recspe</span><span class="p">(</span><span class="n">slow_spec</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applied a correction factor to the spectrum of a slow-measured variable</span>
+<span class="sd">    based on the response-time T</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    freqs: numpy.array</span>
+<span class="sd">        frequencies</span>
+<span class="sd">    slow_spec: numpy.array</span>
+<span class="sd">        the spectrum</span>
+<span class="sd">    T: float</span>
+<span class="sd">        the response-time</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">slow_spec</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">freqs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">slow_spec</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">4.</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">freqs</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span><span class="o">**</span><span class="mf">2.</span><span class="p">))</span>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

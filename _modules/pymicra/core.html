@@ -1,0 +1,588 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.core &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.core</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">decorators</span> <span class="k">as</span> <span class="n">_decors</span>
+
+
+<div class="viewcode-block" id="fileConfig"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.fileConfig">[docs]</a><span class="k">class</span> <span class="nc">fileConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class defines a specific configuration of a data file</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    from_file: str</span>
+<span class="sd">        path of .cfg file (configuration file) to read from. This will ignore all other</span>
+<span class="sd">        keywords.</span>
+<span class="sd">    variables: list of strings or dict</span>
+<span class="sd">        If a list: should be a list of strings with the names of the variables. If the variable</span>
+<span class="sd">        is part if the date, then it should be provided as a datetime directive,</span>
+<span class="sd">        so if the columns is only the year, its name must be `%Y` and so forth. While</span>
+<span class="sd">        if it is the date in YYYY/MM/DD format, it should be `%Y/%m/%d`. For more info</span>
+<span class="sd">        see https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior</span>
+<span class="sd">        If a dict: the keys should be the numbers of the columns and the items should follow</span>
+<span class="sd">        the rules for a list.</span>
+<span class="sd">    date_cols: list of ints</span>
+<span class="sd">        should be indexes of the subset of varNames that corresponds to the variables that compose</span>
+<span class="sd">        the timestamp. If it is not provided the program will try to guess by getting</span>
+<span class="sd">        all variable names that have a percentage sign (%).</span>
+<span class="sd">    date_connector: string</span>
+<span class="sd">        generally not really necessary. It is used to join and then parse the date_cols.</span>
+<span class="sd">    columns_separator: string</span>
+<span class="sd">        used to assemble the date. If the file is tabular-separated then this should be &quot;whitespace&quot;.</span>
+<span class="sd">    header_lines: int or list</span>
+<span class="sd">        up to which line of the file is a header. See pandas.read_csv header option.</span>
+<span class="sd">    filename_format: string</span>
+<span class="sd">        tells the format of the file with the standard notation for date and time and with variable</span>
+<span class="sd">        parts as &quot;?&quot;. E.g. if the files are 56_20150101.csv, 57_20150102.csv etc filename_format should be:</span>
+<span class="sd">            ??_%Y%m%d.csv</span>
+<span class="sd">        this is useful primarily for the quality control feature.</span>
+<span class="sd">    units: dictionary</span>
+<span class="sd">        very important: a dictionary whose keys are the columns of the file and whose items are</span>
+<span class="sd">        the units in which they appear.</span>
+<span class="sd">    description: string</span>
+<span class="sd">        brief description of the datalogger configuration file.</span>
+<span class="sd">    varNames: DEPRECATED</span>
+<span class="sd">        use variables now.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@_decors</span><span class="o">.</span><span class="n">autoassign</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">from_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">variables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">date_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">frequency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">date_connector</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
+            <span class="n">columns_separator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">header_lines</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">skiprows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">filename_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">varNames</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Type help(fileConfig) to read intructions&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initiates the class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+
+        <span class="c1">#-------------------------</span>
+        <span class="k">if</span> <span class="n">from_file</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">io</span>
+            <span class="n">dlconf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">read_fileConfig</span><span class="p">(</span><span class="n">from_file</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dlconf</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="c1">#-------------------------</span>
+
+        <span class="c1">#-------------------------</span>
+        <span class="c1"># Makes sure that units is a dictionary type</span>
+        <span class="k">if</span> <span class="n">units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;units should be a dictionary. Ex.: {&quot;u&quot; : &quot;m/s&quot;, &quot;v&quot; : &quot;m/s&quot;, &quot;theta&quot; : &quot;K&quot; }&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">parseUnits</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+        <span class="c1">#-------------------------</span>
+
+        <span class="c1">#------------------</span>
+        <span class="c1"># Recuperates deprecated option varNames</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">variables</span><span class="p">)</span> <span class="ow">and</span> <span class="n">varNames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">varNames</span>
+        <span class="c1">#------------------</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_date_cols</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_consistency</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="fileConfig.get_date_cols"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.fileConfig.get_date_cols">[docs]</a>    <span class="k">def</span> <span class="nf">get_date_cols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Guesses what are the columns that contain the dates by searching</span>
+<span class="sd">        for percentage signs in them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date_col_names</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span> <span class="n">idx</span> <span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span> <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">date_cols</span> <span class="o">=</span> <span class="p">{</span> <span class="n">k</span> <span class="p">:</span> <span class="n">it</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">it</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;%&#39;</span> <span class="ow">in</span> <span class="n">it</span> <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date_col_names</span> <span class="o">=</span> <span class="n">date_cols</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span> <span class="o">=</span> <span class="n">date_cols</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="fileConfig.check_consistency"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.fileConfig.check_consistency">[docs]</a>    <span class="k">def</span> <span class="nf">check_consistency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks consistency of fileConfig</span>
+<span class="sd">        Currently only checks every key of self.units dictionary agaisnt values of variables dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fileConfig WARNING!:</span><span class="se">\n</span><span class="s1">    </span><span class="si">{}</span><span class="s1"> is defined in &quot;units&quot; but not defined in &quot;variables&quot;!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;pymicra.fileConfig&gt;</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="n">__repr__</span> <span class="o">=</span> <span class="n">__str__</span></div>
+
+
+<div class="viewcode-block" id="siteConfig"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.siteConfig">[docs]</a><span class="k">class</span> <span class="nc">siteConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Keeper of the configurations and constants of an experiment. (such as height of instruments,</span>
+<span class="sd">    location, canopy height and etc)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_decors</span><span class="o">.</span><span class="n">autoassign</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">instruments_height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">measurement_height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">canopy_height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">displacement_height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">roughness_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">latitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">            from_file: str</span>
+<span class="sd">                path to .site file with the configurations of the experiment. All atributes are taken from there.</span>
+<span class="sd">            measurement_height: float</span>
+<span class="sd">                the mainn height of the instruments in meters considered for calculations.</span>
+<span class="sd">                Generally it&#39;s the height of the sonic anemometer.</span>
+<span class="sd">            canopy_height: float</span>
+<span class="sd">                the mean height of the vegetation meters</span>
+<span class="sd">            displacement_height: float</span>
+<span class="sd">                also called zero-plane displacement. Will be estimated as 2/3*canopy_height if not given.</span>
+<span class="sd">            roughness_length:</span>
+<span class="sd">                the average length of roughness elements.</span>
+<span class="sd">            description:</span>
+<span class="sd">                short description of the site</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># If from file keyword exists then we get it from there</span>
+        <span class="k">if</span> <span class="n">from_file</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">read_site</span>
+            <span class="n">siteconf</span> <span class="o">=</span> <span class="n">read_site</span><span class="p">(</span><span class="n">from_file</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">siteconf</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="c1">#---------</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># If there&#39;s no displacement height, we try to calculate it</span>
+        <span class="k">if</span> <span class="n">displacement_height</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">displacement_height</span><span class="o">=</span><span class="n">displacement_height</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">canopy_height</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">displacement_height</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">canopy_height</span> <span class="c1">#meters</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">displacement_height</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#---------</span>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates nice representation for printing siteConfig objects based on pandas.Series</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&lt;pymicra.siteConfig&gt; object</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s1">----</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+        <span class="n">string</span><span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">string</span>
+    <span class="n">__repr__</span> <span class="o">=</span> <span class="n">__str__</span></div>
+
+
+
+<div class="viewcode-block" id="Notation"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.Notation">[docs]</a><span class="k">class</span> <span class="nc">Notation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This creates an object that holds the default notation for pymicra.</span>
+<span class="sd">    Example of usage:</span>
+
+<span class="sd">    notation = notation()</span>
+
+<span class="sd">    fluctuations_of_co2_conc = notation.concentration % notation.fluctuations % notation.co2</span>
+
+<span class="sd">    You should be careful with the order. The last argument should not have any &#39;%&#39; symbols</span>
+<span class="sd">    or you&#39;ll get a &quot;TypeError: not all arguments converted during string formatting&quot; message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mean</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_mean&#39;</span>
+    <span class="n">fluctuations</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span>
+    <span class="n">star</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_star&#39;</span>
+    <span class="n">std</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_std&#39;</span>
+    <span class="n">mass_concentration</span><span class="o">=</span><span class="s1">&#39;conc_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">molar_concentration</span><span class="o">=</span><span class="s1">&#39;mconc_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">mass_density</span><span class="o">=</span><span class="s1">&#39;rho_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">molar_density</span><span class="o">=</span><span class="s1">&#39;mrho_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">mass_mixing_ratio</span><span class="o">=</span><span class="s1">&#39;r_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">molar_mixing_ratio</span><span class="o">=</span><span class="s1">&#39;mr_</span><span class="si">%s</span><span class="s1">&#39;</span>
+
+    <span class="n">density</span><span class="o">=</span><span class="n">mass_density</span>
+    <span class="n">concentration</span><span class="o">=</span><span class="n">mass_concentration</span>
+    <span class="n">mixing_ratio</span><span class="o">=</span><span class="n">mass_mixing_ratio</span>
+
+    <span class="n">flux_of</span> <span class="o">=</span> <span class="s1">&#39;F_</span><span class="si">%s</span><span class="s1">&#39;</span>
+
+    <span class="n">cross_spectrum</span> <span class="o">=</span> <span class="s1">&#39;X_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="s1">&#39;Sp_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">cospectrum</span> <span class="o">=</span> <span class="s1">&#39;Co_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span>
+    <span class="n">quadrature</span> <span class="o">=</span> <span class="s1">&#39;Qu_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span>
+
+    <span class="nd">@_decors</span><span class="o">.</span><span class="n">autoassign</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">,</span> <span class="s1">&#39;co2&#39;</span><span class="p">,</span> <span class="s1">&#39;ch4&#39;</span><span class="p">,</span> <span class="s1">&#39;o3&#39;</span><span class="p">,</span> <span class="s1">&#39;n2o&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        When initialized, calls the build method to build the full notation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="o">=</span><span class="s1">&#39;u&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">=</span><span class="s1">&#39;v&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">=</span><span class="s1">&#39;w&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotated_u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotated_v</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotated_w</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">thermodynamic_temperature</span><span class="o">=</span><span class="s1">&#39;theta&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual_temperature</span><span class="o">=</span><span class="s1">&#39;theta_v&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sonic_temperature</span><span class="o">=</span><span class="s1">&#39;theta_s&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">potential_temperature</span><span class="o">=</span><span class="s1">&#39;theta_p&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span><span class="o">=</span><span class="s1">&#39;p&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relative_humidity</span><span class="o">=</span><span class="s1">&#39;rh&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specific_humidity</span><span class="o">=</span><span class="s1">&#39;q&#39;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">h2o</span><span class="o">=</span><span class="s1">&#39;h2o&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">co2</span><span class="o">=</span><span class="s1">&#39;co2&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ch4</span><span class="o">=</span><span class="s1">&#39;ch4&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">o3</span> <span class="o">=</span> <span class="s1">&#39;o3&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n2o</span><span class="o">=</span><span class="s1">&#39;n2o&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">moist_air</span> <span class="o">=</span> <span class="s1">&#39;air&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dry_air</span>   <span class="o">=</span> <span class="s1">&#39;dry&#39;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">stability_parameter</span> <span class="o">=</span> <span class="s1">&#39;zeta&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obukhov_length</span> <span class="o">=</span> <span class="s1">&#39;Lo&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">momentum_flux</span> <span class="o">=</span> <span class="s1">&#39;tau&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensible_heat_flux</span> <span class="o">=</span> <span class="s1">&#39;H&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual_sensible_heat_flux</span> <span class="o">=</span> <span class="s1">&#39;Hv&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">water_vapor_flux</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latent_heat_flux</span> <span class="o">=</span> <span class="s1">&#39;LE&#39;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Notation.build"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.Notation.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This useful method builds the full notation based on the base notation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#-------------</span>
+        <span class="c1"># Iterates over every &quot;air&quot; variable</span>
+        <span class="k">for</span> <span class="n">subst</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">,</span> <span class="s1">&#39;co2&#39;</span><span class="p">,</span> <span class="s1">&#39;ch4&#39;</span><span class="p">,</span> <span class="s1">&#39;o3&#39;</span><span class="p">,</span> <span class="s1">&#39;n2o&#39;</span><span class="p">,</span> <span class="s1">&#39;moist_air&#39;</span><span class="p">,</span> <span class="s1">&#39;dry_air&#39;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_&#39;</span> <span class="p">],</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;self.mean %&#39;</span><span class="p">]):</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{1}{0}</span><span class="s1">_mass_density = </span><span class="si">{2}</span><span class="s1"> self.mass_density </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{1}{0}</span><span class="s1">_molar_density = </span><span class="si">{2}</span><span class="s1"> self.molar_density </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{1}{0}</span><span class="s1">_mass_mixing_ratio = </span><span class="si">{2}</span><span class="s1"> self.mass_mixing_ratio </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{1}{0}</span><span class="s1">_molar_mixing_ratio = </span><span class="si">{2}</span><span class="s1"> self.molar_mixing_ratio </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{1}{0}</span><span class="s1">_mass_concentration = </span><span class="si">{2}</span><span class="s1"> self.mass_concentration </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{1}{0}</span><span class="s1">_molar_concentration = </span><span class="si">{2}</span><span class="s1"> self.molar_concentration </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+
+
+            <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;fluctuations&#39;</span><span class="p">,</span> <span class="s1">&#39;star&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">]:</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_mass_density_</span><span class="si">{1}</span><span class="s1"> = self.</span><span class="si">{1}</span><span class="s1"> </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">_mass_density&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_molar_density_</span><span class="si">{1}</span><span class="s1"> = self.</span><span class="si">{1}</span><span class="s1"> </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">_molar_density&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_mass_mixing_ratio_</span><span class="si">{1}</span><span class="s1"> = self.</span><span class="si">{1}</span><span class="s1"> </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">_mass_mixing_ratio&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_molar_mixing_ratio_</span><span class="si">{1}</span><span class="s1"> = self.</span><span class="si">{1}</span><span class="s1"> </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">_molar_mixing_ratio&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_mass_concentration_</span><span class="si">{1}</span><span class="s1"> = self.</span><span class="si">{1}</span><span class="s1"> </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">_mass_concentration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_molar_concentration_</span><span class="si">{1}</span><span class="s1"> = self.</span><span class="si">{1}</span><span class="s1"> </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">_molar_concentration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
+        <span class="c1">#-------------</span>
+    
+
+
+        <span class="n">dic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span>
+        <span class="k">for</span> <span class="n">subst</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;co2&#39;</span><span class="p">,</span> <span class="s1">&#39;ch4&#39;</span><span class="p">,</span> <span class="s1">&#39;o3&#39;</span><span class="p">,</span> <span class="s1">&#39;n2o&#39;</span><span class="p">]:</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_flux&#39;</span> <span class="o">%</span> <span class="n">subst</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flux_of</span> <span class="o">%</span> <span class="n">subst</span>
+
+        <span class="n">substances</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;thermodynamic_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;virtual_temperature&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;sonic_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;potential_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;specific_humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;relative_humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">subst</span> <span class="ow">in</span> <span class="n">substances</span><span class="p">:</span>
+            <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_fluctuations = self.fluctuations </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">))</span>
+            <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.mean_</span><span class="si">{0}</span><span class="s1"> = self.mean </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">))</span>
+            <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_star = self.star </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">))</span>
+            <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;self.</span><span class="si">{0}</span><span class="s1">_std = self.std </span><span class="si">% s</span><span class="s1">elf.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subst</span><span class="p">))</span>
+
+        <span class="c1">#-------------</span>
+        <span class="c1"># Here we apply the aliases on the attributes to make it easier to write some long names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_aliases</span><span class="p">()</span></div>
+        <span class="c1">#-------------</span>
+
+
+    <span class="k">def</span> <span class="nf">_apply_aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies short names using aliases</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;thermodynamic&#39;</span><span class="p">:</span><span class="s1">&#39;thermodyn&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;temperature&#39;</span><span class="p">:</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;parameter&#39;</span><span class="p">:</span><span class="s1">&#39;variable&#39;</span> <span class="p">}</span>
+
+        <span class="n">dic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">short</span><span class="o">=</span><span class="n">key</span>
+            <span class="k">for</span> <span class="n">lon</span> <span class="ow">in</span> <span class="n">aliases</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">short</span> <span class="o">=</span> <span class="n">short</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">aliases</span><span class="p">[</span><span class="n">lon</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">!=</span><span class="n">short</span><span class="p">:</span>
+                <span class="n">dic</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">short</span><span class="p">:</span><span class="n">val</span><span class="p">})</span>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Currently displays Notations as a very long pandas.Series</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span><span class="o">=</span><span class="mi">9999</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;max_rows&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">string</span>
+    <span class="n">__repr__</span> <span class="o">=</span> <span class="n">__str__</span></div>
+
+
+
+<div class="viewcode-block" id="dataloggerConfig"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.dataloggerConfig">[docs]</a><span class="k">class</span> <span class="nc">dataloggerConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class defines a specific configuration of a datalogger output file</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    from_file: str</span>
+<span class="sd">        path of .dlc file (datalogger configuration file) to read from. This will ignore all other</span>
+<span class="sd">        keywords.</span>
+
+<span class="sd">    varNames: list of strings or dict</span>
+<span class="sd">        If a list: should be a list of strings with the names of the variables. If the variable</span>
+<span class="sd">        is part if the date, then it should be provided as a datetime directive,</span>
+<span class="sd">        so if the columns is only the year, its name must be `%Y` and so forth. While</span>
+<span class="sd">        if it is the date in YYYY/MM/DD format, it should be `%Y/%m/%d`. For more info</span>
+<span class="sd">        see https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior</span>
+<span class="sd">        If a dict: the keys should be the numbers of the columns and the items should follow</span>
+<span class="sd">        the rules for a list.</span>
+
+<span class="sd">    date_cols: list of ints</span>
+<span class="sd">        should be indexes of the subset of varNames that corresponds to the variables that compose</span>
+<span class="sd">        the timestamp. If it is not provided the program will try to guess by getting</span>
+<span class="sd">        all variable names that have a percentage sign (%).</span>
+
+<span class="sd">    date_connector: string</span>
+<span class="sd">        generally not really necessary. It is used to join and then parse the date_cols.</span>
+
+<span class="sd">    columns_separator: string</span>
+<span class="sd">        used to assemble the date. Should only be used if the default char creates conflict. If</span>
+<span class="sd">        the file is tabular-separated then this should be &quot;whitespace&quot;.</span>
+
+<span class="sd">    header_lines: int</span>
+<span class="sd">        up to which line of the file is a header. See pandas.read_csv header option.</span>
+
+<span class="sd">    first_time_skip: int</span>
+<span class="sd">        how many units of frequency the first line of the file is offset (generally zero).</span>
+
+<span class="sd">    filename_format: string</span>
+<span class="sd">        tells the format of the file with the standard notation for date and time and with variable</span>
+<span class="sd">        parts as &quot;?&quot;. E.g. if the files are 56_20150101.csv, 57_20150102.csv etc filename_format should be:</span>
+<span class="sd">            ??_%Y%m%d.csv</span>
+<span class="sd">        this is useful primarily for the quality control feature.</span>
+
+<span class="sd">    units: dictionary</span>
+<span class="sd">        very important: a dictionary whose keys are the columns of the file and whose items are</span>
+<span class="sd">        the units in which they appear.</span>
+
+<span class="sd">    description: string</span>
+<span class="sd">        brief description of the datalogger configuration file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@_decors</span><span class="o">.</span><span class="n">autoassign</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">from_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">varNames</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">date_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">frequency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">date_connector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">columns_separator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">header_lines</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">first_time_skip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">skiprows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">filename_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generic datalogger configuration file. Type help(dataloggerConfig) to read intructions&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initiates the class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">algs</span> <span class="k">as</span> <span class="nn">aux</span>
+
+        <span class="c1">#-------------------------</span>
+        <span class="c1"># Makes sure that units is a dictionary type</span>
+        <span class="k">if</span> <span class="n">units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;units should be a dictionary. Ex.: {&quot;u&quot; : &quot;m/s&quot;, &quot;v&quot; : &quot;m/s&quot;, &quot;theta&quot; : &quot;K&quot; }&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="n">aux</span><span class="o">.</span><span class="n">parseUnits</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+        <span class="c1">#-------------------------</span>
+
+        <span class="c1">#-------------------------</span>
+        <span class="k">if</span> <span class="n">from_file</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">read_dlc</span>
+            <span class="n">dlconf</span> <span class="o">=</span> <span class="n">read_dlc</span><span class="p">(</span><span class="n">from_file</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dlconf</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="c1">#-------------------------</span>
+
+        <span class="c1">#-------------------------</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">varNames</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">varNames</span><span class="p">)</span><span class="o">==</span><span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">varNames</span><span class="o">=</span><span class="n">varNames</span>
+
+            <span class="c1">#-------------------------</span>
+            <span class="c1"># If date_cols is not provided, this will try to guess the date columns</span>
+            <span class="c1"># by assuming that no other columns has a % sign on their name</span>
+            <span class="k">if</span> <span class="n">date_cols</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span><span class="o">=</span><span class="n">date_cols</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">date_col_names</span> <span class="o">=</span> <span class="p">[</span> <span class="n">varNames</span><span class="p">[</span> <span class="n">idx</span> <span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">date_cols</span> <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">varNames</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">date_col_names</span> <span class="o">=</span> <span class="p">[</span> <span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">varNames</span> <span class="k">if</span> <span class="s1">&#39;%&#39;</span> <span class="ow">in</span> <span class="n">el</span> <span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span> <span class="o">=</span> <span class="n">aux</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">varNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">varNames</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+                   <span class="n">date_cols</span> <span class="o">=</span> <span class="p">{</span> <span class="n">k</span> <span class="p">:</span> <span class="n">it</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">it</span><span class="p">)</span> <span class="ow">in</span> <span class="n">varNames</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;%&#39;</span> <span class="ow">in</span> <span class="n">it</span> <span class="p">}</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">date_col_names</span> <span class="o">=</span> <span class="n">date_cols</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span> <span class="o">=</span> <span class="n">date_cols</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+           <span class="c1">#-------------------------</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">varNames</span> <span class="o">=</span> <span class="n">varNames</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span> <span class="o">=</span> <span class="n">date_cols</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date_col_names</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#-------------------------</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">=</span><span class="n">frequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date_connector</span><span class="o">=</span><span class="n">date_connector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns_separator</span><span class="o">=</span><span class="n">columns_separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_lines</span><span class="o">=</span><span class="n">header_lines</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skiprows</span><span class="o">=</span><span class="n">skiprows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_time_skip</span><span class="o">=</span><span class="n">first_time_skip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="o">=</span><span class="n">units</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="o">=</span><span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_format</span><span class="o">=</span><span class="n">filename_format</span>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;pymicra.dataloggerConfig&gt;</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="n">__repr__</span> <span class="o">=</span> <span class="n">__str__</span></div>
+
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">_pd</span>
+<div class="viewcode-block" id="myData"><a class="viewcode-back" href="../../pymicra.html#pymicra.core.myData">[docs]</a><span class="k">class</span> <span class="nc">myData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attempt to create a myData object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">dic</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dic</span> <span class="o">=</span> <span class="n">dic</span>
+<span class="c1">#        self.df = df</span>
+
+    <span class="c1">#def as_df(self):</span>
+    <span class="c1">#    import pandas as pd</span>
+    <span class="c1">#    return self.copy()</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">__repr__</span><span class="p">()</span></div>
+
+    <span class="c1">#def __str__(self):</span>
+    <span class="c1">#    return _pd.DataFrame.__str__(self)</span>
+
+    <span class="c1">#def __div__(self):</span>
+    <span class="c1">#    import pandas as pd</span>
+       <span class="c1"># return pd.DataFrame(self)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

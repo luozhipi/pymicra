@@ -1,0 +1,231 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.decorators &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.decorators</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+
+
+<div class="viewcode-block" id="pdgeneral_in"><a class="viewcode-back" href="../../pymicra.html#pymicra.decorators.pdgeneral_in">[docs]</a><span class="k">def</span> <span class="nf">pdgeneral_in</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">ser</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ser</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ser</span><span class="o">.</span><span class="n">dtype</span><span class="p">)])</span> <span class="o">+</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input must be a pandas.Series or pandas.DataFrame&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="pdgeneral_io"><a class="viewcode-back" href="../../pymicra.html#pymicra.decorators.pdgeneral_io">[docs]</a><span class="k">def</span> <span class="nf">pdgeneral_io</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If the input is a series transform it to a dtaframe then transform the output from dataframe</span>
+<span class="sd">    back into a series. If the input is a series and the output is a one-element series, transform it to a float.</span>
+
+<span class="sd">    Currently the output functionality works only when the output is one variable, not an array</span>
+<span class="sd">    of elements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">ser</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ser</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ser</span><span class="o">.</span><span class="n">dtype</span><span class="p">)])</span> <span class="o">+</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span> <span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span> <span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">size</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span> <span class="p">]:</span>
+                <span class="n">outser</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">outser</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">outser</span><span class="p">])</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input must be a pandas.Series or pandas.DataFrame&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+<div class="viewcode-block" id="pdgeneral"><a class="viewcode-back" href="../../pymicra.html#pymicra.decorators.pdgeneral">[docs]</a><span class="k">def</span> <span class="nf">pdgeneral</span><span class="p">(</span><span class="n">convert_out</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">convert_out</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pdgeneral_io</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pdgeneral_in</span></div>
+
+
+
+
+<div class="viewcode-block" id="autoassign"><a class="viewcode-back" href="../../pymicra.html#pymicra.decorators.autoassign">[docs]</a><span class="k">def</span> <span class="nf">autoassign</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    autoassign(function) -&gt; method</span>
+<span class="sd">    autoassign(*argnames) -&gt; decorator</span>
+<span class="sd">    autoassign(exclude=argnames) -&gt; decorator</span>
+<span class="sd">    </span>
+<span class="sd">    allow a method to assign (some of) its arguments as attributes of</span>
+<span class="sd">    &#39;self&#39; automatically.  E.g.</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; class Foo(object):</span>
+<span class="sd">    ...     @autoassign</span>
+<span class="sd">    ...     def __init__(self, foo, bar): pass</span>
+<span class="sd">    ... </span>
+<span class="sd">    &gt;&gt;&gt; breakfast = Foo(&#39;spam&#39;, &#39;eggs&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; breakfast.foo, breakfast.bar</span>
+<span class="sd">    (&#39;spam&#39;, &#39;eggs&#39;)</span>
+<span class="sd">    </span>
+<span class="sd">    To restrict autoassignment to &#39;bar&#39; and &#39;baz&#39;, write:</span>
+<span class="sd">    </span>
+<span class="sd">        @autoassign(&#39;bar&#39;, &#39;baz&#39;)</span>
+<span class="sd">        def method(self, foo, bar, baz): ...</span>
+
+<span class="sd">    To prevent &#39;foo&#39; and &#39;baz&#39; from being autoassigned, use:</span>
+
+<span class="sd">        @autoassign(exclude=(&#39;foo&#39;, &#39;baz&#39;))</span>
+<span class="sd">        def method(self, foo, bar, baz): ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+    <span class="kn">from</span> <span class="nn">inspect</span> <span class="k">import</span> <span class="n">getargspec</span><span class="p">,</span> <span class="n">isfunction</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">izip</span><span class="p">,</span> <span class="n">ifilter</span><span class="p">,</span> <span class="n">starmap</span>
+
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">exclude</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;exclude&#39;</span><span class="p">]),</span> <span class="kc">None</span>
+        <span class="n">sieve</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">nv</span><span class="p">:</span> <span class="n">nv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">isfunction</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sieve</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span><span class="n">l</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">names</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">names</span><span class="p">),</span> <span class="kc">None</span>
+        <span class="n">sieve</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">nv</span><span class="p">:</span> <span class="n">nv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">names</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="n">fargnames</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">fdefaults</span> <span class="o">=</span> <span class="n">getargspec</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="c1"># Remove self from fargnames and make sure fdefault is a tuple</span>
+        <span class="n">fargnames</span><span class="p">,</span> <span class="n">fdefaults</span> <span class="o">=</span> <span class="n">fargnames</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">fdefaults</span> <span class="ow">or</span> <span class="p">()</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sieve</span><span class="p">(</span><span class="n">izip</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">fargnames</span><span class="p">),</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">fdefaults</span><span class="p">))))</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">assigned</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sieve</span><span class="p">(</span><span class="n">izip</span><span class="p">(</span><span class="n">fargnames</span><span class="p">,</span> <span class="n">args</span><span class="p">)))</span>
+            <span class="n">assigned</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sieve</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()))</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">starmap</span><span class="p">(</span><span class="n">assigned</span><span class="o">.</span><span class="n">setdefault</span><span class="p">,</span> <span class="n">defaults</span><span class="p">):</span> <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">assigned</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">decorated</span>
+    <span class="k">return</span> <span class="n">f</span> <span class="ow">and</span> <span class="n">decorator</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">or</span> <span class="n">decorator</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

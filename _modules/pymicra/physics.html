@@ -1,0 +1,561 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.physics &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.physics</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Author: Tomas Chor</span>
+
+<span class="sd">Module that contains physical functions for general use</span>
+
+<span class="sd">TO DO LIST:</span>
+
+<span class="sd">* ADD GENERAL SOLAR ZENITH CALCULATION</span>
+<span class="sd">* ADD FOOTPRINT CALCULATION?</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="theta_from_theta_s"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.theta_from_theta_s">[docs]</a><span class="k">def</span> <span class="nf">theta_from_theta_s</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    From Schotanus, Nieuwstadt, de Bruin; DOI 10.1007/BF00164332</span>
+
+<span class="sd">    theta_s = theta (1 + 0.51 q) (1 - (vn/c)**2)**0.5</span>
+<span class="sd">    theta_s ~ theta (1 + 0.51 q)</span>
+
+<span class="sd">    Parameter:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: pandas.dataframe</span>
+<span class="sd">        dataset</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        units dictionary</span>
+<span class="sd">    notation: pymicra.Notation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">sonic_temp</span> <span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="mf">0.51</span><span class="o">*</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="p">])</span>
+    <span class="k">if</span> <span class="n">return_df</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span> <span class="o">=</span> <span class="n">theta</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">theta</span></div>
+
+
+<div class="viewcode-block" id="theta_from_theta_v"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.theta_from_theta_v">[docs]</a><span class="k">def</span> <span class="nf">theta_from_theta_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    theta_v ~ theta (1 + 0.61 q)</span>
+
+<span class="sd">    Parameter:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: pandas.dataframe</span>
+<span class="sd">        dataset</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        units dictionary</span>
+<span class="sd">    notation: pymicra.Notation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">sonic_temp</span> <span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="mf">0.61</span><span class="o">*</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="p">])</span>
+    <span class="k">if</span> <span class="n">return_df</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span> <span class="o">=</span> <span class="n">theta</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">theta</span></div>
+
+
+
+<div class="viewcode-block" id="theta_std_from_theta_v_fluc"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.theta_std_from_theta_v_fluc">[docs]</a><span class="k">def</span> <span class="nf">theta_std_from_theta_v_fluc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Derived from theta_v = theta(1 + 0.61 q)</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.dataframe</span>
+<span class="sd">        dataframe with q, q&#39;, theta, theta_v&#39;</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        units dictionary</span>
+<span class="sd">    notation: pymicra.Notation</span>
+<span class="sd">        Notation object or None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Consider the existence of mean q</span>
+    <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_specific_humidity</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">q_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_specific_humidity</span> <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">q_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Consider existence of mean theta</span>
+    <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_thermodyn_temp</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">theta_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_thermodyn_temp</span> <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">theta_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="c1">#-----------</span>
+
+    <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="mf">0.61</span><span class="o">*</span><span class="n">q_mean</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+
+    <span class="n">num1</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp_fluctuations</span> <span class="p">]</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">num2</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="mf">0.61</span> <span class="o">*</span> <span class="n">theta_mean</span> <span class="o">*</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp_fluctuations</span><span class="p">]</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_fluctuations</span> <span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">num3</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.61</span><span class="o">*</span><span class="n">theta_mean</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_fluctuations</span> <span class="p">]</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="n">var</span> <span class="o">=</span> <span class="p">(</span><span class="n">num1</span> <span class="o">-</span> <span class="n">num2</span> <span class="o">+</span> <span class="n">num3</span><span class="p">)</span><span class="o">/</span><span class="n">denom</span>
+    <span class="n">theta_fluc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">theta_fluc</span></div>
+
+
+
+<div class="viewcode-block" id="ppxv2density"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.ppxv2density">[docs]</a><span class="k">def</span> <span class="nf">ppxv2density</span><span class="p">(</span><span class="n">ser</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">solute</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ser should be a series!</span>
+<span class="sd">    concentration in ser should be ppmv, which will be transformed to g/m3</span>
+<span class="sd">    p should be in kPa!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ureg</span>
+
+    <span class="n">units</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ser</span> <span class="o">=</span> <span class="n">ser</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">p</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="n">solute</span><span class="p">])</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">ser</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span><span class="n">solute</span><span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">constants</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;R_spec&#39;</span><span class="p">])</span>
+    <span class="n">out</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="s1">&#39;kg/m**3&#39;</span><span class="p">)</span>
+    <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">solute</span><span class="p">:</span><span class="n">unit</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">units</span></div>
+
+
+<div class="viewcode-block" id="airDensity_from_theta_v"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.airDensity_from_theta_v">[docs]</a><span class="k">def</span> <span class="nf">airDensity_from_theta_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_means</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates moist air density using p = rho R_dry T_virtual</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">R_dry</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Calculates air density and its unit with theta_v and R_dry</span>
+    <span class="k">if</span> <span class="n">use_means</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">pressure</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">R_dry</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">pressure</span> <span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">R_dry</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp</span> <span class="p">])</span>
+    <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">:</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">pressure</span> <span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;R_spec&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp</span> <span class="p">])</span> <span class="p">})</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># We pass it to the standard mass density unit: kg/m**3</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">({</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span><span class="p">:</span><span class="s1">&#39;kg/m**3&#39;</span><span class="p">},</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">units</span></div>
+
+
+<div class="viewcode-block" id="dryAirDensity_from_p"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.dryAirDensity_from_p">[docs]</a><span class="k">def</span> <span class="nf">dryAirDensity_from_p</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates dry air density</span>
+<span class="sd">    NEEDS IMPROVEMENT REGARDING HANDLING OF UNITS</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">Rdry</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span>
+    <span class="n">Rh2o</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span>
+    <span class="n">Runit</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;R_spec&#39;</span><span class="p">]</span>
+
+    <span class="n">p_h2o</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span><span class="o">*</span><span class="n">Rh2o</span><span class="o">*</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span>
+    <span class="n">p_h2o_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span><span class="o">*</span><span class="n">Runit</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Before adding or subtracting we need to make sure both units are the same</span>
+    <span class="n">p_h2o</span><span class="p">,</span> <span class="n">p_h2o_unit</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="n">p_h2o</span><span class="p">,</span> <span class="n">p_h2o_unit</span><span class="p">,</span> <span class="s1">&#39;kPa&#39;</span><span class="p">)</span>
+    <span class="n">p_air</span><span class="p">,</span> <span class="n">p_air_unit</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">pressure</span> <span class="p">],</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">pressure</span> <span class="p">],</span> <span class="s1">&#39;kPa&#39;</span><span class="p">)</span>
+
+    <span class="n">p_dry</span> <span class="o">=</span> <span class="n">p_air</span> <span class="o">-</span> <span class="n">p_h2o</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">p_dry</span><span class="o">/</span><span class="p">(</span><span class="n">Rdry</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">])</span>
+    <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">:</span> <span class="n">p_air_unit</span><span class="o">/</span><span class="p">(</span><span class="n">Runit</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">])})</span>
+    <span class="c1">#-----------</span>
+
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">units</span></div>
+
+
+<div class="viewcode-block" id="airDensity_from_theta"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.airDensity_from_theta">[docs]</a><span class="k">def</span> <span class="nf">airDensity_from_theta</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_means</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_unit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates moist air density using theta measurements</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        dataset to add rho_air</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        units dictionary</span>
+<span class="sd">    notation: pymicra.notation</span>
+<span class="sd">        notation to be used</span>
+<span class="sd">    inplace: bool</span>
+<span class="sd">        whether or not to treat units inplace</span>
+<span class="sd">    use_means: bool</span>
+<span class="sd">        use the mean of theta or not when calculating</span>
+<span class="sd">    theta: pandas.Series</span>
+<span class="sd">        auxiliar theta measurement</span>
+<span class="sd">    theta_unit: pint.quantity</span>
+<span class="sd">        auxiliar theta&#39;s unit</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">outunits</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">R_dry</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span>
+    <span class="n">R_h2o</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span>
+    <span class="n">R_spec_unit</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;R_spec&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">theta</span><span class="p">:</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span>
+        <span class="n">theta_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">use_means</span><span class="p">:</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># We calculate the water vapor partial pressure</span>
+    <span class="n">p_h2o</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span> <span class="o">*</span> <span class="n">R_h2o</span> <span class="o">*</span> <span class="n">theta</span>
+    <span class="n">p_h2o_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span> <span class="p">]</span><span class="o">*</span><span class="n">R_spec_unit</span><span class="o">*</span><span class="n">theta_unit</span>
+    <span class="c1">#pv, pvu = algs.multiply([ data[defs.h2o_mass_density], R_h2o, theta ], [ units[defs.h2o_mass_density], R_spec_unit, theta_unit ])</span>
+    <span class="c1">#print(p_h2o, p_h2o_unit)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># We subtract p_h2o from p_dry using pymicra.algs.add because addition with different units is tricky</span>
+    <span class="n">p_dry</span><span class="p">,</span> <span class="n">p_dry_unit</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">add</span><span class="p">([</span> <span class="n">data</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">pressure</span><span class="p">],</span> <span class="o">-</span><span class="n">p_h2o</span> <span class="p">],</span> <span class="p">[</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">pressure</span><span class="p">],</span> <span class="n">p_h2o_unit</span> <span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># We calculate dry air mass density</span>
+    <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">p_dry</span><span class="o">/</span><span class="p">(</span><span class="n">R_dry</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">p_dry_unit</span><span class="o">/</span><span class="p">(</span><span class="n">R_spec_unit</span><span class="o">*</span><span class="n">theta_unit</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">({</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">:</span> <span class="s1">&#39;kg/m**3&#39;</span><span class="p">},</span> <span class="n">outunits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># We add rho_dry to rho_h2o using pymicra.algs.add because addition with different units is tricky</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">]</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span><span class="p">]],</span>
+                        <span class="p">[</span><span class="n">outunits</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span><span class="p">],</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density</span><span class="p">]],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unitdict</span><span class="o">=</span><span class="n">outunits</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span><span class="p">)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Adjust the units</span>
+    <span class="n">conversions</span> <span class="o">=</span> <span class="p">{</span> <span class="n">defs</span><span class="o">.</span><span class="n">moist_air_mass_density</span> <span class="p">:</span> <span class="s1">&#39;kg/m**3&#39;</span><span class="p">,</span>
+                    <span class="n">defs</span><span class="o">.</span><span class="n">dry_air_mass_density</span> <span class="p">:</span> <span class="s1">&#39;kg/m**3&#39;</span><span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">(</span><span class="n">conversions</span><span class="p">,</span> <span class="n">outunits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">outunits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">outunits</span></div>
+
+
+<div class="viewcode-block" id="solarZenith"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.solarZenith">[docs]</a><span class="k">def</span> <span class="nf">solarZenith</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">lat</span><span class="o">=-</span><span class="mf">3.1300</span><span class="p">,</span> <span class="n">lon</span><span class="o">=-</span><span class="mf">60.016667</span><span class="p">,</span> <span class="n">lon0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">63.</span><span class="p">,</span> <span class="n">negative</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the solar zenith angle at any given day</span>
+
+<span class="sd">    needs validation and needs to work without lon0</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    date: datetime object</span>
+<span class="sd">        the date and time for which the zenith angle has to be calculated</span>
+<span class="sd">    lat: float</span>
+<span class="sd">        latitude in degrees</span>
+<span class="sd">    lon: float</span>
+<span class="sd">        longitude in degrees</span>
+<span class="sd">    lon0: float</span>
+<span class="sd">        DEFINE IT BETTER</span>
+
+<span class="sd">    dr is the julian day of the solstice. Default is to get from dictionary</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    zen_ang: float</span>
+<span class="sd">        the zenith angle in degrees</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span><span class="n">sin</span><span class="p">,</span><span class="n">cos</span><span class="p">,</span><span class="n">acos</span><span class="p">,</span><span class="n">radians</span><span class="p">,</span><span class="n">degrees</span>
+    <span class="kn">from</span> <span class="nn">calendar</span> <span class="k">import</span> <span class="n">isleap</span>
+    <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">timedelta</span>
+
+    <span class="c1">#----------</span>
+    <span class="c1"># Finds out which is the day of the solstice for that year and puts it into dr variable</span>
+    <span class="k">if</span> <span class="n">dr</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">constants</span> <span class="k">import</span> <span class="n">sumsolstice</span>
+        <span class="n">dr</span><span class="o">=</span><span class="n">sumsolstice</span><span class="p">[</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_yday</span>
+    <span class="c1">#----------</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># Checks if it&#39;s a leapyear and defines the da (days in year)</span>
+    <span class="k">if</span> <span class="n">isleap</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">):</span>
+        <span class="n">da</span><span class="o">=</span><span class="mi">366</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">da</span><span class="o">=</span><span class="mi">365</span>
+    <span class="c1">#------------</span>
+
+    <span class="n">tt</span><span class="o">=</span><span class="n">date</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span>
+    <span class="n">j_day</span><span class="o">=</span><span class="n">tt</span><span class="o">.</span><span class="n">tm_yday</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">365.</span><span class="o">*</span><span class="p">(</span><span class="n">j_day</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span>
+    <span class="n">et</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mf">60.</span><span class="o">*</span> <span class="p">(</span><span class="mf">229.18</span><span class="o">*</span><span class="p">(</span><span class="mf">0.000075</span> <span class="o">+</span> <span class="mf">0.001868</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.032077</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span><span class="o">-</span><span class="mf">0.014615</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">gamma</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.04089</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">gamma</span><span class="p">)))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon</span><span class="o">-</span><span class="n">lon0</span><span class="p">)</span><span class="o">/</span><span class="mf">15.</span><span class="o">*</span><span class="mf">60.</span> <span class="c1"># minutes</span>
+    <span class="n">soma</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">60.</span><span class="o">*</span><span class="n">et</span> <span class="c1"># minutes</span>
+    <span class="n">solar_date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">soma</span><span class="o">/</span><span class="p">(</span><span class="mf">24.</span><span class="o">*</span><span class="mf">60.</span><span class="p">))</span> <span class="c1"># add minutes to the official time</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.409</span><span class="o">*</span><span class="n">cos</span><span class="p">((</span><span class="mf">2.</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">j_day</span><span class="o">-</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="n">da</span><span class="p">))</span>
+    <span class="n">Hsv</span> <span class="o">=</span> <span class="n">solar_date</span><span class="o">.</span><span class="n">hour</span> <span class="o">+</span> <span class="n">solar_date</span><span class="o">.</span><span class="n">minute</span><span class="o">/</span><span class="mf">60.</span> <span class="o">+</span> <span class="n">solar_date</span><span class="o">.</span><span class="n">second</span><span class="o">/</span><span class="mf">3600.</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">24.</span><span class="o">*</span><span class="p">(</span><span class="n">Hsv</span> <span class="o">-</span> <span class="mf">12.</span><span class="p">)</span>
+    <span class="n">zen_ang</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">acos</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">lat</span><span class="p">))</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">lat</span><span class="p">))</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">h</span><span class="p">)))</span>
+
+    <span class="c1">#----------</span>
+    <span class="c1"># If negative==True then the angles before noon will be negative</span>
+    <span class="k">if</span> <span class="n">negative</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">solar_date</span><span class="o">.</span><span class="n">hour</span><span class="o">&lt;=</span><span class="mi">12</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">zen_ang</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">zen_ang</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">zen_ang</span></div>
+    <span class="c1">#----------</span>
+
+
+<div class="viewcode-block" id="latent_heat_water"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.latent_heat_water">[docs]</a><span class="k">def</span> <span class="nf">latent_heat_water</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the latent heat of evaporation for water</span>
+
+<span class="sd">    Receives T in Kelvin and returns the latent heat in J/g</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">2500.827</span> <span class="o">-</span><span class="mf">2.360</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mf">273.15</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CtoK"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.CtoK">[docs]</a><span class="k">def</span> <span class="nf">CtoK</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return temp in Kelvin given temp T in Celsius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">T</span> <span class="o">+</span> <span class="mf">273.15</span></div>
+
+
+<div class="viewcode-block" id="satWaterPressure"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.satWaterPressure">[docs]</a><span class="k">def</span> <span class="nf">satWaterPressure</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;kelvin&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the saturated water vapor pressure according eq (3.97) of Wallace and Hobbes, page 99.</span>
+
+<span class="sd">    e0, b, T1 and T2 are constants specific for water vapor</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    T: float</span>
+<span class="sd">        thermodynamic temperature</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">        saturated vapor pressure of water (in kPa)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">exp</span>
+    <span class="n">e0</span><span class="o">=</span><span class="mf">0.61094</span>
+    <span class="n">b</span><span class="o">=</span><span class="mf">17.2694</span>
+    <span class="k">if</span> <span class="n">unit</span><span class="o">==</span><span class="s1">&#39;kelvin&#39;</span><span class="p">:</span>
+        <span class="n">T1</span><span class="o">=</span><span class="mf">273.16</span>
+        <span class="n">T2</span><span class="o">=</span><span class="mf">35.86</span>
+    <span class="k">elif</span> <span class="n">units</span><span class="o">==</span><span class="s1">&#39;celsius&#39;</span><span class="p">:</span>
+        <span class="n">T1</span><span class="o">=</span><span class="mf">0.</span>
+        <span class="n">T2</span><span class="o">=</span><span class="mf">243.04</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Check your units&#39;</span><span class="p">)</span>
+    <span class="n">brackets</span><span class="o">=</span><span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">T1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="n">T2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">e0</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="n">brackets</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="perfGas"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.perfGas">[docs]</a><span class="k">def</span> <span class="nf">perfGas</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gas</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the only value that is not provided in the ideal gas law</span>
+
+<span class="sd">    P.S.: I&#39;m using type to identify None objects because this way it works</span>
+<span class="sd">    againt pandas objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">constants</span> <span class="k">import</span> <span class="n">R_spec</span>
+    
+    <span class="k">if</span> <span class="n">R</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gas</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">R</span><span class="o">=</span><span class="n">R_spec</span><span class="p">[</span><span class="n">gas</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">gas</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">R</span><span class="o">=</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">rho</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">T</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">rho</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="R_moistAir"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.R_moistAir">[docs]</a><span class="k">def</span> <span class="nf">R_moistAir</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the gas constant for umid air from the specific humidity q</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    q: float</span>
+<span class="sd">        the specific humidity in g(water)/g(air)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    R_air: float</span>
+<span class="sd">        the specific gas constant for humid air in J/(g*K)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">constants</span> <span class="k">import</span> <span class="n">R_spec</span>
+
+    <span class="k">return</span> <span class="n">q</span><span class="o">*</span> <span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;h2o&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">q</span><span class="p">)</span><span class="o">*</span><span class="n">R_spec</span><span class="p">[</span><span class="s1">&#39;dry_air&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="dewPointTemp"><a class="viewcode-back" href="../../pymicra.html#pymicra.physics.dewPointTemp">[docs]</a><span class="k">def</span> <span class="nf">dewPointTemp</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the dew point temperature.</span>
+<span class="sd">    theta has to be in Kelvin and e in kPa</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="n">ln</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e</span> <span class="o">/</span> <span class="mf">0.611</span><span class="p">)</span>
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">ln</span> <span class="o">/</span> <span class="p">(</span><span class="mf">17.502</span> <span class="o">-</span> <span class="n">ln</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">240.97</span><span class="o">*</span><span class="n">coef</span> <span class="o">+</span> <span class="mf">273.16</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

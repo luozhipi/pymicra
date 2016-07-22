@@ -1,0 +1,369 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.micro.scales &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.micro.scales</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<div class="viewcode-block" id="MonObuVar"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.scales.MonObuVar">[docs]</a><span class="k">def</span> <span class="nf">MonObuVar</span><span class="p">(</span><span class="n">L_m</span><span class="p">,</span> <span class="n">siteConf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Redirects to stabilityParam</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">stabilityParam</span><span class="p">(</span><span class="n">L_m</span><span class="p">,</span> <span class="n">siteConf</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="stabilityParam"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.scales.stabilityParam">[docs]</a><span class="k">def</span> <span class="nf">stabilityParam</span><span class="p">(</span><span class="n">L_m</span><span class="p">,</span> <span class="n">siteConf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Monin-Obukhov Similarity Variable</span>
+<span class="sd">    defined as</span>
+
+<span class="sd">    zeta = (z-d)/Lo</span>
+<span class="sd">    where d is the displacement height or zero-plane displacement</span>
+<span class="sd">    and L_m is the Monin-Obukhov Length.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">z</span><span class="o">=</span><span class="n">siteConf</span><span class="o">.</span><span class="n">measurement_height</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">siteConf</span><span class="o">.</span><span class="n">displacement_height</span>
+    <span class="n">zeta</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="n">L_m</span>
+    <span class="k">return</span> <span class="n">zeta</span></div>
+
+<div class="viewcode-block" id="MonObuLen"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.scales.MonObuLen">[docs]</a><span class="k">def</span> <span class="nf">MonObuLen</span><span class="p">(</span><span class="n">theta_v_star</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">obukhovLen</span><span class="p">(</span><span class="n">theta_v_star</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="p">,</span> <span class="n">u_star</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="obukhovLen2"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.scales.obukhovLen2">[docs]</a><span class="k">def</span> <span class="nf">obukhovLen2</span><span class="p">(</span><span class="n">theta_v_star</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Monin-Obukhov Length</span>
+<span class="sd">    according to:</span>
+
+<span class="sd">    GARRAT, The atmospheric boundary layer, 1992 (eq. 1.11, p. 10)</span>
+<span class="sd">    L = ( u_star^2 * theta_v ) / ( kappa * g * theta_v_star )</span>
+
+<span class="sd">    KUNDU, Fluid mechanics, 1990 (eq 71, chap. 12, p. 462)</span>
+<span class="sd">    L_M = - u_star^3 / ( kappa * alpha * g * cov(w,T&#39;) )</span>
+
+<span class="sd">    ARYA, Introduction to micrometeorology (eq. 11.1, p. 214)</span>
+<span class="sd">    L = - u_star^3 / (kappa * (g/T_0) * (H_0/(rho*c_p)) )</span>
+
+<span class="sd">    STULL, An introduction to Boundary layer meteorology, 1988 (eq. 5.7b, p. 181)</span>
+<span class="sd">    L = - ( theta_v * u_star^3 ) / ( kappa *g* cov(w&#39;,theta_v&#39;) )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">gravity</span>
+    <span class="n">kappa</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">kappa</span>
+    <span class="n">Lm</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span> <span class="p">(</span><span class="n">u_star</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">theta_v_mean</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kappa</span> <span class="o">*</span><span class="n">g</span><span class="o">*</span> <span class="n">theta_v_star</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Lm</span></div>
+
+
+<div class="viewcode-block" id="obukhovLen"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.scales.obukhovLen">[docs]</a><span class="k">def</span> <span class="nf">obukhovLen</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_v_mean_unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Monin-Obukhov Length</span>
+<span class="sd">    according to:</span>
+
+<span class="sd">    GARRAT, The atmospheric boundary layer, 1992 (eq. 1.11, p. 10)</span>
+<span class="sd">    L = ( u_star^2 * theta_v ) / ( kappa * g * theta_v_star )</span>
+
+<span class="sd">    KUNDU, Fluid mechanics, 1990 (eq 71, chap. 12, p. 462)</span>
+<span class="sd">    L_M = - u_star^3 / ( kappa * alpha * g * cov(w,T&#39;) )</span>
+
+<span class="sd">    ARYA, Introduction to micrometeorology (eq. 11.1, p. 214)</span>
+<span class="sd">    L = - u_star^3 / (kappa * (g/T_0) * (H_0/(rho*c_p)) )</span>
+
+<span class="sd">    STULL, An introduction to Boundary layer meteorology, 1988 (eq. 5.7b, p. 181)</span>
+<span class="sd">    L = - ( theta_v * u_star^3 ) / ( kappa *g* cov(w&#39;,theta_v&#39;) )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">algs</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">gravity</span>
+    <span class="n">kappa</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">kappa</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">theta_v_mean</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">theta_v_mean_unit</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Must provide theta_v_mean_unit keyword if theta_v_mean is provided&#39;</span><span class="p">)</span>
+        <span class="n">theta_v_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_virtual_temperature</span> <span class="p">]</span>
+
+    <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">u_star</span> <span class="p">]</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="n">theta_v_mean</span>
+    <span class="n">num_unit</span> <span class="o">=</span> <span class="p">(</span><span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">u_star</span> <span class="p">]</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">*</span><span class="n">theta_v_mean_unit</span>
+
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">kappa</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temperature_star</span> <span class="p">]</span>
+    <span class="n">denom_unit</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s1">&#39;gravity&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temperature_star</span> <span class="p">]</span>
+
+    <span class="n">Lo</span> <span class="o">=</span> <span class="o">-</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
+    <span class="n">Lo_unit</span> <span class="o">=</span> <span class="n">num_unit</span><span class="o">/</span><span class="n">denom_unit</span>
+
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">defs</span><span class="o">.</span><span class="n">obukhov_length</span><span class="p">:</span><span class="n">Lo_unit</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">Lo</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Lo</span><span class="p">,</span> <span class="n">Lo_unit</span></div>
+
+
+
+<div class="viewcode-block" id="turbulentScales"><a class="viewcode-back" href="../../../pymicra.micro.html#pymicra.micro.scales.turbulentScales">[docs]</a><span class="k">def</span> <span class="nf">turbulentScales</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">siteConf</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">notation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_v_mean_unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">theta_fluct_from_theta_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">solutes</span><span class="o">=</span><span class="p">[],</span> <span class="n">output_as_df</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates characteristic lengths for data</span>
+
+<span class="sd">    The names of the variables are retrived out the dictionary. You can update the dictionary</span>
+<span class="sd">    and change the names by using the notation_defs keyworkd, which is a notation object</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        dataset to be used. It must either be the raw and turbulent data, or the covariances of such data</span>
+<span class="sd">    siteConf: pymicra.siteConfig object</span>
+<span class="sd">        has the site configurations to calculate the obukhovLen</span>
+<span class="sd">    units: dict</span>
+<span class="sd">        dict units for the input data</span>
+<span class="sd">    output_as_df: boolean</span>
+<span class="sd">        True if you want the output to be a one-line pandas.DataFrame. A pd.Series</span>
+<span class="sd">        will be output if False.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span>
+    <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">from</span> <span class="nn">..</span>  <span class="k">import</span> <span class="n">ureg</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">get_notation</span><span class="p">(</span><span class="n">notation</span><span class="p">)</span>
+    <span class="n">defsdic</span> <span class="o">=</span> <span class="n">defs</span><span class="o">.</span><span class="n">__dict__</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">outunits</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">cunits</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">units</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Beginning to extract turbulent scales...&#39;</span><span class="p">)</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># First we define the names of the columns according to notation</span>
+    <span class="n">u_fluc</span>          <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">u_fluctuations</span>
+    <span class="n">w_fluc</span>          <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">w_fluctuations</span>
+    <span class="n">mrho_h2o_fluc</span>   <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density_fluctuations</span>
+    <span class="n">rho_h2o_fluc</span>    <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">h2o_mass_density_fluctuations</span>
+    <span class="n">theta_fluc</span>      <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp_fluctuations</span>
+    <span class="n">theta_v_fluc</span>    <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp_fluctuations</span>
+    <span class="n">q_fluc</span>          <span class="o">=</span>   <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity_fluctuations</span>
+    <span class="n">solutesf</span>        <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density_fluctuations&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="n">solutestars</span>     <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_molar_density_star&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="n">concsolutesf</span>    <span class="o">=</span> <span class="p">[</span> <span class="n">defsdic</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_mass_concentration_fluctuations&#39;</span> <span class="o">%</span> <span class="n">solute</span><span class="p">]</span> <span class="k">for</span> <span class="n">solute</span> <span class="ow">in</span> <span class="n">solutes</span> <span class="p">]</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># If data is already covariances we go from there</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Data seems to be covariances. Will it use as covariances ...&#39;</span><span class="p">)</span>
+        <span class="n">cov</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">outname</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># If data is raw data, calculate covariances.</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Data seems to be raw data. Will calculate covariances ...&#39;</span><span class="p">)</span>
+
+        <span class="c1">#---------</span>
+        <span class="c1"># Now we try to calculate or identify the fluctuations of theta</span>
+        <span class="n">outname</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">theta_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">theta_fluc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="ow">or</span> <span class="n">theta_fluct_from_theta_v</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fluctuations of theta not found. Will try to calculate it ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="c1">#---------</span>
+            <span class="c1"># We need the mean of the specific humidity and temperature</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span><span class="o">==</span><span class="n">ureg</span><span class="p">[</span><span class="s1">&#39;kelvin&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">units</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp</span> <span class="p">]</span><span class="o">==</span><span class="n">ureg</span><span class="p">[</span><span class="s1">&#39;kelvin&#39;</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Units for both the virtual temperature fluctuations and the thermodynamic temperature fluctuations must be Kelvin&#39;</span><span class="p">)</span>
+            <span class="n">data_q_mean</span> <span class="o">=</span>   <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">specific_humidity</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">data</span><span class="p">[</span> <span class="n">theta_fluc</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">theta_v_fluc</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.61</span><span class="o">*</span><span class="n">theta_mean</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">q_fluc</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="mf">0.61</span><span class="o">*</span><span class="n">data_q_mean</span><span class="p">)</span>
+            <span class="n">theta_fluc_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+            <span class="c1">#---------</span>
+        <span class="c1">#---------</span>
+    
+        <span class="c1">#-----------</span>
+        <span class="c1"># First we construct the covariance matrix (slower but more readable than doing it separately)</span>
+        <span class="c1"># maybe figure out later a way that is both faster and more readable</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating the covariances ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">cov</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">u_fluc</span><span class="p">,</span> <span class="n">w_fluc</span><span class="p">,</span> <span class="n">theta_v_fluc</span><span class="p">,</span> <span class="n">theta_fluc</span><span class="p">,</span> <span class="n">q_fluc</span><span class="p">,</span> <span class="n">mrho_h2o_fluc</span><span class="p">]</span> <span class="o">+</span> <span class="n">solutesf</span> <span class="p">]</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+        <span class="c1">#-----------</span>
+    <span class="c1">#---------</span>
+
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Now to calculate the characteristic lengths, scales and etc</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating the turbulent scales of wind, temperature and humidity ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">outname</span><span class="p">)</span>
+
+    <span class="n">u_star</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">u_fluc</span><span class="p">,</span> <span class="n">w_fluc</span><span class="p">])</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">u_star</span> <span class="p">]</span>  <span class="o">=</span> <span class="n">u_star</span>
+
+    <span class="n">theta_v_star</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">theta_v_fluc</span><span class="p">,</span> <span class="n">w_fluc</span><span class="p">]</span> <span class="o">/</span> <span class="n">u_star</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp_star</span> <span class="p">]</span>   <span class="o">=</span> <span class="n">theta_v_star</span>
+
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">theta_fluc</span><span class="p">,</span> <span class="n">w_fluc</span><span class="p">]</span> <span class="o">/</span> <span class="n">u_star</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">mrho_h2o_fluc</span><span class="p">,</span> <span class="n">w_fluc</span> <span class="p">]</span> <span class="o">/</span> <span class="n">u_star</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Now we set the units of the legths</span>
+    <span class="n">outunits</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">u_star</span> <span class="p">]</span>  <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">u_fluc</span> <span class="p">]</span>
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temp_star</span> <span class="p">]</span>   <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span>
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">thermodyn_temp_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">theta_v_fluc</span> <span class="p">]</span>
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">h2o_molar_density_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">mrho_h2o_fluc</span> <span class="p">]</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># The solutes have to be calculated separately</span>
+    <span class="k">for</span> <span class="n">sol_star</span><span class="p">,</span> <span class="n">sol_fluc</span><span class="p">,</span> <span class="n">sol</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solutestars</span><span class="p">,</span> <span class="n">solutesf</span><span class="p">,</span> <span class="n">solutes</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating the turbulent scale of </span><span class="si">%s</span><span class="s1"> ... &#39;</span> <span class="o">%</span> <span class="n">sol</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span> <span class="n">sol_star</span> <span class="p">]</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sol_fluc</span><span class="p">,</span> <span class="n">w_fluc</span><span class="p">]</span> <span class="o">/</span> <span class="n">u_star</span>
+        <span class="n">outunits</span><span class="p">[</span> <span class="n">sol_star</span>  <span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span> <span class="n">sol_fluc</span> <span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># We check for the mean virtual temperature</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">theta_v_mean</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_virtual_temperature</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">theta_v_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">mean_virtual_temperature</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">theta_v_mean_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">mean_virtual_temperature</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">theta_v_mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">virtual_temperature</span> <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">theta_v_mean_unit</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span><span class="n">defs</span><span class="o">.</span><span class="n">virtual_temperature</span><span class="p">]</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Now we calculate the obukhov length and the similarity variable</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating Obukhov length and stability parameter ... &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">Lo</span> <span class="o">=</span> <span class="n">obukhovLen</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">outunits</span><span class="p">,</span> <span class="n">theta_v_mean</span><span class="o">=</span><span class="n">theta_v_mean</span><span class="p">,</span> <span class="n">theta_v_mean_unit</span><span class="o">=</span><span class="n">theta_v_mean_unit</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">obukhov_length</span> <span class="p">]</span>      <span class="o">=</span> <span class="n">Lo</span>
+    <span class="n">out</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">stability_parameter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">stabilityParam</span><span class="p">(</span><span class="n">Lo</span><span class="p">,</span> <span class="n">siteConf</span><span class="p">)</span>
+
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">obukhov_length</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">u_star</span> <span class="p">]</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span><span class="o">/</span><span class="n">cunits</span><span class="p">[</span> <span class="s1">&#39;gravity&#39;</span> <span class="p">]</span>
+    <span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">stability_parameter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="o">/</span><span class="n">outunits</span><span class="p">[</span> <span class="n">defs</span><span class="o">.</span><span class="n">obukhov_length</span> <span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done!&#39;</span><span class="p">)</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Create a one-row dataframe if output_as_df is True</span>
+    <span class="k">if</span> <span class="n">output_as_df</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+    <span class="c1">#---------</span>
+
+    <span class="c1">#---------</span>
+    <span class="c1"># Finally we construct the output dataframe</span>
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">outunits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">outunits</span></div>
+    <span class="c1">#---------</span>
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

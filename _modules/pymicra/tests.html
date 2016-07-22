@@ -1,0 +1,507 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymicra.tests &mdash; Pymicra 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="Pymicra 0.2.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymicra.tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions that test certain conditions on pandas.dataframes.</span>
+<span class="sd">They all return True for the columns that pass the test and False for the columns</span>
+<span class="sd">that fail the test.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+
+<div class="viewcode-block" id="check_replaced"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_replaced">[docs]</a><span class="k">def</span> <span class="nf">check_replaced</span><span class="p">(</span><span class="n">replaced</span><span class="p">,</span> <span class="n">max_count</span><span class="o">=</span><span class="mi">180</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sums and checks if the number of replaced points is larger than the</span>
+<span class="sd">    maximum accepted</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">replaced</span> <span class="o">&lt;</span> <span class="n">max_count</span>
+
+    <span class="k">return</span> <span class="n">valid</span></div>
+
+
+<div class="viewcode-block" id="check_nans"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_nans">[docs]</a><span class="k">def</span> <span class="nf">check_nans</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">max_percent</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;interpolation&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks data for NaN values</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">data</span> <span class="k">as</span> <span class="n">pmdata</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> 
+    <span class="n">max_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="n">max_percent</span><span class="o">/</span><span class="mf">100.</span><span class="p">)</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># This counts the number of NaNs</span>
+    <span class="n">nan_count</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">nan_count</span> <span class="o">&lt;</span> <span class="n">max_count</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># Replace data with either its trend or by interpolating</span>
+    <span class="k">if</span> <span class="n">replace_with</span><span class="o">==</span><span class="s1">&#39;trend&#39;</span><span class="p">:</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">trend</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">trend</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">replace_with</span><span class="o">==</span><span class="s1">&#39;interpolation&#39;</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">limit_direction</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+    <span class="c1">#------------</span>
+
+    <span class="k">return</span> <span class="n">valid</span><span class="p">,</span> <span class="n">nan_count</span></div>
+
+
+<div class="viewcode-block" id="check_maxdif"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_maxdif">[docs]</a><span class="k">def</span> <span class="nf">check_maxdif</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tables</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detrend_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;how&#39;</span><span class="p">:</span><span class="s1">&#39;movingmean&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">:</span><span class="mi">900</span><span class="p">}):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check the maximum and minimum differences between the fluctuations of a run.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">data</span> <span class="k">as</span> <span class="n">pmdata</span>
+    <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+    <span class="n">detrended</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">detrend_kw</span><span class="p">)</span>
+    <span class="n">maxdif</span> <span class="o">=</span> <span class="p">(</span><span class="n">detrended</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">detrended</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;dif_limits&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">maxdif</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">valid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">valid</span></div>
+
+
+
+<div class="viewcode-block" id="check_stationarity"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_stationarity">[docs]</a><span class="k">def</span> <span class="nf">check_stationarity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tables</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">detrend_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;how&#39;</span><span class="p">:</span><span class="s1">&#39;movingmean&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">:</span><span class="mi">900</span><span class="p">},</span> 
+            <span class="n">trend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">trend_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;how&#39;</span><span class="p">:</span><span class="s1">&#39;movingmedian&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">:</span><span class="s1">&#39;1min&#39;</span><span class="p">}):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check difference between the maximum and minimum values of the run trend agaisnt an upper-limit.</span>
+<span class="sd">    This aims to flag nonstationary runs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">data</span> <span class="k">as</span> <span class="n">pmdata</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># If detrend==True, work with the fluctuations</span>
+    <span class="k">if</span> <span class="n">detrend</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">detrend_kw</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1">#------------</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># If trend==True, work with the trend of df (df being either absolute values or the fluctuation)</span>
+    <span class="k">if</span> <span class="n">trend</span><span class="p">:</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">trend</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">trend_kw</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1">#------------</span>
+
+    <span class="n">maxdif</span> <span class="o">=</span> <span class="p">(</span><span class="n">trend</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">trend</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;dif_limits&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">maxdif</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">valid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1">#print(valid)</span>
+    <span class="k">return</span> <span class="n">valid</span></div>
+
+ 
+
+<div class="viewcode-block" id="check_RA"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_RA">[docs]</a><span class="k">def</span> <span class="nf">check_RA</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detrend_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;how&#39;</span><span class="p">:</span><span class="s1">&#39;linear&#39;</span><span class="p">},</span>
+            <span class="n">RAT_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">RAT_points</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">RAT_significance</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs the Reverse Arrangement Test in each column of data</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        to apply RAT to each column</span>
+<span class="sd">    detrend_kw: dict</span>
+<span class="sd">        keywords to pass to pymicra.detrend</span>
+<span class="sd">    RAT_vars:</span>
+<span class="sd">        list of variables to which apply the RAT</span>
+<span class="sd">    RAT_points: int</span>
+<span class="sd">        if it&#39;s an int N, then reduce each column to N points by averaging. If None,</span>
+<span class="sd">        then the whole columns are used</span>
+<span class="sd">    RAT_significance: float</span>
+<span class="sd">        significance with which to apply the RAT</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    valid: pd.Series</span>
+<span class="sd">        True or False for each column. If True, column passed the test</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">data</span> <span class="k">as</span> <span class="nn">pmdata</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Detrend the data</span>
+    <span class="k">if</span> <span class="n">detrend</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">detrend_kw</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># If RAT_vars is given, apply reverse arrangement only on these variables</span>
+    <span class="k">if</span> <span class="n">RAT_vars</span><span class="p">:</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">RAT_vars</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pmdata</span><span class="o">.</span><span class="n">reverse_arrangement</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">points_number</span><span class="o">=</span><span class="n">RAT_points</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">RAT_significance</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">RAT_vars</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pmdata</span><span class="o">.</span><span class="n">reverse_arrangement</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">points_number</span><span class="o">=</span><span class="n">RAT_points</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">RAT_significance</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Check RAT_vars keyword&#39;</span><span class="p">)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="k">return</span> <span class="n">valid</span></div>
+
+
+
+<div class="viewcode-block" id="check_std"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_std">[docs]</a><span class="k">def</span> <span class="nf">check_std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tables</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">detrend_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;how&#39;</span><span class="p">:</span><span class="s1">&#39;linear&#39;</span><span class="p">},</span> <span class="n">chunk_size</span><span class="o">=</span><span class="s1">&#39;2min&#39;</span><span class="p">,</span> <span class="n">falseverbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks dataframe for columns with too small of a standard deviation</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.DataFrame</span>
+<span class="sd">        dataset whose standard deviation to check </span>
+<span class="sd">    tables: pandas.DataFrame</span>
+<span class="sd">        dataset containing the standard deviation limits for each column</span>
+<span class="sd">    detrend: bool</span>
+<span class="sd">        whether to work with the absolute series and the fluctuations</span>
+<span class="sd">    detrend_kw: dict</span>
+<span class="sd">        keywords to pass to pymicra.detrend with detrend==True</span>
+<span class="sd">    chunk_size: str</span>
+<span class="sd">        pandas datetime offset string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    valid: pandas.Series</span>
+<span class="sd">        contatining True of False for each column. True means passed the test.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">data</span> <span class="k">as</span> <span class="nn">pmdata</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Detrend the data or not</span>
+    <span class="k">if</span> <span class="n">detrend</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">detrend_kw</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Separate into smaller bits or just get the full standard deviation</span>
+    <span class="k">if</span> <span class="n">chunk_size</span><span class="p">:</span>
+        <span class="n">stds_list</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">stds_list</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">stds_list</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">)</span>
+    <span class="c1">#-----------</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># Check each chunk separately</span>
+    <span class="n">validcols</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span> <span class="n">stds_list</span> <span class="o">&lt;</span> <span class="n">tables</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std_limits&#39;</span><span class="p">]</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="n">falseverbose</span> <span class="ow">and</span> <span class="p">(</span><span class="kc">False</span> <span class="ow">in</span> <span class="n">validcols</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+        <span class="n">falsecols</span> <span class="o">=</span> <span class="p">[</span> <span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="kc">False</span> <span class="ow">in</span> <span class="n">validcols</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">el</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;STD test: failed variables and times are</span><span class="se">\n</span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">validcols</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">falsecols</span><span class="p">]))</span>
+    <span class="c1">#-----------</span>
+
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">validcols</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">valid</span></div>
+ 
+
+<div class="viewcode-block" id="check_limits"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_limits">[docs]</a><span class="k">def</span> <span class="nf">check_limits</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tables</span><span class="p">,</span> <span class="n">max_percent</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;interpolation&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks dataframe for lower and upper limits. If found, they are substituted by </span>
+<span class="sd">    the linear trend of the run. The number of faulty points is also checked for each</span>
+<span class="sd">    column against the maximum percentage of accepted faults max_percent</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas dataframe</span>
+<span class="sd">        dataframe to be checked</span>
+<span class="sd">    tables: pandas.dataframe</span>
+<span class="sd">        dataframe with the lower and upper limits for variables</span>
+<span class="sd">    max_percent: float</span>
+<span class="sd">        number from 0 to 100 that represents the maximum percentage of faulty</span>
+<span class="sd">        runs accepted by this test.</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">    -------</span>
+<span class="sd">    df: pandas.DataFrame</span>
+<span class="sd">        input data but with the faulty points substituted by the linear trend of the run.</span>
+<span class="sd">    valid: pandas.Series</span>
+<span class="sd">        True for the columns that passed this test, False for the columns that didn&#39;t.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">trend</span> <span class="k">as</span> <span class="n">pmtrend</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">algs</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">max_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="n">max_percent</span><span class="o">/</span><span class="mf">100.</span><span class="p">)</span>
+    <span class="n">low_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">tables</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">upp_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">tables</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">fault_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">tables</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="c1">#-----------</span>
+    <span class="c1"># First we check the lower values</span>
+    <span class="k">if</span> <span class="s1">&#39;lower_limits&#39;</span> <span class="ow">in</span> <span class="n">tables</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+        <span class="n">faulty</span> <span class="o">=</span> <span class="n">df</span> <span class="o">&lt;</span> <span class="n">tables</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;lower_limits&#39;</span><span class="p">]</span>
+        <span class="n">low_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span> <span class="n">faulty</span> <span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> 
+        <span class="n">df</span><span class="p">[</span> <span class="n">faulty</span> <span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="c1">#-------------------------------</span>
+    
+    <span class="c1">#-------------------------------</span>
+    <span class="c1"># Now we check the upper values</span>
+    <span class="k">if</span> <span class="s1">&#39;upper_limits&#39;</span> <span class="ow">in</span> <span class="n">tables</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+        <span class="n">faulty</span> <span class="o">=</span> <span class="n">df</span> <span class="o">&gt;</span> <span class="n">tables</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;upper_limits&#39;</span><span class="p">]</span>
+        <span class="n">upp_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span> <span class="n">faulty</span> <span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> 
+        <span class="n">df</span><span class="p">[</span> <span class="n">faulty</span> <span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="c1">#-------------------------------</span>
+
+    <span class="n">fault_count</span> <span class="o">=</span> <span class="n">low_count</span> <span class="o">+</span> <span class="n">upp_count</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">fault_count</span> <span class="o">&lt;</span> <span class="n">max_count</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># Replace data with either its trend or by interpolating</span>
+    <span class="k">if</span> <span class="n">replace_with</span><span class="o">==</span><span class="s1">&#39;trend&#39;</span><span class="p">:</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">trend</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">trend</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">replace_with</span><span class="o">==</span><span class="s1">&#39;interpolation&#39;</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">limit_direction</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+    <span class="c1">#------------</span>
+
+    <span class="c1">#-------------------------------</span>
+    <span class="c1"># Substitute faulty points by the linear trend</span>
+    <span class="c1">#trend = data.polyfit()</span>
+    <span class="c1">#df = df.fillna(trend)</span>
+    <span class="c1">#-------------------------------</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">fault_count</span></div>
+ 
+
+<div class="viewcode-block" id="check_spikes"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_spikes">[docs]</a><span class="k">def</span> <span class="nf">check_spikes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="s1">&#39;2min&#39;</span><span class="p">,</span>
+                 <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">detrend_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;how&#39;</span><span class="p">:</span><span class="s1">&#39;linear&#39;</span><span class="p">},</span>
+                 <span class="n">visualize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">vis_col</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_consec_spikes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="n">cut_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mf">5.</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">()),</span>
+                 <span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;interpolation&#39;</span><span class="p">,</span>
+                 <span class="n">max_percent</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies spikes-check according to Vickers and Mahrt (1997)</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    data: pandas.dataframe</span>
+<span class="sd">        data to de-spike</span>
+<span class="sd">    chunk_size: str, int</span>
+<span class="sd">        size of chunks to consider. If str should be pandas offset string. If int, number of lines.</span>
+<span class="sd">    detrend: bool</span>
+<span class="sd">        whether to detrend the data and work  with the fluctuations or to work with the absolute series.</span>
+<span class="sd">    detrend_kw: dict</span>
+<span class="sd">        dict of keywords to pass to pymicra.trend in order to detrend data (if detrend==True).</span>
+<span class="sd">    visualize: bool</span>
+<span class="sd">        whether of not to visualize the interpolation ocurring</span>
+<span class="sd">    vis_col: str, int or list</span>
+<span class="sd">        the column(s) to visualize when seeing the interpolation (only effective if visualize==True)</span>
+<span class="sd">    max_consec_spikes: int</span>
+<span class="sd">        maximum number of consecutive spikes to actually be considered spikes and substituted</span>
+<span class="sd">    cut_func: function</span>
+<span class="sd">        function used to define spikes</span>
+<span class="sd">    replace_with: str</span>
+<span class="sd">        method to use when replacing spikes. Options are &#39;interpolation&#39; or &#39;trend&#39;.</span>
+<span class="sd">    max_percent: float</span>
+<span class="sd">        maximum percentage of spikes to allow.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">algs</span>
+    <span class="kn">import</span> <span class="nn">data</span> <span class="k">as</span> <span class="nn">pmdata</span>
+
+    <span class="c1">#------------</span>
+    <span class="k">if</span> <span class="n">replace_with</span><span class="o">==</span><span class="s1">&#39;trend&#39;</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">replace_nans</span><span class="p">(</span><span class="n">dframe</span><span class="p">):</span>
+            <span class="n">trend</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">trend</span><span class="p">(</span><span class="n">dframe</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dframe</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">trend</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">replace_with</span><span class="o">==</span><span class="s1">&#39;interpolation&#39;</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">replace_nans</span><span class="p">(</span><span class="n">dframe</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">dframe</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">limit_direction</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+    <span class="c1">#------------</span>
+
+    <span class="n">original</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1">#------------</span>
+    <span class="c1"># If dentreded == True we save the trend for later and work with the detrended data</span>
+    <span class="k">if</span> <span class="n">detrend</span><span class="p">:</span>
+        <span class="n">origtrend</span> <span class="o">=</span> <span class="n">pmdata</span><span class="o">.</span><span class="n">trend</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">detrend_kw</span><span class="p">)</span>
+        <span class="n">detrended</span> <span class="o">=</span> <span class="n">original</span> <span class="o">-</span> <span class="n">origtrend</span>
+        <span class="n">dfs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">splitData</span><span class="p">(</span><span class="n">detrended</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dfs</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">splitData</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
+    <span class="c1">#------------</span>
+
+    <span class="n">max_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">original</span><span class="p">)</span><span class="o">*</span><span class="n">max_percent</span><span class="o">/</span><span class="mf">100.</span><span class="p">)</span>
+    <span class="n">fault_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">original</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">original</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfs</span><span class="p">)):</span>
+        <span class="n">chunk</span><span class="o">=</span><span class="n">dfs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1">#-------------------------------</span>
+        <span class="c1"># This substitutes the spikes to NaNs so it can be replaced later</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span><span class="o">&gt;</span><span class="n">max_consec_spikes</span><span class="p">:</span>
+            <span class="n">chunk</span><span class="o">=</span><span class="n">algs</span><span class="o">.</span><span class="n">limitedSubs</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">max_interp</span><span class="o">=</span><span class="n">max_consec_spikes</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">cut_func</span><span class="p">)</span>
+        <span class="n">fault_count</span> <span class="o">=</span> <span class="n">fault_count</span> <span class="o">-</span> <span class="n">chunk</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="c1">#-------------------------------</span>
+
+        <span class="c1">#-------------------------------</span>
+        <span class="c1"># Substitution of spikes happens here</span>
+        <span class="c1">#trend = pmdata.trend(chunk, how=&#39;linear&#39;)</span>
+        <span class="c1">#chunk = chunk.fillna(trend)</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">replace_nans</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        <span class="c1">#-------------------------------</span>
+
+        <span class="c1">#-------------------------------</span>
+        <span class="c1"># We change the chunk in the original list of dfs to concatenate later</span>
+        <span class="n">dfs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">chunk</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1">#-------------------------------</span>
+
+    <span class="c1">#---------------------</span>
+    <span class="c1"># Now we put the chunks back together and maybe correct the trend</span>
+    <span class="n">despiked</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">detrend</span><span class="p">:</span>
+        <span class="n">fou</span> <span class="o">=</span> <span class="n">despiked</span> <span class="o">+</span> <span class="n">origtrend</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fou</span> <span class="o">=</span> <span class="n">despiked</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">fault_count</span> <span class="o">&lt;</span> <span class="n">max_count</span>
+    <span class="c1">#---------------------</span>
+
+    <span class="c1">#---------------------</span>
+    <span class="c1"># Visualize what you&#39;re doing to see if it&#39;s correct</span>
+    <span class="k">if</span> <span class="n">visualize</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Plotting de-spiking...&#39;</span><span class="p">)</span>
+        <span class="n">original</span><span class="p">[</span><span class="n">vis_col</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;original&#39;</span><span class="p">)</span>
+        <span class="n">fou</span><span class="p">[</span><span class="n">vis_col</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;final&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Column: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vis_col</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1">#---------------------</span>
+
+    <span class="k">return</span> <span class="n">fou</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">fault_count</span></div>
+
+
+<div class="viewcode-block" id="check_numlines"><a class="viewcode-back" href="../../pymicra.html#pymicra.tests.check_numlines">[docs]</a><span class="k">def</span> <span class="nf">check_numlines</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">numlines</span><span class="o">=</span><span class="mi">18000</span><span class="p">,</span> <span class="n">falseverbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks length of file against a correct value.</span>
+<span class="sd">    Returns False is length is wrong and True if length is right</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: string</span>
+<span class="sd">        path of the file to check</span>
+<span class="sd">    numlines: int</span>
+<span class="sd">        correct number of lines that the file has to have</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">algs</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">algs</span><span class="o">.</span><span class="n">file_len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lines</span><span class="o">==</span><span class="n">numlines</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="kc">True</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">falseverbose</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;numlines:&#39;</span><span class="p">,</span><span class="n">lines</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="kc">False</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])</span></div>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Pymicra 0.2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Tomás Chor.
+      Last updated on 2016-07-22.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>
