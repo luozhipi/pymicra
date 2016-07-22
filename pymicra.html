@@ -139,7 +139,7 @@
 <span id="pymicra-core-module"></span><h2>pymicra.core module<a class="headerlink" href="#module-pymicra.core" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pymicra.core.Notation">
-<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">Notation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#Notation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.Notation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">Notation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.Notation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This creates an object that holds the default notation for pymicra.
 Example of usage:</p>
@@ -147,10 +147,9 @@ Example of usage:</p>
 <p>fluctuations_of_co2_conc = notation.concentration % notation.fluctuations % notation.co2</p>
 <p>You should be careful with the order. The last argument should not have any &#8216;%&#8217; symbols
 or you&#8217;ll get a &#8220;TypeError: not all arguments converted during string formatting&#8221; message.</p>
-<p class="rubric">Methods</p>
 <dl class="method">
 <dt id="pymicra.core.Notation.build">
-<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#Notation.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.Notation.build" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.Notation.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>This useful method builds the full notation based on the base notation</p>
 </dd></dl>
 
@@ -248,102 +247,97 @@ or you&#8217;ll get a &#8220;TypeError: not all arguments converted during strin
 
 <dl class="class">
 <dt id="pymicra.core.dataloggerConfig">
-<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">dataloggerConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#dataloggerConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.dataloggerConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">dataloggerConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.dataloggerConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This class defines a specific configuration of a datalogger output file</p>
-<dl class="docutils">
-<dt>from_file: str</dt>
-<dd>path of .dlc file (datalogger configuration file) to read from. This will ignore all other
-keywords.</dd>
-<dt>varNames: list of strings or dict</dt>
-<dd>If a list: should be a list of strings with the names of the variables. If the variable
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>from_file</strong> (<em>str</em>) &#8211; path of .dlc file (datalogger configuration file) to read from. This will ignore all other
+keywords.</li>
+<li><strong>varNames</strong> (<em>list of strings or dict</em>) &#8211; If a list: should be a list of strings with the names of the variables. If the variable
 is part if the date, then it should be provided as a datetime directive,
 so if the columns is only the year, its name must be <cite>%Y</cite> and so forth. While
 if it is the date in YYYY/MM/DD format, it should be <cite>%Y/%m/%d</cite>. For more info
 see <a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior</a>
 If a dict: the keys should be the numbers of the columns and the items should follow
-the rules for a list.</dd>
-<dt>date_cols: list of ints</dt>
-<dd>should be indexes of the subset of varNames that corresponds to the variables that compose
+the rules for a list.</li>
+<li><strong>date_cols</strong> (<em>list of ints</em>) &#8211; should be indexes of the subset of varNames that corresponds to the variables that compose
 the timestamp. If it is not provided the program will try to guess by getting
-all variable names that have a percentage sign (%).</dd>
-<dt>date_connector: string</dt>
-<dd>generally not really necessary. It is used to join and then parse the date_cols.</dd>
-<dt>columns_separator: string</dt>
-<dd>used to assemble the date. Should only be used if the default char creates conflict. If
-the file is tabular-separated then this should be &#8220;whitespace&#8221;.</dd>
-<dt>header_lines: int</dt>
-<dd>up to which line of the file is a header. See pandas.read_csv header option.</dd>
-<dt>first_time_skip: int</dt>
-<dd>how many units of frequency the first line of the file is offset (generally zero).</dd>
-<dt>filename_format: string</dt>
-<dd><p class="first">tells the format of the file with the standard notation for date and time and with variable
+all variable names that have a percentage sign (%).</li>
+<li><strong>date_connector</strong> (<em>string</em>) &#8211; generally not really necessary. It is used to join and then parse the date_cols.</li>
+<li><strong>columns_separator</strong> (<em>string</em>) &#8211; used to assemble the date. Should only be used if the default char creates conflict. If
+the file is tabular-separated then this should be &#8220;whitespace&#8221;.</li>
+<li><strong>header_lines</strong> (<em>int</em>) &#8211; up to which line of the file is a header. See pandas.read_csv header option.</li>
+<li><strong>first_time_skip</strong> (<em>int</em>) &#8211; how many units of frequency the first line of the file is offset (generally zero).</li>
+<li><strong>filename_format</strong> (<em>string</em>) &#8211; <p>tells the format of the file with the standard notation for date and time and with variable
 parts as &#8221;?&#8221;. E.g. if the files are 56_20150101.csv, 57_20150102.csv etc filename_format should be:</p>
 <blockquote>
 <div>??_%Y%m%d.csv</div></blockquote>
-<p class="last">this is useful primarily for the quality control feature.</p>
-</dd>
-<dt>units: dictionary</dt>
-<dd>very important: a dictionary whose keys are the columns of the file and whose items are
-the units in which they appear.</dd>
-<dt>description: string</dt>
-<dd>brief description of the datalogger configuration file.</dd>
-</dl>
+<p>this is useful primarily for the quality control feature.</p>
+</li>
+<li><strong>units</strong> (<em>dictionary</em>) &#8211; very important: a dictionary whose keys are the columns of the file and whose items are
+the units in which they appear.</li>
+<li><strong>description</strong> (<em>string</em>) &#8211; brief description of the datalogger configuration file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="pymicra.core.fileConfig">
-<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">fileConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#fileConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.fileConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">fileConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.fileConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This class defines a specific configuration of a data file</p>
-<dl class="docutils">
-<dt>from_file: str</dt>
-<dd>path of .cfg file (configuration file) to read from. This will ignore all other
-keywords.</dd>
-<dt>variables: list of strings or dict</dt>
-<dd>If a list: should be a list of strings with the names of the variables. If the variable
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>from_file</strong> (<em>str</em>) &#8211; path of .cfg file (configuration file) to read from. This will ignore all other
+keywords.</li>
+<li><strong>variables</strong> (<em>list of strings or dict</em>) &#8211; If a list: should be a list of strings with the names of the variables. If the variable
 is part if the date, then it should be provided as a datetime directive,
 so if the columns is only the year, its name must be <cite>%Y</cite> and so forth. While
 if it is the date in YYYY/MM/DD format, it should be <cite>%Y/%m/%d</cite>. For more info
 see <a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior</a>
 If a dict: the keys should be the numbers of the columns and the items should follow
-the rules for a list.</dd>
-<dt>date_cols: list of ints</dt>
-<dd>should be indexes of the subset of varNames that corresponds to the variables that compose
+the rules for a list.</li>
+<li><strong>date_cols</strong> (<em>list of ints</em>) &#8211; should be indexes of the subset of varNames that corresponds to the variables that compose
 the timestamp. If it is not provided the program will try to guess by getting
-all variable names that have a percentage sign (%).</dd>
-<dt>date_connector: string</dt>
-<dd>generally not really necessary. It is used to join and then parse the date_cols.</dd>
-<dt>columns_separator: string</dt>
-<dd>used to assemble the date. If the file is tabular-separated then this should be &#8220;whitespace&#8221;.</dd>
-<dt>header_lines: int or list</dt>
-<dd>up to which line of the file is a header. See pandas.read_csv header option.</dd>
-<dt>filename_format: string</dt>
-<dd><p class="first">tells the format of the file with the standard notation for date and time and with variable
+all variable names that have a percentage sign (%).</li>
+<li><strong>date_connector</strong> (<em>string</em>) &#8211; generally not really necessary. It is used to join and then parse the date_cols.</li>
+<li><strong>columns_separator</strong> (<em>string</em>) &#8211; used to assemble the date. If the file is tabular-separated then this should be &#8220;whitespace&#8221;.</li>
+<li><strong>header_lines</strong> (<em>int or list</em>) &#8211; up to which line of the file is a header. See pandas.read_csv header option.</li>
+<li><strong>filename_format</strong> (<em>string</em>) &#8211; <p>tells the format of the file with the standard notation for date and time and with variable
 parts as &#8221;?&#8221;. E.g. if the files are 56_20150101.csv, 57_20150102.csv etc filename_format should be:</p>
 <blockquote>
 <div>??_%Y%m%d.csv</div></blockquote>
-<p class="last">this is useful primarily for the quality control feature.</p>
-</dd>
-<dt>units: dictionary</dt>
-<dd>very important: a dictionary whose keys are the columns of the file and whose items are
-the units in which they appear.</dd>
-<dt>description: string</dt>
-<dd>brief description of the datalogger configuration file.</dd>
-<dt>varNames: DEPRECATED</dt>
-<dd>use variables now.</dd>
-</dl>
-<p class="rubric">Methods</p>
+<p>this is useful primarily for the quality control feature.</p>
+</li>
+<li><strong>units</strong> (<em>dictionary</em>) &#8211; very important: a dictionary whose keys are the columns of the file and whose items are
+the units in which they appear.</li>
+<li><strong>description</strong> (<em>string</em>) &#8211; brief description of the datalogger configuration file.</li>
+<li><strong>varNames</strong> (<em>DEPRECATED</em>) &#8211; use variables now.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="pymicra.core.fileConfig.check_consistency">
-<code class="descname">check_consistency</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#fileConfig.check_consistency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.fileConfig.check_consistency" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_consistency</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.fileConfig.check_consistency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks consistency of fileConfig
 Currently only checks every key of self.units dictionary agaisnt values of variables dict.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pymicra.core.fileConfig.get_date_cols">
-<code class="descname">get_date_cols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#fileConfig.get_date_cols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.fileConfig.get_date_cols" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_date_cols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.fileConfig.get_date_cols" title="Permalink to this definition">¶</a></dt>
 <dd><p>Guesses what are the columns that contain the dates by searching
 for percentage signs in them</p>
 </dd></dl>
@@ -352,14 +346,14 @@ for percentage signs in them</p>
 
 <dl class="class">
 <dt id="pymicra.core.myData">
-<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">myData</code><span class="sig-paren">(</span><em>df</em>, <em>dic</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#myData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.myData" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">myData</code><span class="sig-paren">(</span><em>df</em>, <em>dic</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.myData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Attempt to create a myData object</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pymicra.core.siteConfig">
-<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">siteConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/core.html#siteConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.core.siteConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pymicra.core.</code><code class="descname">siteConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.core.siteConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Keeper of the configurations and constants of an experiment. (such as height of instruments,
 location, canopy height and etc)</p>
@@ -370,36 +364,40 @@ location, canopy height and etc)</p>
 <span id="pymicra-data-module"></span><h2>pymicra.data module<a class="headerlink" href="#module-pymicra.data" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.data.bulkCorr">
-<code class="descclassname">pymicra.data.</code><code class="descname">bulkCorr</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#bulkCorr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.bulkCorr" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">bulkCorr</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.bulkCorr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bulk correlation coefficient according to
 Cancelli, Dias, Chamecki. Dimensionless criteria for the production of...
 doi:10.1029/2012WR012127</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>pandas.dataframe</em>) &#8211; a two-columns dataframe</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.data.crossSpectra">
-<code class="descclassname">pymicra.data.</code><code class="descname">crossSpectra</code><span class="sig-paren">(</span><em>data</em>, <em>frequency=10</em>, <em>notation=None</em>, <em>anti_aliasing=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#crossSpectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.crossSpectra" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">crossSpectra</code><span class="sig-paren">(</span><em>data</em>, <em>frequency=10</em>, <em>notation=None</em>, <em>anti_aliasing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.crossSpectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the spectrum for a set of data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: pandas.DataFrame or pandas.Series</strong></p>
-<blockquote>
-<div><p>dataframe with one (will return the spectrum) or two (will return to cross-spectrum) columns</p>
-</div></blockquote>
-<p><strong>frequency: float</strong></p>
-<blockquote>
-<div><p>frequency of measurement of signal to pass to numpy.fft.rfftfreq</p>
-</div></blockquote>
-<p><strong>anti_aliasing: bool</strong></p>
-<blockquote>
-<div><p>whether or not to apply anti-aliasing according to Gobbi, Chamecki &amp; Dias, 2006 (doi:10.1029/2005WR004374)</p>
-</div></blockquote>
-<p><strong>notation: notation object</strong></p>
-<blockquote class="last">
-<div><p>notation to be used</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame or pandas.Series</em>) &#8211; dataframe with one (will return the spectrum) or two (will return to cross-spectrum) columns</li>
+<li><strong>frequency</strong> (<em>float</em>) &#8211; frequency of measurement of signal to pass to numpy.fft.rfftfreq</li>
+<li><strong>anti_aliasing</strong> (<em>bool</em>) &#8211; whether or not to apply anti-aliasing according to Gobbi, Chamecki &amp; Dias, 2006 (doi:10.1029/2005WR004374)</li>
+<li><strong>notation</strong> (<em>notation object</em>) &#8211; notation to be used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectrum</strong> &#8211; whose column is the spectrum or coespectrum of the input dataframe</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dataframe</p>
 </td>
 </tr>
 </tbody>
@@ -408,44 +406,25 @@ doi:10.1029/2012WR012127</p>
 
 <dl class="function">
 <dt id="pymicra.data.detrend">
-<code class="descclassname">pymicra.data.</code><code class="descname">detrend</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#detrend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.detrend" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">detrend</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.detrend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the detrended fluctuations of a given dataset</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: pandas.DataFrame, pandas.Series</strong></p>
-<blockquote>
-<div><p>dataset to be detrended</p>
-</div></blockquote>
-<p><strong>how: string</strong></p>
-<blockquote>
-<div><p>how of average to apply. Currently {&#8216;movingmean&#8217;, &#8216;movingmedian&#8217;, &#8216;block&#8217;, &#8216;linear&#8217;, &#8216;poly&#8217;}.</p>
-</div></blockquote>
-<p><strong>rule: pandas offset string</strong></p>
-<blockquote>
-<div><p>the blocks for which the trends should be calculated in the block and linear type</p>
-</div></blockquote>
-<p><strong>window: pandas date offset string or int</strong></p>
-<blockquote>
-<div><p>if moving mean/median is chosen, this tells us the window size to pass to pandas. If int,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.DataFrame, pandas.Series</em>) &#8211; dataset to be detrended</li>
+<li><strong>how</strong> (<em>string</em>) &#8211; how of average to apply. Currently {&#8216;movingmean&#8217;, &#8216;movingmedian&#8217;, &#8216;block&#8217;, &#8216;linear&#8217;, &#8216;poly&#8217;}.</li>
+<li><strong>rule</strong> (<em>pandas offset string</em>) &#8211; the blocks for which the trends should be calculated in the block and linear type</li>
+<li><strong>window</strong> (<em>pandas date offset string or int</em>) &#8211; if moving mean/median is chosen, this tells us the window size to pass to pandas. If int,
 this is the number of points used in the window. If string we will to guess the number of
 points from the index.
-Small windows (equivalent to 1min approx) work better when using rollingmedian.</p>
-</div></blockquote>
-<p><strong>block_func: str, function</strong></p>
-<blockquote>
-<div><p>how to resample in block type. Default is mean but it can be any numpy function
-that returns a float. E.g, median.</p>
-</div></blockquote>
-<p><strong>degree: int</strong></p>
-<blockquote>
-<div><p>degree of polynomial fit (only if how==&#8217;linear&#8217; or how==&#8217;polynomial&#8217;)</p>
-</div></blockquote>
-<p><strong>Returns:</strong></p>
-<blockquote class="last">
-<div><p>out: pandas.DataFrame or pandas.Series</p>
-</div></blockquote>
+Small windows (equivalent to 1min approx) work better when using rollingmedian.</li>
+<li><strong>block_func</strong> (<em>str, function</em>) &#8211; how to resample in block type. Default is mean but it can be any numpy function
+that returns a float. E.g, median.</li>
+<li><strong>degree</strong> (<em>int</em>) &#8211; degree of polynomial fit (only if how==&#8217;linear&#8217; or how==&#8217;polynomial&#8217;)</li>
+<li><strong>Returns</strong> &#8211; out: pandas.DataFrame or pandas.Series</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -454,31 +433,24 @@ that returns a float. E.g, median.</p>
 
 <dl class="function">
 <dt id="pymicra.data.reverse_arrangement">
-<code class="descclassname">pymicra.data.</code><code class="descname">reverse_arrangement</code><span class="sig-paren">(</span><em>array</em>, <em>points_number=None</em>, <em>alpha=0.05</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#reverse_arrangement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.reverse_arrangement" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">reverse_arrangement</code><span class="sig-paren">(</span><em>array</em>, <em>points_number=None</em>, <em>alpha=0.05</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.reverse_arrangement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the reverse arrangement test
 according to Bendat and Piersol - Random Data - 4th edition, page 96</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>array: np.array, list, tuple, generator</strong></p>
-<blockquote>
-<div><p>array which to test for the reverse arrangement test</p>
-</div></blockquote>
-<p><strong>points_number: integer</strong></p>
-<blockquote>
-<div><p>number of chunks to consider to the test. Maximum is the length of the array.
-If it is less, then the number of points will be reduced by application of a mean</p>
-</div></blockquote>
-<p><strong>alpha: float</strong></p>
-<blockquote>
-<div><p>Significance level for which to apply the test</p>
-</div></blockquote>
-<p><strong>WARNING! This fuction approximates table A.6 from Bendat&amp;Piersol as a normal distribution.</strong></p>
-<p><strong>This may no be true, since they do not express which distribution they use to construct</strong></p>
-<p><strong>their table. However, in the range 9&lt;N&lt;101, this approximation is as good as 5% at N=10</strong></p>
-<p><strong>and 0.1% at N=100.</strong></p>
-<p class="last"><strong>Still not adapted for dataframes</strong></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>array</strong> (<em>np.array, list, tuple, generator</em>) &#8211; array which to test for the reverse arrangement test</li>
+<li><strong>points_number</strong> (<em>integer</em>) &#8211; number of chunks to consider to the test. Maximum is the length of the array.
+If it is less, then the number of points will be reduced by application of a mean</li>
+<li><strong>alpha</strong> (<em>float</em>) &#8211; Significance level for which to apply the test</li>
+<li><strong>This fuction approximates table A.6 from Bendat&amp;Piersol as a normal distribution.</strong> (<em>WARNING!</em>) &#8211; </li>
+<li><strong>may no be true, since they do not express which distribution they use to construct</strong> (<em>This</em>) &#8211; </li>
+<li><strong>table. However, in the range 9&lt;N&lt;101, this approximation is as good as 5% at N=10</strong> (<em>their</em>) &#8211; </li>
+<li><strong>0.1% at N=100.</strong> (<em>and</em>) &#8211; </li>
+<li><strong>not adapted for dataframes</strong> (<em>Still</em>) &#8211; </li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -487,19 +459,15 @@ If it is less, then the number of points will be reduced by application of a mea
 
 <dl class="function">
 <dt id="pymicra.data.rotate2D">
-<code class="descclassname">pymicra.data.</code><code class="descname">rotate2D</code><span class="sig-paren">(</span><em>data</em>, <em>notation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#rotate2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.rotate2D" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">rotate2D</code><span class="sig-paren">(</span><em>data</em>, <em>notation=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.rotate2D" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: pandas DataFrame</strong></p>
-<blockquote>
-<div><p>the dataFrame to be rotated</p>
-</div></blockquote>
-<p><strong>notation: notation object</strong></p>
-<blockquote class="last">
-<div><p>a notation object to know which are the wind variables</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas DataFrame</em>) &#8211; the dataFrame to be rotated</li>
+<li><strong>notation</strong> (<em>notation object</em>) &#8211; a notation object to know which are the wind variables</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -508,24 +476,23 @@ If it is less, then the number of points will be reduced by application of a mea
 
 <dl class="function">
 <dt id="pymicra.data.spectra">
-<code class="descclassname">pymicra.data.</code><code class="descname">spectra</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.spectra" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">spectra</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.spectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the cross-spectra for a set of data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: pandas.DataFrame or pandas.Series</strong></p>
-<blockquote>
-<div><p>dataframe with more than one columns</p>
-</div></blockquote>
-<p><strong>frequency: float</strong></p>
-<blockquote>
-<div><p>frequency of measurement of signal to pass to numpy.fft.rfftfreq</p>
-</div></blockquote>
-<p><strong>anti_aliasing: bool</strong></p>
-<blockquote class="last">
-<div><p>whether or not to apply anti-aliasing according to Gobbi, Chamecki &amp; Dias, 2006 (doi:10.1029/2005WR004374)</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame or pandas.Series</em>) &#8211; dataframe with more than one columns</li>
+<li><strong>frequency</strong> (<em>float</em>) &#8211; frequency of measurement of signal to pass to numpy.fft.rfftfreq</li>
+<li><strong>anti_aliasing</strong> (<em>bool</em>) &#8211; whether or not to apply anti-aliasing according to Gobbi, Chamecki &amp; Dias, 2006 (doi:10.1029/2005WR004374)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectra</strong> &#8211; whose column is the spectrum or coespectrum of the input dataframe</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dataframe</p>
 </td>
 </tr>
 </tbody>
@@ -534,28 +501,24 @@ If it is less, then the number of points will be reduced by application of a mea
 
 <dl class="function">
 <dt id="pymicra.data.spectrum">
-<code class="descclassname">pymicra.data.</code><code class="descname">spectrum</code><span class="sig-paren">(</span><em>data</em>, <em>frequency=10</em>, <em>anti_aliasing=False</em>, <em>outname=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.spectrum" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">spectrum</code><span class="sig-paren">(</span><em>data</em>, <em>frequency=10</em>, <em>anti_aliasing=False</em>, <em>outname=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the spectrum for a set of data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: pandas.DataFrame</strong></p>
-<blockquote>
-<div><p>dataframe with one (will return the spectrum) or two (will return to cross-spectrum) columns</p>
-</div></blockquote>
-<p><strong>frequency: float</strong></p>
-<blockquote>
-<div><p>frequency of measurement of signal to pass to numpy.fft.rfftfreq</p>
-</div></blockquote>
-<p><strong>anti_aliasing: bool</strong></p>
-<blockquote>
-<div><p>whether or not to apply anti-aliasing according to Gobbi, Chamecki &amp; Dias, 2006 (doi:10.1029/2005WR004374)</p>
-</div></blockquote>
-<p><strong>outname: str</strong></p>
-<blockquote class="last">
-<div><p>name of the output column</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataframe with one (will return the spectrum) or two (will return to cross-spectrum) columns</li>
+<li><strong>frequency</strong> (<em>float</em>) &#8211; frequency of measurement of signal to pass to numpy.fft.rfftfreq</li>
+<li><strong>anti_aliasing</strong> (<em>bool</em>) &#8211; whether or not to apply anti-aliasing according to Gobbi, Chamecki &amp; Dias, 2006 (doi:10.1029/2005WR004374)</li>
+<li><strong>outname</strong> (<em>str</em>) &#8211; name of the output column</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectrum</strong> &#8211; whose column is the spectrum or coespectrum of the input dataframe</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dataframe</p>
 </td>
 </tr>
 </tbody>
@@ -564,44 +527,25 @@ If it is less, then the number of points will be reduced by application of a mea
 
 <dl class="function">
 <dt id="pymicra.data.trend">
-<code class="descclassname">pymicra.data.</code><code class="descname">trend</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/data.html#trend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.data.trend" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.data.</code><code class="descname">trend</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.data.trend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to return the trend given data. Can be achieved using a moving avg, block avg or polynomial fitting</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: pandas.DataFrame or pandas.Series</strong></p>
-<blockquote>
-<div><p>the data whose trend wee seek.</p>
-</div></blockquote>
-<p><strong>how: string</strong></p>
-<blockquote>
-<div><p>how of average to apply. Currently {&#8216;movingmean&#8217;, &#8216;movingmedian&#8217;, &#8216;block&#8217;, &#8216;linear&#8217;}.</p>
-</div></blockquote>
-<p><strong>rule: string</strong></p>
-<blockquote>
-<div><p>pandas offset string to define the block in the block average. Default is &#8220;10min&#8221;.</p>
-</div></blockquote>
-<p><strong>window: pandas date offset string or int</strong></p>
-<blockquote>
-<div><p>if moving mean/median is chosen, this tells us the window size to pass to pandas. If int,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.DataFrame or pandas.Series</em>) &#8211; the data whose trend wee seek.</li>
+<li><strong>how</strong> (<em>string</em>) &#8211; how of average to apply. Currently {&#8216;movingmean&#8217;, &#8216;movingmedian&#8217;, &#8216;block&#8217;, &#8216;linear&#8217;}.</li>
+<li><strong>rule</strong> (<em>string</em>) &#8211; pandas offset string to define the block in the block average. Default is &#8220;10min&#8221;.</li>
+<li><strong>window</strong> (<em>pandas date offset string or int</em>) &#8211; if moving mean/median is chosen, this tells us the window size to pass to pandas. If int,
 this is the number of points used in the window. If string we will to guess the number of
 points from the index.
-Small windows (equivalent to 1min approx) work better when using rollingmedian.</p>
-</div></blockquote>
-<p><strong>block_func: str, function</strong></p>
-<blockquote>
-<div><p>how to resample in block type. Default is mean but it can be any numpy function
-that returns a float. E.g, median.</p>
-</div></blockquote>
-<p><strong>degree: int</strong></p>
-<blockquote>
-<div><p>degree of polynomial fit (only if how==&#8217;linear&#8217; or how==&#8217;polynomial&#8217;)</p>
-</div></blockquote>
-<p><strong>Returns:</strong></p>
-<blockquote class="last">
-<div><p>out: pandas.DataFrame or pandas.Series</p>
-</div></blockquote>
+Small windows (equivalent to 1min approx) work better when using rollingmedian.</li>
+<li><strong>block_func</strong> (<em>str, function</em>) &#8211; how to resample in block type. Default is mean but it can be any numpy function
+that returns a float. E.g, median.</li>
+<li><strong>degree</strong> (<em>int</em>) &#8211; degree of polynomial fit (only if how==&#8217;linear&#8217; or how==&#8217;polynomial&#8217;)</li>
+<li><strong>Returns</strong> &#8211; out: pandas.DataFrame or pandas.Series</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -613,7 +557,7 @@ that returns a float. E.g, median.</p>
 <span id="pymicra-decorators-module"></span><h2>pymicra.decorators module<a class="headerlink" href="#module-pymicra.decorators" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.decorators.autoassign">
-<code class="descclassname">pymicra.decorators.</code><code class="descname">autoassign</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span> &rarr; method<a class="reference internal" href="_modules/pymicra/decorators.html#autoassign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.decorators.autoassign" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.decorators.</code><code class="descname">autoassign</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span> &rarr; method<a class="headerlink" href="#pymicra.decorators.autoassign" title="Permalink to this definition">¶</a></dt>
 <dd><p>autoassign(<a href="#id1"><span class="problematic" id="id2">*</span></a>argnames) -&gt; decorator
 autoassign(exclude=argnames) -&gt; decorator</p>
 <p>allow a method to assign (some of) its arguments as attributes of
@@ -621,7 +565,7 @@ autoassign(exclude=argnames) -&gt; decorator</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nd">@autoassign</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">):</span> <span class="k">pass</span>
-<span class="gp">... </span>
+<span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">breakfast</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">(</span><span class="s1">&#39;spam&#39;</span><span class="p">,</span> <span class="s1">&#39;eggs&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">breakfast</span><span class="o">.</span><span class="n">foo</span><span class="p">,</span> <span class="n">breakfast</span><span class="o">.</span><span class="n">bar</span>
 <span class="go">(&#39;spam&#39;, &#39;eggs&#39;)</span>
@@ -639,17 +583,17 @@ def method(self, foo, bar, baz): ...</div></blockquote>
 
 <dl class="function">
 <dt id="pymicra.decorators.pdgeneral">
-<code class="descclassname">pymicra.decorators.</code><code class="descname">pdgeneral</code><span class="sig-paren">(</span><em>convert_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/decorators.html#pdgeneral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.decorators.pdgeneral" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.decorators.</code><code class="descname">pdgeneral</code><span class="sig-paren">(</span><em>convert_out=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.decorators.pdgeneral" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pymicra.decorators.pdgeneral_in">
-<code class="descclassname">pymicra.decorators.</code><code class="descname">pdgeneral_in</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/decorators.html#pdgeneral_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.decorators.pdgeneral_in" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.decorators.</code><code class="descname">pdgeneral_in</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.decorators.pdgeneral_in" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pymicra.decorators.pdgeneral_io">
-<code class="descclassname">pymicra.decorators.</code><code class="descname">pdgeneral_io</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/decorators.html#pdgeneral_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.decorators.pdgeneral_io" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.decorators.</code><code class="descname">pdgeneral_io</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.decorators.pdgeneral_io" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the input is a series transform it to a dtaframe then transform the output from dataframe
 back into a series. If the input is a series and the output is a one-element series, transform it to a float.</p>
 <p>Currently the output functionality works only when the output is one variable, not an array
@@ -664,29 +608,30 @@ Date: 2015-08-07
 &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
 <dl class="function">
 <dt id="pymicra.io.dataset">
-<code class="descclassname">pymicra.io.</code><code class="descname">dataset</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.dataset" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.io.</code><code class="descname">dataset</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.dataset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pymicra.io.readDataFile">
-<code class="descclassname">pymicra.io.</code><code class="descname">readDataFile</code><span class="sig-paren">(</span><em>fname</em>, <em>variables=None</em>, <em>only_named_cols=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#readDataFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.readDataFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Author: Tomas Chor</p>
+<code class="descclassname">pymicra.io.</code><code class="descname">readDataFile</code><span class="sig-paren">(</span><em>fname</em>, <em>variables=None</em>, <em>only_named_cols=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.readDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads one datafile using pandas.read_csv()</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>kwargs: dict</strong></p>
-<blockquote>
-<div><p>dictionary with kwargs of pandas&#8217; read_csv function
-see <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</a> for more detail</p>
-</div></blockquote>
-<p><strong>variables: list or dict</strong></p>
-<blockquote>
-<div><p>list or dictionary containing the names of each variable in the file (if dict, the keys must be ints)</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>variables</strong> (<em>list or dict</em>) &#8211; keys are columns and values are names of variable</li>
+<li><strong>only_named_columns</strong> (<em>bool</em>) &#8211; if True, don&#8217;t read columns that don&#8217;t appear on variables&#8217; keys</li>
+<li><strong>kwargs</strong> (<em>dict</em>) &#8211; dictionary with kwargs of pandas&#8217; read_csv function
+see <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</a> for more detail</li>
+<li><strong>variables</strong> &#8211; list or dictionary containing the names of each variable in the file (if dict, the keys must be ints)</li>
+</ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dataFrame: pandas.DataFrame object</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pandas.DataFrame object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -695,21 +640,58 @@ see <a class="reference external" href="http://pandas.pydata.org/pandas-docs/sta
 
 <dl class="function">
 <dt id="pymicra.io.readDataFiles">
-<code class="descclassname">pymicra.io.</code><code class="descname">readDataFiles</code><span class="sig-paren">(</span><em>flist</em>, <em>verbose=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#readDataFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.readDataFiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Author: Tomas Chor
-Reads data from a list of files</p>
+<code class="descclassname">pymicra.io.</code><code class="descname">readDataFiles</code><span class="sig-paren">(</span><em>flist</em>, <em>verbose=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.readDataFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads data from a list of files by calling readDataFile individually for each entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>flist</strong> (<em>sequence of strings</em>) &#8211; files to be parsed</li>
+<li><strong>verbose</strong> (<em>bool</em>) &#8211; whether to print</li>
+<li><strong>**kwargs</strong> &#8211; readDataFile kwargs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.io.readUnitsCsv">
-<code class="descclassname">pymicra.io.</code><code class="descname">readUnitsCsv</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#readUnitsCsv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.readUnitsCsv" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.io.</code><code class="descname">readUnitsCsv</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.readUnitsCsv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a csv file in which the first line is the name of the variables
 and the second line contains the units</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<em>string</em>) &#8211; path of the csv file to read</li>
+<li><strong>**kwargs</strong> &#8211; to be passed to pandas.read_csv</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>df</strong> (<em>pandas.DataFrame</em>) &#8211; dataframe with the data</li>
+<li><strong>unitsdic</strong> (<em>dictionary</em>) &#8211; dictionary with the variable names as keys and the units as values</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.io.read_dlc">
-<code class="descclassname">pymicra.io.</code><code class="descname">read_dlc</code><span class="sig-paren">(</span><em>dlcfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#read_dlc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.read_dlc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.io.</code><code class="descname">read_dlc</code><span class="sig-paren">(</span><em>dlcfile</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.read_dlc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads datalogger configuration file</p>
 <p>WARNING! When defining the .dlc note that by default columns that are enclosed between doublequotes
 will appear without the doublequotes. So if your file is of the form :</p>
@@ -720,7 +702,7 @@ CampbellSci dataloggers. To disable this feature, you should parse the file with
 
 <dl class="function">
 <dt id="pymicra.io.read_fileConfig">
-<code class="descclassname">pymicra.io.</code><code class="descname">read_fileConfig</code><span class="sig-paren">(</span><em>dlcfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#read_fileConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.read_fileConfig" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.io.</code><code class="descname">read_fileConfig</code><span class="sig-paren">(</span><em>dlcfile</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.read_fileConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads metadata configuration file</p>
 <p>WARNING! When defining the .config file note that by default columns that are enclosed between doublequotes
 will appear without the doublequotes. So if your file is of the form :</p>
@@ -731,7 +713,7 @@ CampbellSci dataloggers. To disable this feature, you should parse the file with
 
 <dl class="function">
 <dt id="pymicra.io.read_site">
-<code class="descclassname">pymicra.io.</code><code class="descname">read_site</code><span class="sig-paren">(</span><em>sitefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#read_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.read_site" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.io.</code><code class="descname">read_site</code><span class="sig-paren">(</span><em>sitefile</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.read_site" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads .site configuration file, which holds siteConfig definitions</p>
 <dl class="docutils">
 <dt>The .site should have definitions as regular python syntax (in meters!):</dt>
@@ -746,8 +728,24 @@ roughness_length    = 1.0</dd>
 
 <dl class="function">
 <dt id="pymicra.io.timeSeries">
-<code class="descclassname">pymicra.io.</code><code class="descname">timeSeries</code><span class="sig-paren">(</span><em>flist</em>, <em>datalogger</em>, <em>parse_dates=True</em>, <em>verbose=False</em>, <em>read_data_kw={}</em>, <em>parse_dates_kw={}</em>, <em>clean_dates=True</em>, <em>return_units=True</em>, <em>only_named_cols=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/io.html#timeSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.io.timeSeries" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.io.</code><code class="descname">timeSeries</code><span class="sig-paren">(</span><em>flist</em>, <em>datalogger</em>, <em>parse_dates=True</em>, <em>verbose=False</em>, <em>read_data_kw={}</em>, <em>parse_dates_kw={}</em>, <em>clean_dates=True</em>, <em>return_units=True</em>, <em>only_named_cols=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.io.timeSeries" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a micrometeorological time series from a file or list of files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>flist</strong> (<em>list or string</em>) &#8211; either list or names of files (dataFrame will be one concatenated dataframe) or the name of one file</li>
+<li><strong>datalogger</strong> (<em>pymicra.dataloggerConfig object</em>) &#8211; configuration of the datalogger which is from where all the configurations of the file will be taken</li>
+<li><strong>parse_date</strong> (<em>bool</em>) &#8211; whether or not to index the data by date. Note that if this is False many of the functionalities
+of pymicra will be lost.
+(i.d. there are repeated timestamps)</li>
+<li><strong>verbose</strong> (<em>int, bool</em>) &#8211; verbose level</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -755,7 +753,7 @@ roughness_length    = 1.0</dd>
 <span id="pymicra-methods-module"></span><h2>pymicra.methods module<a class="headerlink" href="#module-pymicra.methods" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.methods.binwrapper">
-<code class="descclassname">pymicra.methods.</code><code class="descname">binwrapper</code><span class="sig-paren">(</span><em>self</em>, <em>clean_index=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/methods.html#binwrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.methods.binwrapper" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.methods.</code><code class="descname">binwrapper</code><span class="sig-paren">(</span><em>self</em>, <em>clean_index=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.methods.binwrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to return binned data from a dataframe using the function classbin</p>
 </dd></dl>
 
@@ -771,52 +769,81 @@ roughness_length    = 1.0</dd>
 </ul>
 <dl class="function">
 <dt id="pymicra.physics.CtoK">
-<code class="descclassname">pymicra.physics.</code><code class="descname">CtoK</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#CtoK"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.CtoK" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">CtoK</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.CtoK" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return temp in Kelvin given temp T in Celsius</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.R_moistAir">
-<code class="descclassname">pymicra.physics.</code><code class="descname">R_moistAir</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#R_moistAir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.R_moistAir" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">R_moistAir</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.R_moistAir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the gas constant for umid air from the specific humidity q</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> (<em>float</em>) &#8211; the specific humidity in g(water)/g(air)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>R_air</strong> &#8211; the specific gas constant for humid air in J/(g*K)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.airDensity_from_theta">
-<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em>, <em>use_means=False</em>, <em>theta=None</em>, <em>theta_unit=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#airDensity_from_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.airDensity_from_theta" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em>, <em>use_means=False</em>, <em>theta=None</em>, <em>theta_unit=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.airDensity_from_theta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates moist air density using theta measurements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataset to add rho_air</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
+<li><strong>notation</strong> (<em>pymicra.notation</em>) &#8211; notation to be used</li>
+<li><strong>inplace</strong> (<em>bool</em>) &#8211; whether or not to treat units inplace</li>
+<li><strong>use_means</strong> (<em>bool</em>) &#8211; use the mean of theta or not when calculating</li>
+<li><strong>theta</strong> (<em>pandas.Series</em>) &#8211; auxiliar theta measurement</li>
+<li><strong>theta_unit</strong> (<em>pint.quantity</em>) &#8211; auxiliar theta&#8217;s unit</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.airDensity_from_theta_v">
-<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em>, <em>use_means=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#airDensity_from_theta_v"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.airDensity_from_theta_v" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em>, <em>use_means=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.airDensity_from_theta_v" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates moist air density using p = rho R_dry T_virtual</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.dewPointTemp">
-<code class="descclassname">pymicra.physics.</code><code class="descname">dewPointTemp</code><span class="sig-paren">(</span><em>theta</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#dewPointTemp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.dewPointTemp" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">dewPointTemp</code><span class="sig-paren">(</span><em>theta</em>, <em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.dewPointTemp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the dew point temperature.
 theta has to be in Kelvin and e in kPa</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.dryAirDensity_from_p">
-<code class="descclassname">pymicra.physics.</code><code class="descname">dryAirDensity_from_p</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#dryAirDensity_from_p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.dryAirDensity_from_p" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">dryAirDensity_from_p</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.dryAirDensity_from_p" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates dry air density
 NEEDS IMPROVEMENT REGARDING HANDLING OF UNITS</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.latent_heat_water">
-<code class="descclassname">pymicra.physics.</code><code class="descname">latent_heat_water</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#latent_heat_water"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.latent_heat_water" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">latent_heat_water</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.latent_heat_water" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the latent heat of evaporation for water</p>
 <p>Receives T in Kelvin and returns the latent heat in J/g</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.perfGas">
-<code class="descclassname">pymicra.physics.</code><code class="descname">perfGas</code><span class="sig-paren">(</span><em>p=None</em>, <em>rho=None</em>, <em>R=None</em>, <em>T=None</em>, <em>gas=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#perfGas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.perfGas" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">perfGas</code><span class="sig-paren">(</span><em>p=None</em>, <em>rho=None</em>, <em>R=None</em>, <em>T=None</em>, <em>gas=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.perfGas" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the only value that is not provided in the ideal gas law</p>
 <p>P.S.: I&#8217;m using type to identify None objects because this way it works
 againt pandas objects</p>
@@ -824,7 +851,7 @@ againt pandas objects</p>
 
 <dl class="function">
 <dt id="pymicra.physics.ppxv2density">
-<code class="descclassname">pymicra.physics.</code><code class="descname">ppxv2density</code><span class="sig-paren">(</span><em>ser</em>, <em>T</em>, <em>p</em>, <em>units</em>, <em>solute=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#ppxv2density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.ppxv2density" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">ppxv2density</code><span class="sig-paren">(</span><em>ser</em>, <em>T</em>, <em>p</em>, <em>units</em>, <em>solute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.ppxv2density" title="Permalink to this definition">¶</a></dt>
 <dd><p>ser should be a series!
 concentration in ser should be ppmv, which will be transformed to g/m3
 p should be in kPa!</p>
@@ -832,159 +859,546 @@ p should be in kPa!</p>
 
 <dl class="function">
 <dt id="pymicra.physics.satWaterPressure">
-<code class="descclassname">pymicra.physics.</code><code class="descname">satWaterPressure</code><span class="sig-paren">(</span><em>T</em>, <em>unit='kelvin'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#satWaterPressure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.satWaterPressure" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">satWaterPressure</code><span class="sig-paren">(</span><em>T</em>, <em>unit='kelvin'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.satWaterPressure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the saturated water vapor pressure according eq (3.97) of Wallace and Hobbes, page 99.</p>
 <p>e0, b, T1 and T2 are constants specific for water vapor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>T</strong> (<em>float</em>) &#8211; thermodynamic temperature</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">saturated vapor pressure of water (in kPa)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.solarZenith">
-<code class="descclassname">pymicra.physics.</code><code class="descname">solarZenith</code><span class="sig-paren">(</span><em>date</em>, <em>lat=-3.13</em>, <em>lon=-60.016667</em>, <em>lon0=-63.0</em>, <em>negative=False</em>, <em>dr=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#solarZenith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.solarZenith" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">solarZenith</code><span class="sig-paren">(</span><em>date</em>, <em>lat=-3.13</em>, <em>lon=-60.016667</em>, <em>lon0=-63.0</em>, <em>negative=False</em>, <em>dr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.solarZenith" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the solar zenith angle at any given day</p>
 <p>needs validation and needs to work without lon0</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime object</em>) &#8211; the date and time for which the zenith angle has to be calculated</li>
+<li><strong>lat</strong> (<em>float</em>) &#8211; latitude in degrees</li>
+<li><strong>lon</strong> (<em>float</em>) &#8211; longitude in degrees</li>
+<li><strong>lon0</strong> (<em>float</em>) &#8211; DEFINE IT BETTER</li>
+<li><strong>is the julian day of the solstice. Default is to get from dictionary</strong> (<em>dr</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>zen_ang</strong> &#8211; the zenith angle in degrees</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.theta_from_theta_s">
-<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_s</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_df=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#theta_from_theta_s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.theta_from_theta_s" title="Permalink to this definition">¶</a></dt>
-<dd><p>From Schotanus, Nieuwstadt, de Bruin; DOI 10.1007/BF00164332</p>
-<p>theta_s = theta (1 + 0.51 q) (1 - (vn/c)**2)**0.5
-theta_s ~ theta (1 + 0.51 q)</p>
+<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_s</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_df=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_from_theta_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates thermodynamic temperature using sonic temperature measurements</p>
+<p>From Schotanus, Nieuwstadt, de Bruin; DOI 10.1007/BF00164332</p>
+<p>theta_s = theta (1 + 0.51 q) (1 - (vn/c)**2)^0.5</p>
+<p><span class="math">\(theta_s \approx theta (1 + 0.51 q)\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.dataframe</em>) &#8211; dataset</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
+<li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">thermodynamic temperature</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.Series</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.theta_from_theta_v">
-<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_df=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#theta_from_theta_v"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.theta_from_theta_v" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_df=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_from_theta_v" title="Permalink to this definition">¶</a></dt>
 <dd><p>theta_v ~ theta (1 + 0.61 q)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.dataframe</em>) &#8211; dataset</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
+<li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.physics.theta_std_from_theta_v_fluc">
-<code class="descclassname">pymicra.physics.</code><code class="descname">theta_std_from_theta_v_fluc</code><span class="sig-paren">(</span><em>1 + 0.61 q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/physics.html#theta_std_from_theta_v_fluc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.physics.theta_std_from_theta_v_fluc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">pymicra.physics.</code><code class="descname">theta_std_from_theta_v_fluc</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_std_from_theta_v_fluc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derived from theta_v = theta(1 + 0.61 q)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.dataframe</em>) &#8211; dataframe with q, q&#8217;, theta, theta_v&#8217;</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
+<li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; Notation object or None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <div class="section" id="module-pymicra.tests">
 <span id="pymicra-tests-module"></span><h2>pymicra.tests module<a class="headerlink" href="#module-pymicra.tests" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.tests.check_RA">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_RA</code><span class="sig-paren">(</span><em>data</em>, <em>detrend=True</em>, <em>detrend_kw={'how': 'linear'}</em>, <em>RAT_vars=None</em>, <em>RAT_points=50</em>, <em>RAT_significance=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_RA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_RA" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_RA</code><span class="sig-paren">(</span><em>data</em>, <em>detrend=True</em>, <em>detrend_kw={'how': 'linear'}</em>, <em>RAT_vars=None</em>, <em>RAT_points=50</em>, <em>RAT_significance=0.05</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_RA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the Reverse Arrangement Test in each column of data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; to apply RAT to each column</li>
+<li><strong>detrend_kw</strong> (<em>dict</em>) &#8211; keywords to pass to pymicra.detrend</li>
+<li><strong>RAT_vars</strong> &#8211; list of variables to which apply the RAT</li>
+<li><strong>RAT_points</strong> (<em>int</em>) &#8211; if it&#8217;s an int N, then reduce each column to N points by averaging. If None,
+then the whole columns are used</li>
+<li><strong>RAT_significance</strong> (<em>float</em>) &#8211; significance with which to apply the RAT</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>valid</strong> &#8211; True or False for each column. If True, column passed the test</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd.Series</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_limits">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_limits</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>max_percent=1.0</em>, <em>replace_with='interpolation'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_limits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_limits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks dataframe for lower and upper limits. If found, they are substituted by 
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_limits</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>max_percent=1.0</em>, <em>replace_with='interpolation'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_limits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks dataframe for lower and upper limits. If found, they are substituted by
 the linear trend of the run. The number of faulty points is also checked for each
 column against the maximum percentage of accepted faults max_percent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas dataframe</em>) &#8211; dataframe to be checked</li>
+<li><strong>tables</strong> (<em>pandas.dataframe</em>) &#8211; dataframe with the lower and upper limits for variables</li>
+<li><strong>max_percent</strong> (<em>float</em>) &#8211; number from 0 to 100 that represents the maximum percentage of faulty
+runs accepted by this test.</li>
+<li><strong>Return</strong> &#8211; </li>
+<li><strong>-------</strong> &#8211; </li>
+<li><strong>df</strong> (<em>pandas.DataFrame</em>) &#8211; input data but with the faulty points substituted by the linear trend of the run.</li>
+<li><strong>valid</strong> (<em>pandas.Series</em>) &#8211; True for the columns that passed this test, False for the columns that didn&#8217;t.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_maxdif">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_maxdif</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>detrend=True</em>, <em>detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_maxdif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_maxdif" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_maxdif</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>detrend=True</em>, <em>detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_maxdif" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the maximum and minimum differences between the fluctuations of a run.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_nans">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_nans</code><span class="sig-paren">(</span><em>data</em>, <em>max_percent=0.1</em>, <em>replace_with='interpolation'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_nans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_nans" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_nans</code><span class="sig-paren">(</span><em>data</em>, <em>max_percent=0.1</em>, <em>replace_with='interpolation'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_nans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks data for NaN values</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_numlines">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_numlines</code><span class="sig-paren">(</span><em>fname</em>, <em>numlines=18000</em>, <em>falseverbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_numlines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_numlines" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_numlines</code><span class="sig-paren">(</span><em>fname</em>, <em>numlines=18000</em>, <em>falseverbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_numlines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks length of file against a correct value.
 Returns False is length is wrong and True if length is right</p>
-<dl class="docutils">
-<dt>fname: string</dt>
-<dd>path of the file to check</dd>
-<dt>numlines: int</dt>
-<dd>correct number of lines that the file has to have</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fname</strong> (<em>string</em>) &#8211; path of the file to check</li>
+<li><strong>numlines</strong> (<em>int</em>) &#8211; correct number of lines that the file has to have</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_replaced">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_replaced</code><span class="sig-paren">(</span><em>replaced</em>, <em>max_count=180</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_replaced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_replaced" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_replaced</code><span class="sig-paren">(</span><em>replaced</em>, <em>max_count=180</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_replaced" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sums and checks if the number of replaced points is larger than the
 maximum accepted</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_spikes">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_spikes</code><span class="sig-paren">(</span><em>data</em>, <em>chunk_size='2min'</em>, <em>detrend=True</em>, <em>detrend_kw={'how': 'linear'}</em>, <em>visualize=False</em>, <em>vis_col=1</em>, <em>max_consec_spikes=3</em>, <em>cut_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>replace_with='interpolation'</em>, <em>max_percent=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_spikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_spikes" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_spikes</code><span class="sig-paren">(</span><em>data</em>, <em>chunk_size='2min'</em>, <em>detrend=True</em>, <em>detrend_kw={'how': 'linear'}</em>, <em>visualize=False</em>, <em>vis_col=1</em>, <em>max_consec_spikes=3</em>, <em>cut_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>replace_with='interpolation'</em>, <em>max_percent=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_spikes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies spikes-check according to Vickers and Mahrt (1997)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.dataframe</em>) &#8211; data to de-spike</li>
+<li><strong>chunk_size</strong> (<em>str, int</em>) &#8211; size of chunks to consider. If str should be pandas offset string. If int, number of lines.</li>
+<li><strong>detrend</strong> (<em>bool</em>) &#8211; whether to detrend the data and work  with the fluctuations or to work with the absolute series.</li>
+<li><strong>detrend_kw</strong> (<em>dict</em>) &#8211; dict of keywords to pass to pymicra.trend in order to detrend data (if detrend==True).</li>
+<li><strong>visualize</strong> (<em>bool</em>) &#8211; whether of not to visualize the interpolation ocurring</li>
+<li><strong>vis_col</strong> (<em>str, int or list</em>) &#8211; the column(s) to visualize when seeing the interpolation (only effective if visualize==True)</li>
+<li><strong>max_consec_spikes</strong> (<em>int</em>) &#8211; maximum number of consecutive spikes to actually be considered spikes and substituted</li>
+<li><strong>cut_func</strong> (<em>function</em>) &#8211; function used to define spikes</li>
+<li><strong>replace_with</strong> (<em>str</em>) &#8211; method to use when replacing spikes. Options are &#8216;interpolation&#8217; or &#8216;trend&#8217;.</li>
+<li><strong>max_percent</strong> (<em>float</em>) &#8211; maximum percentage of spikes to allow.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_stationarity">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_stationarity</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>detrend=False</em>, <em>detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>trend=True</em>, <em>trend_kw={'how': 'movingmedian'</em>, <em>'window': '1min'}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_stationarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_stationarity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_stationarity</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>detrend=False</em>, <em>detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>trend=True</em>, <em>trend_kw={'how': 'movingmedian'</em>, <em>'window': '1min'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_stationarity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check difference between the maximum and minimum values of the run trend agaisnt an upper-limit.
 This aims to flag nonstationary runs</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.tests.check_std">
-<code class="descclassname">pymicra.tests.</code><code class="descname">check_std</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>detrend=False</em>, <em>detrend_kw={'how': 'linear'}</em>, <em>chunk_size='2min'</em>, <em>falseverbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/tests.html#check_std"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.tests.check_std" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.tests.</code><code class="descname">check_std</code><span class="sig-paren">(</span><em>data</em>, <em>tables</em>, <em>detrend=False</em>, <em>detrend_kw={'how': 'linear'}</em>, <em>chunk_size='2min'</em>, <em>falseverbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.tests.check_std" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks dataframe for columns with too small of a standard deviation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataset whose standard deviation to check</li>
+<li><strong>tables</strong> (<em>pandas.DataFrame</em>) &#8211; dataset containing the standard deviation limits for each column</li>
+<li><strong>detrend</strong> (<em>bool</em>) &#8211; whether to work with the absolute series and the fluctuations</li>
+<li><strong>detrend_kw</strong> (<em>dict</em>) &#8211; keywords to pass to pymicra.detrend with detrend==True</li>
+<li><strong>chunk_size</strong> (<em>str</em>) &#8211; pandas datetime offset string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>valid</strong> &#8211; contatining True of False for each column. True means passed the test.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.Series</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pymicra.util">
 <span id="pymicra-util-module"></span><h2>pymicra.util module<a class="headerlink" href="#module-pymicra.util" title="Permalink to this headline">¶</a></h2>
+<p>Module for general utilities</p>
+<blockquote>
+<div><ul class="simple">
+<li>INCLUDE DECODIFICAION OF DATA?</li>
+<li>INCLUDE UPPER LIMIT TO STD TEST?</li>
+<li>INCLUDE DROPOUT TEST</li>
+<li>INCLUDE THIRD MOMENT TEST</li>
+<li>CHANGE NOTATION IN QCONTROL&#8217;S SUMMARY</li>
+</ul>
+</div></blockquote>
 <dl class="function">
 <dt id="pymicra.util.correctDrift">
-<code class="descclassname">pymicra.util.</code><code class="descname">correctDrift</code><span class="sig-paren">(</span><em>drifted</em>, <em>correct_drifted_vars=None</em>, <em>correct=None</em>, <em>get_fit=True</em>, <em>write_fit=True</em>, <em>fit_file='correctDrift_linfit.params'</em>, <em>apply_fit=True</em>, <em>show_plot=False</em>, <em>return_plot=False</em>, <em>units={}</em>, <em>return_index=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/util.html#correctDrift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.util.correctDrift" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">pymicra.util.</code><code class="descname">correctDrift</code><span class="sig-paren">(</span><em>drifted</em>, <em>correct_drifted_vars=None</em>, <em>correct=None</em>, <em>get_fit=True</em>, <em>write_fit=True</em>, <em>fit_file='correctDrift_linfit.params'</em>, <em>apply_fit=True</em>, <em>show_plot=False</em>, <em>return_plot=False</em>, <em>units={}</em>, <em>return_index=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.util.correctDrift" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>correct</strong> (<em>pandas.DataFrame</em>) &#8211; dataset with the correct averages</li>
+<li><strong>drifted</strong> (<em>pandas.DataFrame</em>) &#8211; dataset with the averages that need to be corrected</li>
+<li><strong>correct_drifted_vars</strong> (<em>dict</em>) &#8211; dictionary where every key is a var in the right dataset and
+its value is its correspondent in the drifted dataset</li>
+<li><strong>get_fit</strong> (<em>bool</em>) &#8211; whether ot not to fit a linear relation between both datasets. Generally slow. Should only be done once</li>
+<li><strong>write_fit</strong> (<em>bool</em>) &#8211; if get_fit == True, whether or not to write the linear fit to a file (recommended)</li>
+<li><strong>fit_file</strong> (<em>string</em>) &#8211; where to write the linear fit (if one is written) or from where to read the linear fit (if no fit is written)</li>
+<li><strong>apply_fit</strong> (<em>bool</em>) &#8211; whether of not to apply the lineat fit and correct the data (at least get_fit and fit_file must be true)</li>
+<li><strong>show_plot</strong> (<em>bool</em>) &#8211; whether or not to show drifted vs correct plot, to see if it&#8217;s a good fit</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; if given, it creates a {file_file}.units file, to tell write down in which units data has to be in
+order to be correctly corrected</li>
+<li><strong>return_index</strong> (<em>bool</em>) &#8211; whether to return the indexes of the used points for the calculation. Serves to check the regression</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outdf</strong> &#8211; drifted dataset corrected with right dataset</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="pymicra.util.qcontrol">
-<code class="descclassname">pymicra.util.</code><code class="descname">qcontrol</code><span class="sig-paren">(</span><em>files</em>, <em>datalogger_config</em>, <em>read_files_kw={'parse_dates': False</em>, <em>'only_named_cols': False</em>, <em>'clean_dates': False}</em>, <em>accepted_nans_percent=1.0</em>, <em>accepted_spikes_percent=1.0</em>, <em>accepted_bound_percent=1.0</em>, <em>max_replacement_count=180</em>, <em>file_lines=None</em>, <em>begin_date=None</em>, <em>end_date=None</em>, <em>nans_test=True</em>, <em>maxdif_detrend=True</em>, <em>maxdif_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>maxdif_trend=True</em>, <em>maxdif_trend_kw={'how': 'movingmedian'</em>, <em>'window': 600}</em>, <em>std_detrend=True</em>, <em>std_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>RAT_detrend=True</em>, <em>RAT_detrend_kw={'how': 'linear'}</em>, <em>spikes_detrend=True</em>, <em>spikes_detrend_kw={'how': 'linear'}</em>, <em>lower_limits={}</em>, <em>upper_limits={}</em>, <em>spikes_test=True</em>, <em>visualize_spikes=False</em>, <em>spikes_vis_col='u'</em>, <em>spikes_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>replace_with='interpolation'</em>, <em>max_consec_spikes=3</em>, <em>chunk_size=1200</em>, <em>std_limits={}</em>, <em>dif_limits={}</em>, <em>RAT=False</em>, <em>RAT_vars=None</em>, <em>RAT_points=50</em>, <em>RAT_significance=0.05</em>, <em>trueverbose=False</em>, <em>falseverbose=True</em>, <em>falseshow=False</em>, <em>trueshow=False</em>, <em>trueshow_vars=None</em>, <em>outdir='quality_controlled'</em>, <em>summary_file='qcontrol_summary.csv'</em>, <em>replaced_report=None</em>, <em>full_report=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/util.html#qcontrol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.util.qcontrol" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.util.</code><code class="descname">qcontrol</code><span class="sig-paren">(</span><em>files</em>, <em>datalogger_config</em>, <em>read_files_kw={'parse_dates': False</em>, <em>'only_named_cols': False</em>, <em>'clean_dates': False}</em>, <em>accepted_nans_percent=1.0</em>, <em>accepted_spikes_percent=1.0</em>, <em>accepted_bound_percent=1.0</em>, <em>max_replacement_count=180</em>, <em>file_lines=None</em>, <em>begin_date=None</em>, <em>end_date=None</em>, <em>nans_test=True</em>, <em>maxdif_detrend=True</em>, <em>maxdif_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>maxdif_trend=True</em>, <em>maxdif_trend_kw={'how': 'movingmedian'</em>, <em>'window': 600}</em>, <em>std_detrend=True</em>, <em>std_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>RAT_detrend=True</em>, <em>RAT_detrend_kw={'how': 'linear'}</em>, <em>spikes_detrend=True</em>, <em>spikes_detrend_kw={'how': 'linear'}</em>, <em>lower_limits={}</em>, <em>upper_limits={}</em>, <em>spikes_test=True</em>, <em>visualize_spikes=False</em>, <em>spikes_vis_col='u'</em>, <em>spikes_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>replace_with='interpolation'</em>, <em>max_consec_spikes=3</em>, <em>chunk_size=1200</em>, <em>std_limits={}</em>, <em>dif_limits={}</em>, <em>RAT=False</em>, <em>RAT_vars=None</em>, <em>RAT_points=50</em>, <em>RAT_significance=0.05</em>, <em>trueverbose=False</em>, <em>falseverbose=True</em>, <em>falseshow=False</em>, <em>trueshow=False</em>, <em>trueshow_vars=None</em>, <em>outdir='quality_controlled'</em>, <em>summary_file='qcontrol_summary.csv'</em>, <em>replaced_report=None</em>, <em>full_report=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.util.qcontrol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that applies various tests quality control to a set of datafiles and re-writes
-the successful files in another directory. A list of currently-applied tests is found 
+the successful files in another directory. A list of currently-applied tests is found
 below in order of application. The only test available by default is the spikes test.
 All others depend on their respective keywords.</p>
-<dl class="docutils">
-<dt>date check:</dt>
-<dd>files outside a date_range are left out (end_date and begin_date keywords)</dd>
-<dt>lines test:</dt>
-<dd>checks each file to see if they have a certain number of lines. Files with a different number of lines
-fail this test. Active this test by passing the file_lines keyword.</dd>
-</dl>
-<dl class="docutils">
-<dt>NaNs test:</dt>
-<dd>checks for any NaN values. NaNs are replaced with interpolation or linear trend. If the percentage
-of NaNs is greater than accepted_nans_percent, run is discarded. Activate it by passing nans_test=True.</dd>
-<dt>boundaries test:</dt>
-<dd>runs with values in any column lower than a pre-determined lower limit or higher
-than a upper limits are left out. Activate it by passing a lower_limits or upper_limits keyword.</dd>
-<dt>spikes test:</dt>
-<dd>runs with more than a certain percetage of spikes are left out. 
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Consistency tests:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">date check:</th><td class="field-body">files outside a date_range are left out (end_date and begin_date keywords)</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">lines test:</th><td class="field-body">checks each file to see if they have a certain number of lines. Files with a different number of lines
+fail this test. Active this test by passing the file_lines keyword.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Quality tests (in this order):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">NaN&#8217;s test:</th><td class="field-body">checks for any NaN values. NaNs are replaced with interpolation or linear trend. If the percentage
+of NaNs is greater than accepted_nans_percent, run is discarded. Activate it by passing nans_test=True.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">boundaries test:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">runs with values in any column lower than a pre-determined lower limit or higher
+than a upper limits are left out. Activate it by passing a lower_limits or upper_limits keyword.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">spikes test:</th><td class="field-body">runs with more than a certain percetage of spikes are left out.
 Activate it by passing a spikes_test keyword. Adjust the test with the spikes_func
-visualize_spikes, spikes_vis_col, max_consec_spikes, accepted_spikes_percent and chunk_size keywords.</dd>
-<dt>replacement count test:</dt>
-<dd>checks the total amount of points that were replaced (including NaN, boundaries and spikes test)
-against the max_replacement_count keyword. Fails if any columns has more replacements than that.</dd>
-<dt>standard deviation (STD) check:</dt>
-<dd>runs with a standard deviation lower than a pre-determined value (generally close to the
+visualize_spikes, spikes_vis_col, max_consec_spikes, accepted_spikes_percent and chunk_size keywords.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">replacement count test:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">checks the total amount of points that were replaced (including NaN, boundaries and spikes test)
+against the max_replacement_count keyword. Fails if any columns has more replacements than that.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">standard deviation (STD) check:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">runs with a standard deviation lower than a pre-determined value (generally close to the
 sensor precision) are left out.
-Activate it by passing a std_limits keyword.</dd>
-<dt>maximum difference test:</dt>
-<dd>runs whose trend have a maximum difference greater than a certain value are left out.
-This excludes non-stationary runs. Activate it by passing a dif_limits keyword.</dd>
-<dt>reverse arrangement test (RAT):</dt>
-<dd>runs that fail the reverse arrangement test for any variable are left out.
-Activate it by passing a RAT keyword.</dd>
-</dl>
+Activate it by passing a std_limits keyword.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">maximum difference test:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">runs whose trend have a maximum difference greater than a certain value are left out.
+This excludes non-stationary runs. Activate it by passing a dif_limits keyword.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">reverse arrangement test (RAT):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">runs that fail the reverse arrangement test for any variable are left out.
+Activate it by passing a RAT keyword.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>files</strong> (<em>list</em>) &#8211; list of filepaths</li>
+<li><strong>datalogger_config</strong> (<em>pymicra.datalogerConf object or str</em>) &#8211; datalogger configuration object used for all files in the list of files or path to a dlc file.</li>
+<li><strong>read_files_kw</strong> (<em>dict</em>) &#8211; keywords to pass to pymicra.timeSeries. Default is {&#8216;parse_dates&#8217;:False} because parsing dates
+at every file is slow, so this makes the whole process faster.
+However, {&#8216;parse_dates&#8217;:True, &#8216;clean_dates&#8217;:False} is recommended if time is not a problem because
+the window and chunk_size keywords may be used as, for example &#8216;2min&#8217;, instead of 1200, which is the
+equivalent number of points.</li>
+<li><strong>file_lines</strong> (<em>int</em>) &#8211; number of line a &#8220;good&#8221; file must have. Fails if the run has any other number of lines.</li>
+<li><strong>begin_date</strong> (<em>str</em>) &#8211; dates before this automatically fail.</li>
+<li><strong>end_date</strong> (<em>str</em>) &#8211; dates after this automatically fail.</li>
+<li><strong>std_limits</strong> (<em>dict</em>) &#8211; keys must be names of variables and values must be upper limits for the standard deviation.</li>
+<li><strong>std_detrend</strong> (<em>bool</em>) &#8211; whether or not to work with the fluctations of the data on the spikes and standard deviation test.</li>
+<li><strong>std_detrend_kw</strong> &#8211; keywords to be passed to pymicra.detrend specifically to be used on the STD test.</li>
+<li><strong>lower_limits</strong> (<em>dict</em>) &#8211; keys must be names of variables and values must be lower absolute limits for the values of each var.</li>
+<li><strong>upper_limits</strong> (<em>dict</em>) &#8211; keys must be names of variables and values must be upper absolute limits for the values of each var.</li>
+<li><strong>dif_limits</strong> (<em>dict</em>) &#8211; keys must be names of variables and values must be upper limits for the maximum difference
+of values that the linear trend of the run must have.</li>
+<li><strong>maxdif_detrend</strong> (<em>bool</em>) &#8211; whether to detrend data before checking for differences.</li>
+<li><strong>maxdif_detrend_kw</strong> (<em>dict</em>) &#8211; keywords to pass to pymicra.detrend when detrending for max difference test.</li>
+<li><strong>maxdif_trend</strong> (<em>bool</em>) &#8211; whether to check for differences using the trend, instead of raw points (which can be the fluctuations
+or the original absolute values of data, depending if maxdif_detrend==True or False).</li>
+<li><strong>maxdif_trend_kw</strong> (<em>dict</em>) &#8211; keywords to pass to pymicra.detrend when trending for max difference test.
+dictionary of keywords to pass to pymicra.data.trend. This is used in the max difference test, since
+the difference is taken between the max and min values of the trend, not of the series.
+Default = {&#8216;how&#8217;:&#8217;linear&#8217;}.</li>
+<li><strong>spikes_test</strong> (<em>bool</em>) &#8211; whether or not to check for spikes.</li>
+<li><strong>spikes_detrend</strong> (<em>bool</em>) &#8211; whether or not to work with the fluctations of the data on the spikes test.</li>
+<li><strong>spikes_detrend_kw</strong> (<em>dict</em>) &#8211; keywords to pass to pymicra.detrend when detrending for spikes.</li>
+<li><strong>visualize_spikes</strong> (<em>bool</em>) &#8211; whether or not to plot the spikes identification and interpolation (useful for calibration of spikes_func). Only
+one column is visualized at each time. This is set with the spikes_vis_col keyword.</li>
+<li><strong>spikes_vis_col</strong> (<em>str</em>) &#8211; column to use to visualize spikes.</li>
+<li><strong>spikes_func</strong> (<em>function</em>) &#8211; function used to look for spikes. Can be defined used numpy/pandas notation for methods with lambda functions.
+Default is: lambda x: (abs(x - x.mean()) &gt; abs(x.std()*4.))</li>
+<li><strong>replace_with</strong> (<em>str</em>) &#8211; method to use when replacing the spikes. Options are &#8216;interpolation&#8217; and &#8216;trend&#8217;.</li>
+<li><strong>max_consec_spikes</strong> (<em>int</em>) &#8211; limit of consecutive spike points to be interpolated. After this spikes are left as they are in the output.</li>
+<li><strong>accepted_percent</strong> (<em>float</em>) &#8211; limit percentage of spike points in the data. If spike points represent a higher percentage
+than the run fails the spikes check.</li>
+<li><strong>chunk_size</strong> (<em>str</em>) &#8211; string representing time length of chunks used in the spikes and standard deviation check. Default is &#8220;2Min&#8221;.
+Putting None will not separate in chunks. It&#8217;s recommended to use rolling functions in this case (might be slow).</li>
+<li><strong>RAT</strong> (<em>bool</em>) &#8211; whether or not to perform the reverse arrangement test on data.</li>
+<li><strong>RAT_vars</strong> (<em>list</em>) &#8211; list containing the name of variables to go through the reverse arrangement test. If None, all variables are tested.</li>
+<li><strong>RAT_points</strong> (<em>int</em>) &#8211; number of final points to apply the RAT. If 50, the run will be averaged to a 50-points run.</li>
+<li><strong>RAT_significance</strong> &#8211; significance level to apply the RAT.</li>
+<li><strong>RAT_detrend_kw</strong> &#8211; keywords to be passed to pymicra.detrend specifically to be used on the RA test. {&#8220;how&#8221;:&#8221;linear&#8221;}
+is strongly recommended for this case.</li>
+<li><strong>trueverbose</strong> (<em>bool</em>) &#8211; whether or not to show details on the successful runs.</li>
+<li><strong>falseverbose</strong> (<em>bool</em>) &#8211; whether or not to show details on the failed runs.</li>
+<li><strong>trueshow</strong> (<em>bool</em>) &#8211; whether of not to plot the successful runs on screen.</li>
+<li><strong>trueshow_vars</strong> (<em>list</em>) &#8211; list of columns to plot if run is successfull.</li>
+<li><strong>falseshow</strong> (<em>bool</em>) &#8211; whether of not to plot the failed runs on screen.</li>
+<li><strong>outdir</strong> (<em>str</em>) &#8211; name of directory in which to write the successful runs. Directory must already exist.</li>
+<li><strong>summary_file</strong> (<em>str</em>) &#8211; path of file to be created with the summary of the runs. Will be overwriten if already exists.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ext_summary</strong> &#8211; dict with the extended summary, which has the path of the files that got &#8220;stuck&#8221; in each test along with the successful ones</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.util.separateFiles">
-<code class="descclassname">pymicra.util.</code><code class="descname">separateFiles</code><span class="sig-paren">(</span><em>files</em>, <em>dlconfig</em>, <em>outformat='out_%Y-%m-%d_%H:%M.csv'</em>, <em>outdir=''</em>, <em>verbose=False</em>, <em>firstflag='.first'</em>, <em>lastflag='.last'</em>, <em>save_ram=False</em>, <em>frequency='30min'</em>, <em>quoting=0</em>, <em>use_edges=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/util.html#separateFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.util.separateFiles" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.util.</code><code class="descname">separateFiles</code><span class="sig-paren">(</span><em>files</em>, <em>dlconfig</em>, <em>outformat='out_%Y-%m-%d_%H:%M.csv'</em>, <em>outdir=''</em>, <em>verbose=False</em>, <em>firstflag='.first'</em>, <em>lastflag='.last'</em>, <em>save_ram=False</em>, <em>frequency='30min'</em>, <em>quoting=0</em>, <em>use_edges=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.util.separateFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Separates files into (default) 30-minute smaller files. Useful for output files such
 as the ones by Campbell Sci, that can have days of data in one single file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>files</strong> (<em>list</em>) &#8211; list of file paths to be separated</li>
+<li><strong>dlconfig</strong> (<em>pymicra datalogger configuration file</em>) &#8211; to tell how the dates are displayed inside the file</li>
+<li><strong>outformat</strong> (<em>str</em>) &#8211; the format of the file names to output</li>
+<li><strong>outdir</strong> (<em>str</em>) &#8211; the path to the directory in which to output the files</li>
+<li><strong>verbose</strong> (<em>bool</em>) &#8211; whether to print to the screen</li>
+<li><strong>firstflag</strong> (<em>str</em>) &#8211; flag to put after the name of the file for the first file to be created</li>
+<li><strong>lastflag</strong> (<em>str</em>) &#8211; flag to put after the name of the fle for the last file to be created</li>
+<li><strong>save_ram</strong> (<em>bool</em>) &#8211; if you have an amount of files that are to big for pandas to load on your ram this should be set to true</li>
+<li><strong>frequency</strong> &#8211; the frequency in which to separate</li>
+<li><strong>quoting</strong> (<em>int</em>) &#8211; for pandas (see read_csv documentation)</li>
+<li><strong>edges</strong> (<em>use</em>) &#8211; use this carefully. This concatenates the last few lines of a file to the first few lines
+of the next file in case they don&#8217;t finish on a nice round time with respect to the frequency</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

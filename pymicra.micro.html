@@ -102,15 +102,28 @@
 <span id="pymicra-micro-functions-module"></span><h2>pymicra.micro.functions module<a class="headerlink" href="#module-pymicra.micro.functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.functions.Psi">
-<code class="descclassname">pymicra.micro.functions.</code><code class="descname">Psi</code><span class="sig-paren">(</span><em>zeta</em>, <em>x='tau'</em>, <em>zeta0=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/functions.html#Psi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.functions.Psi" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.functions.</code><code class="descname">Psi</code><span class="sig-paren">(</span><em>zeta</em>, <em>x='tau'</em>, <em>zeta0=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.functions.Psi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Integral Monin-Obukhov scale or deviation function, which is the deviation of a
 variable (x) in relation nto their logarithmic profiles due the stability zeta != 0</p>
 <p>Taken from Simpson.ea1998&#8211;the.validity.of.similarity.theory;.in.the.roughness.sublayer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>zeta</strong> (<em>float</em>) &#8211; the stability variable</li>
+<li><strong>x</strong> (<em>string</em>) &#8211; the variable. Options are &#8216;tau&#8217;, &#8216;H&#8217;, &#8216;E&#8217;, &#8216;F&#8217;</li>
+<li><strong>zeta0</strong> (<em>float</em>) &#8211; value of zeta_{0 x}. Only used for the stable case</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.functions.nondimensionalGrad">
-<code class="descclassname">pymicra.micro.functions.</code><code class="descname">nondimensionalGrad</code><span class="sig-paren">(</span><em>zeta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/functions.html#nondimensionalGrad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.functions.nondimensionalGrad" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.functions.</code><code class="descname">nondimensionalGrad</code><span class="sig-paren">(</span><em>zeta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.functions.nondimensionalGrad" title="Permalink to this definition">¶</a></dt>
 <dd><p>The nondimensional gradients, defined as:</p>
 <p>phi_F(zeta) = kappa*(z-d)*dCdz/c_star
 phi_H(zeta) = kappa*(z-d)*dTdz/T_star
@@ -121,7 +134,7 @@ phi_E(zeta) = kappa*(z-d)*dqdz/q_star</p>
 
 <dl class="function">
 <dt id="pymicra.micro.functions.nondimensionalSTD">
-<code class="descclassname">pymicra.micro.functions.</code><code class="descname">nondimensionalSTD</code><span class="sig-paren">(</span><em>zeta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/functions.html#nondimensionalSTD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.functions.nondimensionalSTD" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.functions.</code><code class="descname">nondimensionalSTD</code><span class="sig-paren">(</span><em>zeta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.functions.nondimensionalSTD" title="Permalink to this definition">¶</a></dt>
 <dd><p>The nondimensional standard deviation function, defined as:</p>
 <p>phi_c(zeta) = sigma_c / c_star</p>
 <p>From zahn.ea</p>
@@ -129,18 +142,42 @@ phi_E(zeta) = kappa*(z-d)*dqdz/q_star</p>
 
 <dl class="function">
 <dt id="pymicra.micro.functions.rte">
-<code class="descclassname">pymicra.micro.functions.</code><code class="descname">rte</code><span class="sig-paren">(</span><em>data</em>, <em>w_fluctuations=&quot;w'&quot;</em>, <em>order=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/functions.html#rte"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.functions.rte" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.functions.</code><code class="descname">rte</code><span class="sig-paren">(</span><em>data</em>, <em>w_fluctuations=&quot;w'&quot;</em>, <em>order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.functions.rte" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Relative Transfer Efficiency in the time domain, rte
 according to Cancelli, Dias, Chamecki. Dimensionless criteria for the production-dissipation equilibrium
 of scalar fluctuations and their implications for scalar similarity, Water Resources Research, 2012</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>order</strong> (<em>2-elements list</em>) &#8211; order of variables: if its rte_ab should be [a,b], if its rte_ba should [b,a]</li>
+<li><strong>TO BE VALIDATED!</strong> (<em>NEEDS</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.functions.ste">
-<code class="descclassname">pymicra.micro.functions.</code><code class="descname">ste</code><span class="sig-paren">(</span><em>data</em>, <em>w_fluctuations=&quot;w'&quot;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/functions.html#ste"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.functions.ste" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.functions.</code><code class="descname">ste</code><span class="sig-paren">(</span><em>data</em>, <em>w_fluctuations=&quot;w'&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.functions.ste" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Symmetric Transfer Efficiency in the time domain, ste
 according to Cancelli, Dias, Chamecki. Dimensionless criteria for the production-dissipation equilibrium
 of scalar fluctuations and their implications for scalar similarity, Water Resources Research, 2012</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas dataframe</em>) &#8211; a three-columns dataframe, where one of them should be the vertical velocity fluctuations</li>
+<li><strong>w_fluctuations</strong> (<em>str</em>) &#8211; the name of the vertical velocity fluctuations</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -148,18 +185,18 @@ of scalar fluctuations and their implications for scalar similarity, Water Resou
 <span id="pymicra-micro-scales-module"></span><h2>pymicra.micro.scales module<a class="headerlink" href="#module-pymicra.micro.scales" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.scales.MonObuLen">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuLen</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>g=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/scales.html#MonObuLen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.scales.MonObuLen" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuLen</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>g=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.MonObuLen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.scales.MonObuVar">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuVar</code><span class="sig-paren">(</span><em>L_m</em>, <em>siteConf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/scales.html#MonObuVar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.scales.MonObuVar" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuVar</code><span class="sig-paren">(</span><em>L_m</em>, <em>siteConf</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.MonObuVar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redirects to stabilityParam</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.scales.obukhovLen">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>notation=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/scales.html#obukhovLen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.scales.obukhovLen" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>notation=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.obukhovLen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the Monin-Obukhov Length
 according to:</p>
 <p>GARRAT, The atmospheric boundary layer, 1992 (eq. 1.11, p. 10)
@@ -174,7 +211,7 @@ L = - ( theta_v * u_star^3 ) / ( kappa <em>g</em> cov(w&#8217;,theta_v&#8217;) )
 
 <dl class="function">
 <dt id="pymicra.micro.scales.obukhovLen2">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen2</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>units=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/scales.html#obukhovLen2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.scales.obukhovLen2" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen2</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>units=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.obukhovLen2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the Monin-Obukhov Length
 according to:</p>
 <p>GARRAT, The atmospheric boundary layer, 1992 (eq. 1.11, p. 10)
@@ -189,7 +226,7 @@ L = - ( theta_v * u_star^3 ) / ( kappa <em>g</em> cov(w&#8217;,theta_v&#8217;) )
 
 <dl class="function">
 <dt id="pymicra.micro.scales.stabilityParam">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">stabilityParam</code><span class="sig-paren">(</span><em>L_m</em>, <em>siteConf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/scales.html#stabilityParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.scales.stabilityParam" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">stabilityParam</code><span class="sig-paren">(</span><em>L_m</em>, <em>siteConf</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.stabilityParam" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the Monin-Obukhov Similarity Variable
 defined as</p>
 <p>zeta = (z-d)/Lo
@@ -199,10 +236,25 @@ and L_m is the Monin-Obukhov Length.</p>
 
 <dl class="function">
 <dt id="pymicra.micro.scales.turbulentScales">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">turbulentScales</code><span class="sig-paren">(</span><em>data</em>, <em>siteConf</em>, <em>units</em>, <em>notation=None</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>solutes=[]</em>, <em>output_as_df=True</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/scales.html#turbulentScales"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.scales.turbulentScales" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">turbulentScales</code><span class="sig-paren">(</span><em>data</em>, <em>siteConf</em>, <em>units</em>, <em>notation=None</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>solutes=[]</em>, <em>output_as_df=True</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.turbulentScales" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates characteristic lengths for data</p>
 <p>The names of the variables are retrived out the dictionary. You can update the dictionary
 and change the names by using the notation_defs keyworkd, which is a notation object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataset to be used. It must either be the raw and turbulent data, or the covariances of such data</li>
+<li><strong>siteConf</strong> (<em>pymicra.siteConfig object</em>) &#8211; has the site configurations to calculate the obukhovLen</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; dict units for the input data</li>
+<li><strong>output_as_df</strong> (<em>boolean</em>) &#8211; True if you want the output to be a one-line pandas.DataFrame. A pd.Series
+will be output if False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -210,45 +262,84 @@ and change the names by using the notation_defs keyworkd, which is a notation ob
 <span id="pymicra-micro-spectral-module"></span><h2>pymicra.micro.spectral module<a class="headerlink" href="#module-pymicra.micro.spectral" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.spectral.Ogive">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">Ogive</code><span class="sig-paren">(</span><em>df</em>, <em>no_nan=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#Ogive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.Ogive" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">Ogive</code><span class="sig-paren">(</span><em>df</em>, <em>no_nan=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.Ogive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Integrates the Ogive from Coespectra</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<em>dataframe</em>) &#8211; cospectrum to be integrated</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.correctLag">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">correctLag</code><span class="sig-paren">(</span><em>data, notation=None, lag_bounds=[0, 100]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#correctLag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.correctLag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Identifies and correct lags between data, assuming the 
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">correctLag</code><span class="sig-paren">(</span><em>data, notation=None, lag_bounds=[0, 100]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.correctLag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifies and correct lags between data, assuming the
 vertical wind velocity has lag 0.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.hfc_Dias_ea_16">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_Dias_ea_16</code><span class="sig-paren">(</span><em>cross_spec</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#hfc_Dias_ea_16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.hfc_Dias_ea_16" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_Dias_ea_16</code><span class="sig-paren">(</span><em>cross_spec</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.hfc_Dias_ea_16" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies correction to high frequencies using the quadrature.
 Xab_ab = Co_ab - i Qu_ab</p>
 <p>Co_recovered = Co_ab + 2*pi*n*T*Qu_ab</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cross_spec</strong> (<em>series of dataframe</em>) &#8211; the cross spectrum whose coespectrum you&#8217;d like to correct</li>
+<li><strong>T</strong> (<em>float</em>) &#8211; response time to use</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.hfc_Massman_Ibrom_08">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_Massman_Ibrom_08</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#hfc_Massman_Ibrom_08"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.hfc_Massman_Ibrom_08" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_Massman_Ibrom_08</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.hfc_Massman_Ibrom_08" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.hfc_zeroQuad">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_zeroQuad</code><span class="sig-paren">(</span><em>slow_spec</em>, <em>freqs</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#hfc_zeroQuad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.hfc_zeroQuad" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">hfc_zeroQuad</code><span class="sig-paren">(</span><em>slow_spec</em>, <em>freqs</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.hfc_zeroQuad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies a correction factor to the spectrum of a slow-measured variable
 based on the response-time T. Quadrature must be analytically zero!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>slow_spec</strong> (<em>numpy.array or series</em>) &#8211; the spectrum to be corrected (not cross-spectrum!)</li>
+<li><strong>freqs</strong> (<em>numpy.array</em>) &#8211; frequencies</li>
+<li><strong>T</strong> (<em>float</em>) &#8211; the response-time</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spec</strong> &#8211; the recovered array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.array</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.phaseCorrection">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">phaseCorrection</code><span class="sig-paren">(</span><em>cross_spec</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#phaseCorrection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.phaseCorrection" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">phaseCorrection</code><span class="sig-paren">(</span><em>cross_spec</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.phaseCorrection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.recspeAux">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">recspeAux</code><span class="sig-paren">(</span><em>df</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/spectral.html#recspeAux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.spectral.recspeAux" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">recspeAux</code><span class="sig-paren">(</span><em>df</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.recspeAux" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to make hfc_zeroQuad work in a pandas.DataFrame</p>
 </dd></dl>
 
@@ -257,20 +348,62 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <span id="pymicra-micro-util-module"></span><h2>pymicra.micro.util module<a class="headerlink" href="#module-pymicra.micro.util" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.util.eddyCovariance">
-<code class="descclassname">pymicra.micro.util.</code><code class="descname">eddyCovariance</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>wpl=True</em>, <em>get_turbulent_scales=True</em>, <em>site_config=None</em>, <em>output_as_df=True</em>, <em>notation=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>inplace=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/util.html#eddyCovariance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.util.eddyCovariance" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.util.</code><code class="descname">eddyCovariance</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>wpl=True</em>, <em>get_turbulent_scales=True</em>, <em>site_config=None</em>, <em>output_as_df=True</em>, <em>notation=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>inplace=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.eddyCovariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get fluxes from the turbulent fluctuations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataframe with the characteristic lengths calculated</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
+<li><strong>wpl</strong> (<em>boolean</em>) &#8211; whether or not to apply WPL correction on the latent heat flux and solutes flux</li>
+<li><strong>get_turbulent_scales</strong> (<em>bool</em>) &#8211; whether or not to use getScales to return turbulent scales</li>
+<li><strong>site_config</strong> (<em>pymica.siteConfig</em>) &#8211; siteConfig object to pass to getScales if get_turbulent_scales==True</li>
+<li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; object that holds the notation used in the dataframe</li>
+<li><strong>inplace</strong> (<em>bool</em>) &#8211; whether or not to treat the units inplace</li>
+<li><strong>solutes</strong> (<em>list</em>) &#8211; list that holds every solute considered for flux</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.util.preProcess">
-<code class="descclassname">pymicra.micro.util.</code><code class="descname">preProcess</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>use_means=False</em>, <em>rho_air_from_theta_v=True</em>, <em>inplace=True</em>, <em>theta=None</em>, <em>theta_unit=None</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/util.html#preProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.util.preProcess" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates moist and dry air densities, specific humidity mass density and other 
+<code class="descclassname">pymicra.micro.util.</code><code class="descname">preProcess</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>use_means=False</em>, <em>rho_air_from_theta_v=True</em>, <em>inplace=True</em>, <em>theta=None</em>, <em>theta_unit=None</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.preProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates moist and dry air densities, specific humidity mass density and other
 important variables using the variables provided in the input DataFrame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataframe with micrometeorological measurements</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary with the columns of data as keys</li>
+<li><strong>notation</strong> (<em>pymicra.notation</em>) &#8211; defining notation used in data</li>
+<li><strong>rho_air_from_theta_v</strong> (<em>bool</em>) &#8211; whether to use theta_v to calculate air density or theta</li>
+<li><strong>inplace</strong> (<em>bool</em>) &#8211; treat units inplace or not</li>
+<li><strong>theta</strong> (<em>pandas.Series</em>) &#8211; auxiliar theta measurement to be used if rho_air_from_theta_v==False</li>
+<li><strong>theta_unit</strong> (<em>pint.quantity</em>) &#8211; auxiliar theta measurement&#8217;s unit to be used if rho_air_from_theta_v==False</li>
+<li><strong>solutes</strong> (<em>list</em>) &#8211; list of string where each string is a solute to be considered</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>data</strong> &#8211; dataframe with original columns and new calculated ones</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.util.rotateCoor">
-<code class="descclassname">pymicra.micro.util.</code><code class="descname">rotateCoor</code><span class="sig-paren">(</span><em>data</em>, <em>notation=None</em>, <em>how='2d'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymicra/micro/util.html#rotateCoor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymicra.micro.util.rotateCoor" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.util.</code><code class="descname">rotateCoor</code><span class="sig-paren">(</span><em>data</em>, <em>notation=None</em>, <em>how='2d'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.rotateCoor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
