@@ -295,7 +295,7 @@ will be output if False.</li>
 
 <dl class="function">
 <dt id="pymicra.micro.spectral.correctLag">
-<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">correctLag</code><span class="sig-paren">(</span><em>data, notation=None, lag_bounds=[0, 100]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.correctLag" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">correctLag</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.correctLag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identifies and correct lags between data, assuming the
 vertical wind velocity has lag 0.</p>
 </dd></dl>
@@ -360,6 +360,26 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <dt id="pymicra.micro.spectral.recspeAux">
 <code class="descclassname">pymicra.micro.spectral.</code><code class="descname">recspeAux</code><span class="sig-paren">(</span><em>df</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.recspeAux" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to make hfc_zeroQuad work in a pandas.DataFrame</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.micro.spectral.zeroQuadCorrection">
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">zeroQuadCorrection</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.zeroQuadCorrection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the correction assuming that the quadrature is zero to
+a dataframe with spectra</p>
+<p>Wrapper to make hfc_zeroQuad work in a pandas.DataFrame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df</strong> (<em>pandas.DataFrame</em>) &#8211; dataframe with cospectra to correct</li>
+<li><strong>T</strong> (<em>float</em>) &#8211; response time to be used</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -456,7 +476,7 @@ important variables using the variables provided in the input DataFrame.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-28.
+      Last updated on 2016-07-29.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

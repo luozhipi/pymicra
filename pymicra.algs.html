@@ -221,13 +221,20 @@ x and y do not have to be ordered.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x</strong> (<em>np.array</em>) &#8211; independent variable</li>
 <li><strong>y</strong> (<em>np.array</em>) &#8211; dependent variable</li>
 <li><strong>bins_number</strong> (<em>int</em>) &#8211; number of classes (or bins) desired</li>
 <li><strong>function</strong> (<em>callable</em>) &#8211; funtion to be applied to both x and y-bins in order to smooth the data</li>
 <li><strong>logscale</strong> (<em>boolean</em>) &#8211; whether or not to use a log-spaced scale to set the bins</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>np.array</em> &#8211; x binned</li>
+<li><em>np.array</em> &#8211; y binned</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -334,19 +341,21 @@ This is specifically designed to be used with by pandas.DataFrame.apply method</
 <dt id="pymicra.algs.general.get_index">
 <code class="descclassname">pymicra.algs.general.</code><code class="descname">get_index</code><span class="sig-paren">(</span><em>x</em>, <em>to_look_for</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.get_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Just like the .index method of lists, except it works for multiple values</p>
-<dl class="docutils">
-<dt>x: list or array</dt>
-<dd>the main array</dd>
-<dt>to_look_for: list of array</dt>
-<dd>the subset of the main whose indexes are desired</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>indexes</strong> &#8211; array with the indexes of each element in y</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list or array</em>) &#8211; the main array</li>
+<li><strong>to_look_for</strong> (<em>list or array</em>) &#8211; the subset of the main whose indexes are desired</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.array</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>indexes</strong> &#8211; array with the indexes of each element in y</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.array</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -462,7 +471,7 @@ only True or False.</li>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li><strong>cdate</strong> (<em>datetime object</em>)</li>
-<li><em>Warning Needs to be optimized in order to read question markers also after the date:</em></li>
+<li><em>Warning: Needs to be optimized in order to read question markers also after the date</em></li>
 </ul>
 </p>
 </td>
@@ -473,7 +482,7 @@ only True or False.</li>
 
 <dl class="function">
 <dt id="pymicra.algs.general.parseDates">
-<code class="descclassname">pymicra.algs.general.</code><code class="descname">parseDates</code><span class="sig-paren">(</span><em>data</em>, <em>dataloggerConfig=None</em>, <em>date_col_names=None</em>, <em>clean=True</em>, <em>correct_fracs=None</em>, <em>complete_zeroes=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.parseDates" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.general.</code><code class="descname">parseDates</code><span class="sig-paren">(</span><em>data</em>, <em>dataloggerConfig=None</em>, <em>date_col_names=None</em>, <em>clean=True</em>, <em>verbose=False</em>, <em>connector=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.general.parseDates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Author: Tomas Chor
 date: 2015-08-10
 This routine parses the date from a pandas DataFrame when it is divided into several columns</p>
@@ -481,7 +490,7 @@ This routine parses the date from a pandas DataFrame when it is divided into sev
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>pandas DataFrame</em>) &#8211; dataFrame whose dates have to be parsed</li>
 <li><strong>date_col_names</strong> (<em>list</em>) &#8211; A list of the names of the columns in which the date is divided
 the naming of the date columns must be in accordance with the datetime directives,
@@ -490,9 +499,13 @@ see <a class="reference external" href="https://docs.python.org/2/library/dateti
 <li><strong>connector</strong> (<em>string</em>) &#8211; should be used only when the default connector causes some conflit</li>
 <li><strong>first_time_skip</strong> (<em>int</em>) &#8211; the offset (mostly because of the bad converting done by LBA</li>
 <li><strong>clean</strong> (<em>bool</em>) &#8211; remove date columns from data after it is introduced as index</li>
-<li><strong>correct_fracs</strong> (<em>bool</em>) &#8211; </li>
-<li><strong>complete_zeroes</strong> (<em>list</em>) &#8211; list of columns that need to be padded with zeroes</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data indexed by timestamp</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -692,7 +705,7 @@ defined in __init__.py</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-28.
+      Last updated on 2016-07-29.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
