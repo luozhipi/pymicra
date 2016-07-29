@@ -216,7 +216,7 @@ and then use it from then on everytime you want to read those data files. That i
 Pymicra calls a &#8220;file configuration file&#8221;, or &#8220;config file&#8221; for short. From that
 file, Pymicra can create a <code class="docutils literal"><span class="pre">pymicra.fileConfig</span></code> object. Consider, for example, the config
 file below</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;datalogger configuration file for the itaipu site in 2013&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;datalogger configuration file for a lake. Located at examples/lake.config&#39;</span>
 
 <span class="n">variables</span><span class="o">=</span><span class="p">{</span>
 <span class="mi">0</span><span class="p">:</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
@@ -239,17 +239,46 @@ file below</p>
 <span class="s1">&#39;p&#39;</span><span class="p">:</span><span class="s1">&#39;kPa&#39;</span>
 <span class="p">}</span>
 
-<span class="n">frequency</span><span class="o">=</span><span class="mi">20</span>
-<span class="n">date_cols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">columns_separator</span><span class="o">=</span><span class="s1">&#39;,&#39;</span>
-
+<span class="n">frequency</span><span class="o">=</span><span class="mi">20</span>
 <span class="n">header_lines</span><span class="o">=</span><span class="kc">None</span>
+
 <span class="n">filename_format</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">-%H%M.csv&#39;</span>
+<span class="n">date_cols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>First of all, note that the <code class="docutils literal"><span class="pre">.config</span></code> file is written in Python syntax, so it
 has to be able to actually be run on python. This has to be true for all
 <code class="docutils literal"><span class="pre">.config</span></code> files.</p>
+<p>Furthermore, the extension of the file does not matter. We adopt the
+<code class="docutils literal"><span class="pre">.config</span></code> extension for clarity, but it could be anything else.</p>
+<p>The previous config file describes the data in the files in the directory
+<code class="docutils literal"><span class="pre">../examples/ex_data/</span></code>. Here&#8217;s an example of one such file for comparison</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.000000</span><span class="p">,</span><span class="mf">4.9060000000000015</span><span class="p">,</span><span class="mf">0.787</span><span class="p">,</span><span class="mf">0.264</span><span class="p">,</span><span class="mf">28.55</span><span class="p">,</span><span class="mf">1365.0</span><span class="p">,</span><span class="mf">14.847</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.344</span><span class="p">,</span><span class="o">-</span><span class="mf">0.34</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.332</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.050000</span><span class="p">,</span><span class="mf">4.893</span><span class="p">,</span><span class="mf">0.903</span><span class="p">,</span><span class="mf">0.524</span><span class="p">,</span><span class="mf">28.56</span><span class="p">,</span><span class="mf">1369.0</span><span class="p">,</span><span class="mf">14.566</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.342</span><span class="p">,</span><span class="o">-</span><span class="mf">0.338</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.100000</span><span class="p">,</span><span class="mf">4.78</span><span class="p">,</span><span class="mf">0.784</span><span class="p">,</span><span class="mf">0.398</span><span class="p">,</span><span class="mf">28.52</span><span class="p">,</span><span class="mf">1358.0</span><span class="p">,</span><span class="mf">14.291</span><span class="p">,</span><span class="mf">98.998</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.341</span><span class="p">,</span><span class="o">-</span><span class="mf">0.34</span><span class="p">,</span><span class="o">-</span><span class="mf">0.334</span><span class="p">,</span><span class="o">-</span><span class="mf">0.332</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.150000</span><span class="p">,</span><span class="mf">4.838</span><span class="p">,</span><span class="mf">0.7909999999999999</span><span class="p">,</span><span class="mf">0.327</span><span class="p">,</span><span class="mf">28.58</span><span class="p">,</span><span class="mf">1353.0</span><span class="p">,</span><span class="mf">14.429</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.345</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.334</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.200000</span><span class="p">,</span><span class="mf">4.873</span><span class="p">,</span><span class="mf">0.787</span><span class="p">,</span><span class="mf">0.409</span><span class="p">,</span><span class="mf">28.56</span><span class="p">,</span><span class="mf">1341.0</span><span class="p">,</span><span class="mf">14.307</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.28</span><span class="p">,</span><span class="o">-</span><span class="mf">0.342</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.33</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.250000</span><span class="p">,</span><span class="mf">4.832</span><span class="p">,</span><span class="mf">0.877</span><span class="p">,</span><span class="mf">0.436</span><span class="p">,</span><span class="mf">28.55</span><span class="p">,</span><span class="mf">1362.0</span><span class="p">,</span><span class="mf">14.518</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.343</span><span class="p">,</span><span class="o">-</span><span class="mf">0.338</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.33</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.300000</span><span class="p">,</span><span class="mf">4.828</span><span class="p">,</span><span class="mf">0.8009999999999999</span><span class="p">,</span><span class="mf">0.354</span><span class="p">,</span><span class="mf">28.57</span><span class="p">,</span><span class="mf">1338.0</span><span class="p">,</span><span class="mf">14.401</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.343</span><span class="p">,</span><span class="o">-</span><span class="mf">0.338</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.33</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.350000</span><span class="p">,</span><span class="mf">4.879</span><span class="p">,</span><span class="mf">0.823</span><span class="p">,</span><span class="mf">0.256</span><span class="p">,</span><span class="mf">28.58</span><span class="p">,</span><span class="mf">1356.0</span><span class="p">,</span><span class="mf">14.23</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.28</span><span class="p">,</span><span class="o">-</span><span class="mf">0.341</span><span class="p">,</span><span class="o">-</span><span class="mf">0.337</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.400000</span><span class="p">,</span><span class="mf">4.864</span><span class="p">,</span><span class="mf">0.743</span><span class="p">,</span><span class="mf">0.302</span><span class="p">,</span><span class="mf">28.56</span><span class="p">,</span><span class="mf">1360.0</span><span class="p">,</span><span class="mf">14.375</span><span class="p">,</span><span class="mf">98.998</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.342</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.450000</span><span class="p">,</span><span class="mf">4.744</span><span class="p">,</span><span class="mf">0.703</span><span class="p">,</span><span class="mf">0.361</span><span class="p">,</span><span class="mf">28.57</span><span class="p">,</span><span class="mf">1371.0</span><span class="p">,</span><span class="mf">14.41</span><span class="p">,</span><span class="mf">99.017</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.343</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
+</pre></div>
+</div>
+<p>We obtain the config object with</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">fconfig</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;../examples/lake.config&#39;</span><span class="p">)</span>
+
+<span class="gp">In [20]: </span><span class="k">print</span><span class="p">(</span><span class="n">fconfig</span><span class="p">)</span>
+<span class="go">&lt;pymicra.fileConfig&gt;</span>
+<span class="go">datalogger configuration file for a lake. Located at examples/lake.config</span>
+</pre></div>
+</div>
+<p>Each variable defined in this file works as a keyword, since it can also be
+input manually when calling <code class="docutils literal"><span class="pre">pymicra.fileConfig()</span></code>. Thus, for more
+information, you can also use <code class="docutils literal"><span class="pre">help(pymicra.fileConfig</span></code>. Now we explain the
+keywords one by one. In the next section we wil explain how to use this object
+for reading a data file.</p>
 <div class="section" id="description">
 <h3>description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
 <p>The description is optional. It&#8217;s a string that serves only to better identify
@@ -262,43 +291,40 @@ each key is a column and its corresponding value is the variable in that
 column. Note that we are using here the default notation to indicate which
 variable is in which column. If a different notation is to be used here, then
 you will have to define a new notation in your program (refer back to
-<span class="xref std std-ref">Notation</span> for that).</p>
+<a class="reference internal" href="#notation">Notation</a> for that).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">From this point on, for simplicity,  we will assume that the default notation is used.</p>
 </div>
-<p>Since Pymicra works with labels for its
-data, its best if all the names of the variables are properly written, preferably
-following the default Pymicra notation. Let look at how to write parts of the
-timestamp first.</p>
-<p>The columns that contain parts of the date have to have their name matching
-Python&#8217;s <a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">date format string directive</a>.
-This is useful in case you want to index your data by timestamp, which is a
-huge advantage in some cases (check out what Pandas can do with
-<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">timestamp-indexed data</a>. If you don&#8217;t
-wish to work with timestamps and want to work only by line number in each file,
-you can ignore there columns.</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">improve this subsection</p>
-</div>
-<p>As for the physical quantities, it is strongly advised to follow Pymicra&#8217;s
-notation, which is described explained in the <a class="reference internal" href="#notation">Notation</a> Section. In the above
-example, which follows the Pymicra notation, u, v and w are the three wind
-components, <code class="docutils literal"><span class="pre">theta_v</span></code> stands for the virtual temperature, and <code class="docutils literal"><span class="pre">mrho_h2o</span></code>
-stands for the molar density of H2O. If it were the mass density the name would
-have been <code class="docutils literal"><span class="pre">rho_h2o</span></code>, according to the notation.</p>
+<p>It is imperative that the columns be named accordingly. For example, measuring
+H<sub>2</sub>O contents in mmol/m^3 is different from measuring it in g/m^3 or mg/g. The
+first is a molar density (moles per volume), the second is a mass density (mass
+per volume) and the third is a mass concentration (mass per mass). In the
+default notation these are indicated by the names <code class="docutils literal"><span class="pre">'mrho_h2o'</span></code>, <code class="docutils literal"><span class="pre">'rho_h2o'</span></code>
+and <code class="docutils literal"><span class="pre">'conc_h2o'</span></code>, respectively, and Pymicra needs to know which one is which.</p>
+<p>Columns that contain parts of the timestamp have to have their name matching
+Python&#8217;s <a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">date format string directive</a>,
+which themselves are the 1989 version default C standard format dates, which is
+common in many platforms.</p>
+<p>This is useful only in case you want to index your data by timestamp, which is
+a huge advantage in some cases (check out what Pandas can do with
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">timestamp-indexed data</a>) but Pymicra
+can also work well without this. If you don&#8217;t wish to work with timestamps and
+want to work only by line number in each file, you can ignore these columns and
+indicate that you don&#8217;t want to parse dates. In fact, parsing of dates makes
+Pymicra a lot slower. Reading a file parsing its dates is about 5.5 times
+slower than reading the same file without parsing any dates!</p>
 </div>
 <div class="section" id="units">
 <h3>units<a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">units</span></code> keywork is also very important. It tells Pymicra in which units
-every variable is being measured. Units are handled by <a href="#id3"><span class="problematic" id="id4">|pint|_</span></a>, so for more
+<p>The <code class="docutils literal"><span class="pre">units</span></code> keyword is also very important. It tells Pymicra in which units
+each variable is being measured. Units are handled by <a class="reference external" href="https://pint.readthedocs.io/en/0.7.2/">Pint</a>, so for more
 details on how to define the units please refer to their documentation. Suffices
 to say here that the format of the units are pretty intuitive. Some quick remarks
 are</p>
 <blockquote>
 <div><ul class="simple">
-<li>prefer to define units unambiguously (<code class="docutils literal"><span class="pre">'g/(m*(s**2))'</span></code> is generaly preffered to <code class="docutils literal"><span class="pre">'g/m/s**2'</span></code>, although both will work).</li>
+<li>prefer to define units unambiguously (<code class="docutils literal"><span class="pre">'g/(m*(s**2))'</span></code> is generally preferred to <code class="docutils literal"><span class="pre">'g/m/s**2'</span></code>, although both will work).</li>
 <li>to define that a unit is dimensionless, <code class="docutils literal"><span class="pre">'1'</span></code> will not work. Define it as <code class="docutils literal"><span class="pre">'dimensionless'</span></code> or <code class="docutils literal"><span class="pre">'g/g'</span></code> and so on.</li>
 <li>if one variable does not have a unit (such as a sensor flag), you don&#8217;t have to include that variable.</li>
 <li>the keys of <code class="docutils literal"><span class="pre">units</span></code> <strong>should exactly match</strong> the values of <code class="docutils literal"><span class="pre">variables</span></code>.</li>
@@ -318,7 +344,7 @@ tabs. In that case it should be <code class="docutils literal"><span class="pre"
 </div>
 <div class="section" id="header-lines">
 <h3>header_lines<a class="headerlink" href="#header-lines" title="Permalink to this headline">¶</a></h3>
-<p>The keyword <code class="docutils literal"><span class="pre">header_lines</span></code> tells us which of the first lines are part of a
+<p>The keyword <code class="docutils literal"><span class="pre">header_lines</span></code> tells us which of the first lines are part of
 the file header.  If there is no header then is should be <code class="docutils literal"><span class="pre">None</span></code>. If there
 are header lines than it should be a list or int. For example, if the first two
 lines of the file are part of a header, it should be <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">1]</span></code>. If it were the
@@ -331,33 +357,204 @@ lines of the file are part of a header, it should be <code class="docutils liter
 </div>
 <div class="section" id="date-cols">
 <h3>date_cols<a class="headerlink" href="#date-cols" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">date_cols</span></code> keyword is optional. It merely indicates which on the columns
-are a part of the timestamp. If it&#8217;s not provided, then Pymicra will assume
-that columns whose names have the character &#8220;%&#8221; in them are part of the date
-and will try to parse them. If the default notation is used, this should always
-be true, but can be false if a variable is named with a string that has a
-percentage sign in it.</p>
+<p>The <code class="docutils literal"><span class="pre">date_cols</span></code> keyword is optional. It is a list of integers that indicates
+which of the columns are a part of the timestamp. If it&#8217;s not provided, then
+Pymicra will assume that columns whose names have the character &#8220;%&#8221; in them are
+part of the date and will try to parse them. If the default notation is used,
+this should always be true.</p>
 </div>
 </div>
 <div class="section" id="reading-data">
 <h2>Reading data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h2>
-<p>With this file ready, it is easy to read any datafile. Consider the example
-below</p>
-<p>EXAMPLE</p>
-<p>In it we passed the path of a file to read and the <code class="docutils literal"><span class="pre">fileConfig</span></code> object
-containing the configuration of the file. The function <code class="docutils literal"><span class="pre">timeSeries</span></code> reads the
-file according to the options provided and returns a DataFrame that is put into
-the <code class="docutils literal"><span class="pre">data</span></code> variable. Printing <code class="docutils literal"><span class="pre">data</span></code>, in this case, would print the
-following on screen.</p>
-<p>DATA PRINT</p>
-<p>Notice that every variable defined in our datalogger configuration file appears in the
-data variable.</p>
+<p>To read a data file or a list of data files we use the function <code class="docutils literal"><span class="pre">timeSeries</span></code> along with
+a config file. Let us use the config file defined in the previous subsection with one of the data
+file it describes:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;../examples/ex_data/20131108-1300.csv&#39;</span>
+
+<span class="gp">In [22]: </span><span class="n">fconfig</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;../examples/lake.config&#39;</span><span class="p">)</span>
+
+<span class="gp">In [23]: </span><span class="n">data</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="gp">In [24]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">                             u      v      w  theta_v  mrho_h2o  mrho_co2       p</span>
+<span class="go">%Y-%m-%d%H:%M:%S.%f                                                              </span>
+<span class="go">2013-11-08 13:00:00.000  4.906  0.787  0.264    28.55      1365    14.847  98.982</span>
+<span class="go">2013-11-08 13:00:00.050  4.893  0.903  0.524    28.56      1369    14.566  98.982</span>
+<span class="go">2013-11-08 13:00:00.100  4.780  0.784  0.398    28.52      1358    14.291  98.998</span>
+<span class="go">2013-11-08 13:00:00.150  4.838  0.791  0.327    28.58      1353    14.429  98.982</span>
+<span class="go">2013-11-08 13:00:00.200  4.873  0.787  0.409    28.56      1341    14.307  98.982</span>
+<span class="go">2013-11-08 13:00:00.250  4.832  0.877  0.436    28.55      1362    14.518  98.982</span>
+<span class="go">2013-11-08 13:00:00.300  4.828  0.801  0.354    28.57      1338    14.401  98.982</span>
+<span class="go">2013-11-08 13:00:00.350  4.879  0.823  0.256    28.58      1356    14.230  98.982</span>
+<span class="go">2013-11-08 13:00:00.400  4.864  0.743  0.302    28.56      1360    14.375  98.998</span>
+<span class="go">2013-11-08 13:00:00.450  4.744  0.703  0.361    28.57      1371    14.410  99.017</span>
+<span class="go">...                        ...    ...    ...      ...       ...       ...     ...</span>
+<span class="go">2013-11-08 13:59:59.500  5.504  0.513  0.459    29.47      1212    14.437  98.868</span>
+<span class="go">2013-11-08 13:59:59.550  5.511  0.408  0.471    29.47      1197    14.369  98.903</span>
+<span class="go">2013-11-08 13:59:59.600  5.392 -0.012  0.257    29.50      1181    14.123  98.851</span>
+<span class="go">2013-11-08 13:59:59.650  5.489  0.149  0.313    29.46      1242    14.340  98.877</span>
+<span class="go">2013-11-08 13:59:59.700  5.492  0.275  0.374    29.46      1261    14.544  98.877</span>
+<span class="go">2013-11-08 13:59:59.750  5.442  0.136  0.352    29.47      1206    14.480  98.877</span>
+<span class="go">2013-11-08 13:59:59.800  5.321  0.206  0.374    29.48      1241    14.484  98.877</span>
+<span class="go">2013-11-08 13:59:59.850  5.361  0.233  0.490    29.48      1231    14.660  98.903</span>
+<span class="go">2013-11-08 13:59:59.900  5.329  0.155  0.201    29.49      1221    15.022  98.877</span>
+<span class="go">2013-11-08 13:59:59.950  5.461  0.045  0.219    29.46      1221    14.181  98.887</span>
+
+<span class="go">[72000 rows x 7 columns]</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">data</span></code> is a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code> object which contains the whole data available in the
+datafile with each columns being a variable. Since we indicated that we wanted to parse the dates
+with the option <code class="docutils literal"><span class="pre">parse_dates=True</span></code>, each row has its respective timestamp.
+If, otherwise, we were to ignore the dates, the result would be a integer-indexed dataset:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [25]: </span><span class="n">data2</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="gp">In [26]: </span><span class="k">print</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="go">           u      v      w  theta_v  mrho_h2o  mrho_co2       p</span>
+<span class="go">0      4.906  0.787  0.264    28.55      1365    14.847  98.982</span>
+<span class="go">1      4.893  0.903  0.524    28.56      1369    14.566  98.982</span>
+<span class="go">2      4.780  0.784  0.398    28.52      1358    14.291  98.998</span>
+<span class="go">3      4.838  0.791  0.327    28.58      1353    14.429  98.982</span>
+<span class="go">4      4.873  0.787  0.409    28.56      1341    14.307  98.982</span>
+<span class="go">5      4.832  0.877  0.436    28.55      1362    14.518  98.982</span>
+<span class="go">6      4.828  0.801  0.354    28.57      1338    14.401  98.982</span>
+<span class="go">7      4.879  0.823  0.256    28.58      1356    14.230  98.982</span>
+<span class="go">8      4.864  0.743  0.302    28.56      1360    14.375  98.998</span>
+<span class="go">9      4.744  0.703  0.361    28.57      1371    14.410  99.017</span>
+<span class="go">...      ...    ...    ...      ...       ...       ...     ...</span>
+<span class="go">71990  5.504  0.513  0.459    29.47      1212    14.437  98.868</span>
+<span class="go">71991  5.511  0.408  0.471    29.47      1197    14.369  98.903</span>
+<span class="go">71992  5.392 -0.012  0.257    29.50      1181    14.123  98.851</span>
+<span class="go">71993  5.489  0.149  0.313    29.46      1242    14.340  98.877</span>
+<span class="go">71994  5.492  0.275  0.374    29.46      1261    14.544  98.877</span>
+<span class="go">71995  5.442  0.136  0.352    29.47      1206    14.480  98.877</span>
+<span class="go">71996  5.321  0.206  0.374    29.48      1241    14.484  98.877</span>
+<span class="go">71997  5.361  0.233  0.490    29.48      1231    14.660  98.903</span>
+<span class="go">71998  5.329  0.155  0.201    29.49      1221    15.022  98.877</span>
+<span class="go">71999  5.461  0.045  0.219    29.46      1221    14.181  98.887</span>
+
+<span class="go">[72000 rows x 7 columns]</span>
+</pre></div>
+</div>
+<p>And, as mentioned, this way is a lot faster:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [27]: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">   ....: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+<span class="go">10 loops, best of 3: 132 ms per loop</span>
+<span class="go">1 loops, best of 3: 716 ms per loop</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="viewing-and-manipulating-data">
 <h2>Viewing and manipulating data<a class="headerlink" href="#viewing-and-manipulating-data" title="Permalink to this headline">¶</a></h2>
-<p>To view and manipulate data you have to follow Pandas&#8217;s DataFrame rules. For
+<p>To view and manipulate data, mostly you have to follow Pandas&#8217;s DataFrame rules. For
 that we suggest that the user visit a Pandas tutorial. However, I&#8217;ll explain
-some main ideas here for the sake of completeness.</p>
+some main ideas here for the sake of completeness and introduce some few ideas specific
+for Pymicra that don&#8217;t exist for general Pandas DataFrames.</p>
+<p>First, for viewing raw data on screen, printing should be enough. Slicing and indexing
+are supported:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [29]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">])</span>
+<span class="go">%Y-%m-%d%H:%M:%S.%f</span>
+<span class="go">2013-11-08 13:00:00.000    4.906</span>
+<span class="go">2013-11-08 13:00:00.050    4.893</span>
+<span class="go">2013-11-08 13:00:00.100    4.780</span>
+<span class="go">2013-11-08 13:00:00.150    4.838</span>
+<span class="go">2013-11-08 13:00:00.200    4.873</span>
+<span class="go">2013-11-08 13:00:00.250    4.832</span>
+<span class="go">2013-11-08 13:00:00.300    4.828</span>
+<span class="go">2013-11-08 13:00:00.350    4.879</span>
+<span class="go">2013-11-08 13:00:00.400    4.864</span>
+<span class="go">2013-11-08 13:00:00.450    4.744</span>
+<span class="go">                           ...  </span>
+<span class="go">2013-11-08 13:59:59.500    5.504</span>
+<span class="go">2013-11-08 13:59:59.550    5.511</span>
+<span class="go">2013-11-08 13:59:59.600    5.392</span>
+<span class="go">2013-11-08 13:59:59.650    5.489</span>
+<span class="go">2013-11-08 13:59:59.700    5.492</span>
+<span class="go">2013-11-08 13:59:59.750    5.442</span>
+<span class="go">2013-11-08 13:59:59.800    5.321</span>
+<span class="go">2013-11-08 13:59:59.850    5.361</span>
+<span class="go">2013-11-08 13:59:59.900    5.329</span>
+<span class="go">2013-11-08 13:59:59.950    5.461</span>
+<span class="go">Name: u, dtype: float64</span>
+
+<span class="gp">In [30]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">])</span>
+<span class="go">%Y-%m-%d%H:%M:%S.%f</span>
+<span class="go">2013-11-08 13:00:00.000    28.55</span>
+<span class="go">2013-11-08 13:00:00.050    28.56</span>
+<span class="go">2013-11-08 13:00:00.100    28.52</span>
+<span class="go">2013-11-08 13:00:00.150    28.58</span>
+<span class="go">2013-11-08 13:00:00.200    28.56</span>
+<span class="go">2013-11-08 13:00:00.250    28.55</span>
+<span class="go">2013-11-08 13:00:00.300    28.57</span>
+<span class="go">2013-11-08 13:00:00.350    28.58</span>
+<span class="go">2013-11-08 13:00:00.400    28.56</span>
+<span class="go">2013-11-08 13:00:00.450    28.57</span>
+<span class="go">                           ...  </span>
+<span class="go">2013-11-08 13:59:59.500    29.47</span>
+<span class="go">2013-11-08 13:59:59.550    29.47</span>
+<span class="go">2013-11-08 13:59:59.600    29.50</span>
+<span class="go">2013-11-08 13:59:59.650    29.46</span>
+<span class="go">2013-11-08 13:59:59.700    29.46</span>
+<span class="go">2013-11-08 13:59:59.750    29.47</span>
+<span class="go">2013-11-08 13:59:59.800    29.48</span>
+<span class="go">2013-11-08 13:59:59.850    29.48</span>
+<span class="go">2013-11-08 13:59:59.900    29.49</span>
+<span class="go">2013-11-08 13:59:59.950    29.46</span>
+<span class="go">Name: theta_v, dtype: float64</span>
+
+<span class="gp">In [31]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]])</span>
+<span class="go">                             u      v      w</span>
+<span class="go">%Y-%m-%d%H:%M:%S.%f                         </span>
+<span class="go">2013-11-08 13:00:00.000  4.906  0.787  0.264</span>
+<span class="go">2013-11-08 13:00:00.050  4.893  0.903  0.524</span>
+<span class="go">2013-11-08 13:00:00.100  4.780  0.784  0.398</span>
+<span class="go">2013-11-08 13:00:00.150  4.838  0.791  0.327</span>
+<span class="go">2013-11-08 13:00:00.200  4.873  0.787  0.409</span>
+<span class="go">2013-11-08 13:00:00.250  4.832  0.877  0.436</span>
+<span class="go">2013-11-08 13:00:00.300  4.828  0.801  0.354</span>
+<span class="go">2013-11-08 13:00:00.350  4.879  0.823  0.256</span>
+<span class="go">2013-11-08 13:00:00.400  4.864  0.743  0.302</span>
+<span class="go">2013-11-08 13:00:00.450  4.744  0.703  0.361</span>
+<span class="go">...                        ...    ...    ...</span>
+<span class="go">2013-11-08 13:59:59.500  5.504  0.513  0.459</span>
+<span class="go">2013-11-08 13:59:59.550  5.511  0.408  0.471</span>
+<span class="go">2013-11-08 13:59:59.600  5.392 -0.012  0.257</span>
+<span class="go">2013-11-08 13:59:59.650  5.489  0.149  0.313</span>
+<span class="go">2013-11-08 13:59:59.700  5.492  0.275  0.374</span>
+<span class="go">2013-11-08 13:59:59.750  5.442  0.136  0.352</span>
+<span class="go">2013-11-08 13:59:59.800  5.321  0.206  0.374</span>
+<span class="go">2013-11-08 13:59:59.850  5.361  0.233  0.490</span>
+<span class="go">2013-11-08 13:59:59.900  5.329  0.155  0.201</span>
+<span class="go">2013-11-08 13:59:59.950  5.461  0.045  0.219</span>
+
+<span class="go">[72000 rows x 3 columns]</span>
+
+<span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;2013-11-08 13:15:00&#39;</span><span class="p">])</span>
+<span class="go">                             u      v      w  theta_v  mrho_h2o  mrho_co2       p</span>
+<span class="go">%Y-%m-%d%H:%M:%S.%f                                                              </span>
+<span class="go">2013-11-08 13:15:00.000  6.389  1.531  0.028    28.53      1311    14.686  98.946</span>
+<span class="go">2013-11-08 13:15:00.050  6.163  1.728 -0.043    28.53      1314    14.768  98.946</span>
+<span class="go">2013-11-08 13:15:00.100  6.450  1.822 -0.071    28.51      1306    14.823  98.946</span>
+<span class="go">2013-11-08 13:15:00.150  6.725  1.816  0.234    28.54      1306    14.752  98.946</span>
+<span class="go">2013-11-08 13:15:00.200  6.661  1.753  0.261    28.52      1312    14.454  98.946</span>
+<span class="go">2013-11-08 13:15:00.250  6.498  1.946  0.295    28.51      1297    14.560  98.894</span>
+<span class="go">2013-11-08 13:15:00.300  6.295  1.805  0.178    28.54      1301    14.533  98.956</span>
+<span class="go">2013-11-08 13:15:00.350  6.248  1.606  0.266    28.51      1305    14.542  98.956</span>
+<span class="go">2013-11-08 13:15:00.400  6.193  1.441  0.207    28.52      1302    14.512  98.929</span>
+<span class="go">2013-11-08 13:15:00.450  6.221  1.473  0.064    28.57      1275    14.429  98.956</span>
+<span class="go">2013-11-08 13:15:00.500  5.792  1.289  0.277    28.49      1300    14.620  98.929</span>
+<span class="go">2013-11-08 13:15:00.550  6.175  1.229  0.580    28.55      1295    14.723  98.946</span>
+<span class="go">2013-11-08 13:15:00.600  5.786  1.292  0.611    28.53      1273    14.633  98.946</span>
+<span class="go">2013-11-08 13:15:00.650  5.876  0.928  0.765    28.51      1293    15.056  98.946</span>
+<span class="go">2013-11-08 13:15:00.700  5.885  1.167  0.674    28.54      1272    14.359  98.956</span>
+<span class="go">2013-11-08 13:15:00.750  5.690  1.188  0.648    28.52      1301    14.753  98.998</span>
+<span class="go">2013-11-08 13:15:00.800  5.906  1.220  0.715    28.54      1305    14.582  98.956</span>
+<span class="go">2013-11-08 13:15:00.850  5.992  1.104  0.628    28.54      1294    14.581  98.929</span>
+<span class="go">2013-11-08 13:15:00.900  5.969  1.569  0.716    28.52      1271    14.333  98.956</span>
+<span class="go">2013-11-08 13:15:00.950  6.090  1.085  0.325    28.46      1298    14.608  98.956</span>
+</pre></div>
+</div>
 </div>
 </div>
 
