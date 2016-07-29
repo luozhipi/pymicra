@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Pymicra’s auto-generated docs &mdash; Pymicra 0.2.0 documentation</title>
+    <title>Pymicra’s auto-generated docs &mdash; Pymicra 0.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.0',
+        VERSION:     '0.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
+    <link rel="top" title="Pymicra 0.2.1 documentation" href="index.html" />
     <link rel="next" title="pymicra.algs package" href="pymicra.algs.html" />
-    <link rel="prev" title="Getting started" href="tutorial.html" />
+    <link rel="prev" title="Hands-on tutorial" href="tutorial.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -48,9 +48,9 @@
           <a href="pymicra.algs.html" title="pymicra.algs package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="tutorial.html" title="Getting started"
+          <a href="tutorial.html" title="Hands-on tutorial"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -62,7 +62,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Hands-on tutorial</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pymicra&#8217;s auto-generated docs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pymicra">Pymicra contents</a></li>
@@ -119,7 +120,7 @@
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="tutorial.html"
-                        title="previous chapter">Getting started</a></p>
+                        title="previous chapter">Hands-on tutorial</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pymicra.algs.html"
                         title="next chapter">pymicra.algs package</a></p>
@@ -671,7 +672,8 @@ functions defined elsewhere. This is done by monkey-patching Pandas.</p>
 </div>
 <div class="section" id="module-pymicra.physics">
 <span id="pymicra-physics"></span><h2>pymicra.physics<a class="headerlink" href="#module-pymicra.physics" title="Permalink to this headline">¶</a></h2>
-<p>Module that contains physical functions for general use</p>
+<p>Module that contains physical functions. They are all general use, but
+most are specially frequent in micrometeorology.</p>
 <dl class="docutils">
 <dt>TO DO LIST:</dt>
 <dd><ul class="first last simple">
@@ -680,12 +682,6 @@ functions defined elsewhere. This is done by monkey-patching Pandas.</p>
 </ul>
 </dd>
 </dl>
-<dl class="function">
-<dt id="pymicra.physics.CtoK">
-<code class="descclassname">pymicra.physics.</code><code class="descname">CtoK</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.CtoK" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return temp in Kelvin given temp T in Celsius</p>
-</dd></dl>
-
 <dl class="function">
 <dt id="pymicra.physics.R_moistAir">
 <code class="descclassname">pymicra.physics.</code><code class="descname">R_moistAir</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.R_moistAir" title="Permalink to this definition">¶</a></dt>
@@ -706,7 +702,7 @@ functions defined elsewhere. This is done by monkey-patching Pandas.</p>
 
 <dl class="function">
 <dt id="pymicra.physics.airDensity_from_theta">
-<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em>, <em>use_means=False</em>, <em>theta=None</em>, <em>theta_unit=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.airDensity_from_theta" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace_units=True</em>, <em>use_means=False</em>, <em>theta=None</em>, <em>theta_unit=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.airDensity_from_theta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates moist air density using theta measurements</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -716,7 +712,7 @@ functions defined elsewhere. This is done by monkey-patching Pandas.</p>
 <li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataset to add rho_air</li>
 <li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
 <li><strong>notation</strong> (<em>pymicra.notation</em>) &#8211; notation to be used</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; whether or not to treat units inplace</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; whether or not to treat units inplace</li>
 <li><strong>use_means</strong> (<em>bool</em>) &#8211; use the mean of theta or not when calculating</li>
 <li><strong>theta</strong> (<em>pandas.Series</em>) &#8211; auxiliar theta measurement</li>
 <li><strong>theta_unit</strong> (<em>pint.quantity</em>) &#8211; auxiliar theta&#8217;s unit</li>
@@ -729,8 +725,23 @@ functions defined elsewhere. This is done by monkey-patching Pandas.</p>
 
 <dl class="function">
 <dt id="pymicra.physics.airDensity_from_theta_v">
-<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em>, <em>use_means=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.airDensity_from_theta_v" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">airDensity_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace_units=True</em>, <em>use_means=False</em>, <em>return_full_df=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.airDensity_from_theta_v" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates moist air density using p = rho R_dry T_virtual</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; data to use to calculate air density</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; dictionary of units</li>
+<li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; notation to be used</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; whether or not to update the units inplace. If False, units are returns too</li>
+<li><strong>use_means</strong> (<em>bool</em>) &#8211; whether or not to use averages of pressure and virtual temperature, instead of the means plus fluctuations</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -742,7 +753,7 @@ theta has to be in Kelvin and e in kPa</p>
 
 <dl class="function">
 <dt id="pymicra.physics.dryAirDensity_from_p">
-<code class="descclassname">pymicra.physics.</code><code class="descname">dryAirDensity_from_p</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.dryAirDensity_from_p" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">dryAirDensity_from_p</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace_units=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.dryAirDensity_from_p" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates dry air density
 NEEDS IMPROVEMENT REGARDING HANDLING OF UNITS</p>
 </dd></dl>
@@ -764,10 +775,32 @@ againt pandas objects</p>
 
 <dl class="function">
 <dt id="pymicra.physics.ppxv2density">
-<code class="descclassname">pymicra.physics.</code><code class="descname">ppxv2density</code><span class="sig-paren">(</span><em>ser</em>, <em>T</em>, <em>p</em>, <em>units</em>, <em>solute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.ppxv2density" title="Permalink to this definition">¶</a></dt>
-<dd><p>ser should be a series!
-concentration in ser should be ppmv, which will be transformed to g/m3
-p should be in kPa!</p>
+<code class="descclassname">pymicra.physics.</code><code class="descname">ppxv2density</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>inplace_units=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.ppxv2density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates density of solutes based on their molar concentration (ppmv, ppbv and etc), not
+to be confused with mass concentration (ppm, ppb and etc).</p>
+<p>Uses the relation
+<span class="math">\(\rho_x = \frac{C p}{\theta R_x}\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataset of micromet variables</li>
+<li><strong>units</strong> (<em>dict</em>) &#8211; dict of pint units</li>
+<li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; notation to be used here</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; whether or not to treat the dict units in place</li>
+<li><strong>solutes</strong> (<em>list or tuple</em>) &#8211; solutes to consider when doing this conversion</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">input data plus calculated density columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -790,36 +823,8 @@ p should be in kPa!</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymicra.physics.solarZenith">
-<code class="descclassname">pymicra.physics.</code><code class="descname">solarZenith</code><span class="sig-paren">(</span><em>date</em>, <em>lat=-3.13</em>, <em>lon=-60.016667</em>, <em>lon0=-63.0</em>, <em>negative=False</em>, <em>dr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.solarZenith" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the solar zenith angle at any given day</p>
-<p>needs validation and needs to work without lon0</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>date</strong> (<em>datetime object</em>) &#8211; the date and time for which the zenith angle has to be calculated</li>
-<li><strong>lat</strong> (<em>float</em>) &#8211; latitude in degrees</li>
-<li><strong>lon</strong> (<em>float</em>) &#8211; longitude in degrees</li>
-<li><strong>lon0</strong> (<em>float</em>) &#8211; DEFINE IT BETTER</li>
-<li><strong>is the julian day of the solstice. Default is to get from dictionary</strong> (<em>dr</em>) &#8211; </li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>zen_ang</strong> &#8211; the zenith angle in degrees</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="pymicra.physics.theta_from_theta_s">
-<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_s</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_df=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_from_theta_s" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_s</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_full_df=True</em>, <em>inplace_units=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_from_theta_s" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates thermodynamic temperature using sonic temperature measurements</p>
 <p>From Schotanus, Nieuwstadt, de Bruin; DOI 10.1007/BF00164332</p>
 <p>theta_s = theta (1 + 0.51 q) (1 - (vn/c)**2)^0.5</p>
@@ -847,9 +852,9 @@ p should be in kPa!</p>
 
 <dl class="function">
 <dt id="pymicra.physics.theta_from_theta_v">
-<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_df=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_from_theta_v" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.physics.</code><code class="descname">theta_from_theta_v</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>return_full_df=True</em>, <em>inplace_units=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.physics.theta_from_theta_v" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates thermodynamic temperature from virtual temperature measurements</p>
-<p>theta_v ~ theta (1 + 0.61 q)</p>
+<p><span class="math">\(theta_v \approx theta (1 + 0.61 q)\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -879,11 +884,17 @@ p should be in kPa!</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>pandas.dataframe</em>) &#8211; dataframe with q, q&#8217;, theta, theta_v&#8217;</li>
 <li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
 <li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; Notation object or None</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">standard deviation of the thermodynamic temperature</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
 </td>
 </tr>
 </tbody>
@@ -1106,7 +1117,7 @@ order to be correctly corrected</li>
 
 <dl class="function">
 <dt id="pymicra.util.qcontrol">
-<code class="descclassname">pymicra.util.</code><code class="descname">qcontrol</code><span class="sig-paren">(</span><em>files</em>, <em>datalogger_config</em>, <em>read_files_kw={'parse_dates': False</em>, <em>'only_named_cols': False</em>, <em>'clean_dates': False}</em>, <em>accepted_nans_percent=1.0</em>, <em>accepted_spikes_percent=1.0</em>, <em>accepted_bound_percent=1.0</em>, <em>max_replacement_count=180</em>, <em>file_lines=None</em>, <em>begin_date=None</em>, <em>end_date=None</em>, <em>nans_test=True</em>, <em>maxdif_detrend=True</em>, <em>maxdif_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>maxdif_trend=True</em>, <em>maxdif_trend_kw={'how': 'movingmedian'</em>, <em>'window': 600}</em>, <em>std_detrend=True</em>, <em>std_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>RAT_detrend=True</em>, <em>RAT_detrend_kw={'how': 'linear'}</em>, <em>spikes_detrend=True</em>, <em>spikes_detrend_kw={'how': 'linear'}</em>, <em>lower_limits={}</em>, <em>upper_limits={}</em>, <em>spikes_test=True</em>, <em>visualize_spikes=False</em>, <em>spikes_vis_col='u'</em>, <em>spikes_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>replace_with='interpolation'</em>, <em>max_consec_spikes=3</em>, <em>chunk_size=1200</em>, <em>std_limits={}</em>, <em>dif_limits={}</em>, <em>RAT=False</em>, <em>RAT_vars=None</em>, <em>RAT_points=50</em>, <em>RAT_significance=0.05</em>, <em>trueverbose=False</em>, <em>falseverbose=True</em>, <em>falseshow=False</em>, <em>trueshow=False</em>, <em>trueshow_vars=None</em>, <em>outdir='quality_controlled'</em>, <em>summary_file='qcontrol_summary.csv'</em>, <em>replaced_report=None</em>, <em>full_report=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.util.qcontrol" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.util.</code><code class="descname">qcontrol</code><span class="sig-paren">(</span><em>files</em>, <em>datalogger_config</em>, <em>read_files_kw={'return_units': False</em>, <em>'parse_dates': False</em>, <em>'only_named_cols': False</em>, <em>'clean_dates': False}</em>, <em>accepted_nans_percent=1.0</em>, <em>accepted_spikes_percent=1.0</em>, <em>accepted_bound_percent=1.0</em>, <em>max_replacement_count=180</em>, <em>file_lines=None</em>, <em>begin_date=None</em>, <em>end_date=None</em>, <em>nans_test=True</em>, <em>maxdif_detrend=True</em>, <em>maxdif_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>maxdif_trend=True</em>, <em>maxdif_trend_kw={'how': 'movingmedian'</em>, <em>'window': 600}</em>, <em>std_detrend=True</em>, <em>std_detrend_kw={'how': 'movingmean'</em>, <em>'window': 900}</em>, <em>RAT_detrend=True</em>, <em>RAT_detrend_kw={'how': 'linear'}</em>, <em>spikes_detrend=True</em>, <em>spikes_detrend_kw={'how': 'linear'}</em>, <em>lower_limits={}</em>, <em>upper_limits={}</em>, <em>spikes_test=True</em>, <em>visualize_spikes=False</em>, <em>spikes_vis_col='u'</em>, <em>spikes_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>replace_with='interpolation'</em>, <em>max_consec_spikes=3</em>, <em>chunk_size=1200</em>, <em>std_limits={}</em>, <em>dif_limits={}</em>, <em>RAT=False</em>, <em>RAT_vars=None</em>, <em>RAT_points=50</em>, <em>RAT_significance=0.05</em>, <em>trueverbose=False</em>, <em>falseverbose=True</em>, <em>falseshow=False</em>, <em>trueshow=False</em>, <em>trueshow_vars=None</em>, <em>outdir='quality_controlled'</em>, <em>summary_file='qcontrol_summary.csv'</em>, <em>replaced_report=None</em>, <em>full_report=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.util.qcontrol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that applies various tests quality control to a set of datafiles and re-writes
 the successful files in another directory. A list of currently-applied tests is found
 below in order of application. The only test available by default is the spikes test.
@@ -1338,14 +1349,14 @@ of the next file in case they don&#8217;t finish on a nice round time with respe
           <a href="pymicra.algs.html" title="pymicra.algs package"
              >next</a> |</li>
         <li class="right" >
-          <a href="tutorial.html" title="Getting started"
+          <a href="tutorial.html" title="Hands-on tutorial"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-24.
+      Last updated on 2016-07-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

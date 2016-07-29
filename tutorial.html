@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Getting started &mdash; Pymicra 0.2.0 documentation</title>
+    <title>Hands-on tutorial &mdash; Pymicra 0.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.0',
+        VERSION:     '0.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
+    <link rel="top" title="Pymicra 0.2.1 documentation" href="index.html" />
     <link rel="next" title="Pymicra’s auto-generated docs" href="pymicra.html" />
-    <link rel="prev" title="Installation" href="install.html" />
+    <link rel="prev" title="Getting started" href="basics.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -48,9 +48,9 @@
           <a href="pymicra.html" title="Pymicra’s auto-generated docs"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="install.html" title="Installation"
+          <a href="basics.html" title="Getting started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -62,10 +62,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#notation">Notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reading-datafiles">Reading datafiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#viewing-and-manipulating-data">Viewing and manipulating data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Hands-on tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#converting-between-different-units">Converting between different units</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#extracting-fluxes">Extracting fluxes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#obtaining-the-spectra">Obtaining the spectra</a></li>
@@ -93,13 +91,7 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Getting started</a><ul>
-<li><a class="reference internal" href="#notation">Notation</a></li>
-<li><a class="reference internal" href="#reading-datafiles">Reading datafiles</a><ul>
-<li><a class="reference internal" href="#creating-file-configurations">Creating file configurations</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#viewing-and-manipulating-data">Viewing and manipulating data</a></li>
+<li><a class="reference internal" href="#">Hands-on tutorial</a><ul>
 <li><a class="reference internal" href="#converting-between-different-units">Converting between different units</a></li>
 <li><a class="reference internal" href="#extracting-fluxes">Extracting fluxes</a></li>
 <li><a class="reference internal" href="#obtaining-the-spectra">Obtaining the spectra</a></li>
@@ -108,8 +100,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="previous chapter">Installation</a></p>
+  <p class="topless"><a href="basics.html"
+                        title="previous chapter">Getting started</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pymicra.html"
                         title="next chapter">Pymicra&#8217;s auto-generated docs</a></p>
@@ -121,106 +113,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="getting-started">
-<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>This &#8220;Getting started&#8221; tutorial is a brief introduction to Pymicra. This is in
-no way supposed to be a complete representation of everything that can be done
-with Pymicra.</p>
-<div class="section" id="notation">
-<h2>Notation<a class="headerlink" href="#notation" title="Permalink to this headline">¶</a></h2>
-<p>Pymicra uses a specific notation to name each one of its columns. This notation
-is extremely important, because it is by these labels that Pymicra knows which
-variable is in each column. You can check the default notation with</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymicra</span>
-<span class="k">print</span><span class="p">(</span><span class="n">pymicra</span><span class="o">.</span><span class="n">notation</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>On the left you see the full name of the variables (which corresponds to a notation namespace) and on the right
-we see the default notation for that variable.</p>
-<p>You can change Pymicra&#8217;s notation at any time by altering the attributes of
-<code class="docutils literal"><span class="pre">pymicra.notation</span></code>.</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Extend this section with some examples</p>
-</div>
-</div>
-<div class="section" id="reading-datafiles">
-<h2>Reading datafiles<a class="headerlink" href="#reading-datafiles" title="Permalink to this headline">¶</a></h2>
-<p>The easiest way to read data files is using the <code class="docutils literal"><span class="pre">timeSeries</span></code> function with a
-<code class="docutils literal"><span class="pre">fileConfig</span></code> object such as</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;example.config&#39;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="s1">&#39;1H_20130504.csv&#39;</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>First, let&#8217;s explain what the <code class="docutils literal"><span class="pre">fileConfig</span></code> class does. This class holds most
-of the configurations inherent to the datalogger that actually influence the
-file output (such as columns separator), which variable is in each column,
-variables units, frequency, file headers, etc..</p>
-<div class="section" id="creating-file-configurations">
-<h3>Creating file configurations<a class="headerlink" href="#creating-file-configurations" title="Permalink to this headline">¶</a></h3>
-<p>You can create a <code class="docutils literal"><span class="pre">fileConfig</span></code> object manually by passing each of
-these informations as a keyword to the <code class="docutils literal"><span class="pre">fileConfig</span></code> function, but
-the easiest method is to create a <code class="docutils literal"><span class="pre">.dlc</span></code> file (meaning datalogger
-configuration), store it somewhere and create a <code class="docutils literal"><span class="pre">fileConfig</span></code> object
-by reading it every time you work with files with that same configuration.</p>
-<p>Consider the example <code class="docutils literal"><span class="pre">.dlc</span></code> file below, which will be explained next.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ex_itaipu</span><span class="o">.</span><span class="n">dlc</span>
-</pre></div>
-</div>
-<p>First of all, every .dlc file is written in Python syntax, so it has to be able
-to actually be run on python. The description is optional and the
-<code class="docutils literal"><span class="pre">first_time_skip</span></code> and <code class="docutils literal"><span class="pre">date_connector</span></code> keywords are generally not
-necessary, so you&#8217;ll rarely have to use them. They can be omitted from the
-file.</p>
-<p>The most important keyword is <code class="docutils literal"><span class="pre">variables</span></code>. Since Pymicra works with labels for its
-data, its best if all the names of the variables are properly written, preferably
-following the default Pymicra notation. Let look at how to write parts of the
-timestamp first.</p>
-<p>The columns that contain parts of the date have to have their name matching
-Python&#8217;s <a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">date format string directive</a>.
-This is useful in case you want to index your data by timestamp, which is a
-huge advantage in some cases (check out what Pandas can do with
-<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">timestamp-indexed data</a>. If you don&#8217;t
-wish to work with timestamps and want to work only by line number in each file,
-you can ignore there columns.</p>
-<p>As for the physical quantities, it is strongly advised to follow Pymicra&#8217;s
-notation, which is described explained in the <a class="reference internal" href="#notation">Notation</a> Section. In the above
-example, which follows the Pymicra notation, u, v and w are the three wind
-components, <code class="docutils literal"><span class="pre">theta_v</span></code> stands for the virtual temperature, and <code class="docutils literal"><span class="pre">mrho_h2o</span></code>
-stands for the molar density of H2O. If it were the mass density the name would
-have been <code class="docutils literal"><span class="pre">rho_h2o</span></code>, according to the notation.</p>
-<p>The <code class="docutils literal"><span class="pre">date_cols</span></code></p>
-<p>The <code class="docutils literal"><span class="pre">frequency</span></code>, in Hertz, is the frequency of the data collection.
-Useful mostly when taking the spectrum or co-spectrum.</p>
-<p>The <code class="docutils literal"><span class="pre">columns</span></code> separator is what separates one column from the other.
-Generally it is one character, such as a comma or a whitespace. A special case
-happens is if the columns are separated by whitespaces of varying length. In
-that case just put &#8220;whitespace&#8221;.</p>
-<p>The keyword <code class="docutils literal"><span class="pre">header_lines</span></code> is an int, or list of ints saying which rows are
-headers, starting from zero. So if the first two rows of the file are a header,
-the <code class="docutils literal"><span class="pre">header_lines</span></code> in this case should be <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">1]</span></code>.</p>
-<p>The <code class="docutils literal"><span class="pre">filename_format</span></code></p>
-<p>The <code class="docutils literal"><span class="pre">date_connector</span></code></p>
-<p>The <code class="docutils literal"><span class="pre">first_time_skip</span></code></p>
-<p>With this file ready, it is easy to read any datafile. Consider the example
-below</p>
-<p>EXAMPLE</p>
-<p>In it we passed the path of a file to read and the <code class="docutils literal"><span class="pre">fileConfig</span></code> object
-containing the configuration of the file. The function <code class="docutils literal"><span class="pre">timeSeries</span></code> reads the
-file according to the options provided and returns a DataFrame that is put into
-the <code class="docutils literal"><span class="pre">data</span></code> variable. Printing <code class="docutils literal"><span class="pre">data</span></code>, in this case, would print the
-following on screen.</p>
-<p>DATA PRINT</p>
-<p>Notice that every variable defined in our datalogger configuration file appears in the
-data variable.</p>
-</div>
-</div>
-<div class="section" id="viewing-and-manipulating-data">
-<h2>Viewing and manipulating data<a class="headerlink" href="#viewing-and-manipulating-data" title="Permalink to this headline">¶</a></h2>
-<p>To view and manipulate data you have to follow Pandas&#8217;s DataFrame rules. For
-that we suggest that the user visit a Pandas tutorial. However, I&#8217;ll explain
-some main ideas here for the sake of completeness.</p>
-</div>
+  <div class="section" id="hands-on-tutorial">
+<h1>Hands-on tutorial<a class="headerlink" href="#hands-on-tutorial" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="converting-between-different-units">
 <h2>Converting between different units<a class="headerlink" href="#converting-between-different-units" title="Permalink to this headline">¶</a></h2>
 <p>Pymicra has some handy functions that convert between units using Pint.</p>
@@ -256,14 +150,14 @@ spectra, co-spectra and quadratures.</p>
           <a href="pymicra.html" title="Pymicra’s auto-generated docs"
              >next</a> |</li>
         <li class="right" >
-          <a href="install.html" title="Installation"
+          <a href="basics.html" title="Getting started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-22.
+      Last updated on 2016-07-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

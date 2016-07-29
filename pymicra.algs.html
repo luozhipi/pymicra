@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pymicra.algs package &mdash; Pymicra 0.2.0 documentation</title>
+    <title>pymicra.algs package &mdash; Pymicra 0.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.0',
+        VERSION:     '0.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,10 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
+    <link rel="top" title="Pymicra 0.2.1 documentation" href="index.html" />
+    <link rel="up" title="Pymicra’s auto-generated docs" href="pymicra.html" />
+    <link rel="next" title="pymicra.micro package" href="pymicra.micro.html" />
+    <link rel="prev" title="Pymicra’s auto-generated docs" href="pymicra.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -42,7 +45,14 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="pymicra.micro.html" title="pymicra.micro package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pymicra.html" title="Pymicra’s auto-generated docs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pymicra.html" accesskey="U">Pymicra&#8217;s auto-generated docs</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -51,11 +61,25 @@
               <img class="logo" src="_static/starry.jpg" alt="Logo"/>
             </a></p>
 <h3><a href="index.html">Table Of Contents</a></h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Hands-on tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pymicra.html">Pymicra&#8217;s auto-generated docs</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pymicra.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra">Pymicra contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.constants">pymicra.constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.core">pymicra.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.data">pymicra.data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.decorators">pymicra.decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.io">pymicra.io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.methods">pymicra.methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.physics">pymicra.physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.tests">pymicra.tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.util">pymicra.util</a></li>
+</ul>
+</li>
 </ul>
 
   <div role="note" aria-label="source link">
@@ -88,6 +112,12 @@
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pymicra.html"
+                        title="previous chapter">Pymicra&#8217;s auto-generated docs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pymicra.micro.html"
+                        title="next chapter">pymicra.micro package</a></p>
         </div>
       </div>
 
@@ -524,13 +554,13 @@ full dataframe is returned.</p>
 <span id="pymicra-algs-units-module"></span><h2>pymicra.algs.units module<a class="headerlink" href="#module-pymicra.algs.units" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.algs.units.add">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">add</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.add" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">add</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace_units=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add elements considering their units</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.algs.units.convert_cols">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_cols</code><span class="sig-paren">(</span><em>data</em>, <em>guide</em>, <em>units</em>, <em>inplace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_cols" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_cols</code><span class="sig-paren">(</span><em>data</em>, <em>guide</em>, <em>units</em>, <em>inplace_units=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_cols" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts data from one unit to the other</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -540,7 +570,7 @@ full dataframe is returned.</p>
 <li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; to be chanhed from one unit to the other</li>
 <li><strong>guide</strong> (<em>dict</em>) &#8211; {names of columns : units to converted to}</li>
 <li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</li>
 </ul>
 </td>
 </tr>
@@ -550,7 +580,7 @@ full dataframe is returned.</p>
 
 <dl class="function">
 <dt id="pymicra.algs.units.convert_indexes">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_indexes</code><span class="sig-paren">(</span><em>data</em>, <em>guide</em>, <em>units</em>, <em>inplace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_indexes" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_indexes</code><span class="sig-paren">(</span><em>data</em>, <em>guide</em>, <em>units</em>, <em>inplace_units=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_indexes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts data from one unit to the other</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -560,7 +590,7 @@ full dataframe is returned.</p>
 <li><strong>data</strong> (<em>pandas.Series</em>) &#8211; to be chanhed from one unit to the other</li>
 <li><strong>guide</strong> (<em>dict</em>) &#8211; {names of columns : units to converted to}</li>
 <li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</li>
 </ul>
 </td>
 </tr>
@@ -570,7 +600,7 @@ full dataframe is returned.</p>
 
 <dl class="function">
 <dt id="pymicra.algs.units.convert_to">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_to</code><span class="sig-paren">(</span><em>data</em>, <em>inunit</em>, <em>outunit</em>, <em>inplace=False</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_to" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">convert_to</code><span class="sig-paren">(</span><em>data</em>, <em>inunit</em>, <em>outunit</em>, <em>inplace_units=False</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.convert_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts data from one unit to the other</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -580,7 +610,7 @@ full dataframe is returned.</p>
 <li><strong>data</strong> (<em>pandas.series</em>) &#8211; to be chanhed from one unit to the other</li>
 <li><strong>inunit</strong> (<em>pint.quantity or dict</em>) &#8211; unit(s) that the data is in</li>
 <li><strong>outunit</strong> (<em>str</em>) &#8211; convert to this unit</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; if inunit is a dict, the dict is update in place. &#8220;key&#8221; keyword must be provided</li>
 <li><strong>key</strong> (<em>str</em>) &#8211; if inunit is a dict, it is the name of the variable to be changed</li>
 </ul>
 </td>
@@ -591,19 +621,19 @@ full dataframe is returned.</p>
 
 <dl class="function">
 <dt id="pymicra.algs.units.divide">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">divide</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.divide" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">divide</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace_units=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.divide" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divide elements considering their units</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.algs.units.multiply">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">multiply</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.multiply" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">multiply</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace_units=False</em>, <em>unitdict=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.multiply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply elements considering their units</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.algs.units.operate">
-<code class="descclassname">pymicra.algs.units.</code><code class="descname">operate</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace=False</em>, <em>unitdict=None</em>, <em>key=None</em>, <em>operation='+'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.operate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.algs.units.</code><code class="descname">operate</code><span class="sig-paren">(</span><em>elems</em>, <em>units</em>, <em>inplace_units=False</em>, <em>unitdict=None</em>, <em>key=None</em>, <em>operation='+'</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.algs.units.operate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Operate on elements considering their units</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -612,7 +642,7 @@ full dataframe is returned.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>elems</strong> (<em>list, tuple</em>) &#8211; list of pandas.Series</li>
 <li><strong>units</strong> (<em>list, tuple</em>) &#8211; list of pint.units ordered as the elems list</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; sets dictionary inplace</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; sets dictionary inplace_units</li>
 <li><strong>unitdict</strong> (<em>dict</em>) &#8211; dict to be set inplace</li>
 <li><strong>key</strong> (<em>str</em>) &#8211; name of variables to be set inplace as dict key</li>
 </ul>
@@ -650,12 +680,19 @@ defined in __init__.py</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="pymicra.micro.html" title="pymicra.micro package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pymicra.html" title="Pymicra’s auto-generated docs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pymicra.html" >Pymicra&#8217;s auto-generated docs</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-22.
+      Last updated on 2016-07-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

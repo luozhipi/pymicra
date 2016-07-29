@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pymicra.micro package &mdash; Pymicra 0.2.0 documentation</title>
+    <title>pymicra.micro package &mdash; Pymicra 0.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.0',
+        VERSION:     '0.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
+    <link rel="top" title="Pymicra 0.2.1 documentation" href="index.html" />
+    <link rel="up" title="Pymicra’s auto-generated docs" href="pymicra.html" />
+    <link rel="prev" title="pymicra.algs package" href="pymicra.algs.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -42,7 +44,11 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="pymicra.algs.html" title="pymicra.algs package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pymicra.html" accesskey="U">Pymicra&#8217;s auto-generated docs</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -51,11 +57,25 @@
               <img class="logo" src="_static/starry.jpg" alt="Logo"/>
             </a></p>
 <h3><a href="index.html">Table Of Contents</a></h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Hands-on tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pymicra.html">Pymicra&#8217;s auto-generated docs</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pymicra.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra">Pymicra contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.constants">pymicra.constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.core">pymicra.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.data">pymicra.data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.decorators">pymicra.decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.io">pymicra.io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.methods">pymicra.methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.physics">pymicra.physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.tests">pymicra.tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.util">pymicra.util</a></li>
+</ul>
+</li>
 </ul>
 
   <div role="note" aria-label="source link">
@@ -88,6 +108,9 @@
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pymicra.algs.html"
+                        title="previous chapter">pymicra.algs package</a></p>
         </div>
       </div>
 
@@ -189,32 +212,18 @@ of scalar fluctuations and their implications for scalar similarity, Water Resou
 <dl class="function">
 <dt id="pymicra.micro.scales.MonObuLen">
 <code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuLen</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>g=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.MonObuLen" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Redirects to obukhovLen()</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.scales.MonObuVar">
 <code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuVar</code><span class="sig-paren">(</span><em>L_m</em>, <em>siteConf</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.MonObuVar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Redirects to stabilityParam</p>
+<dd><p>Redirects to stabilityParam()</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymicra.micro.scales.obukhovLen">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>notation=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.obukhovLen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the Monin-Obukhov Length
-according to:</p>
-<p>GARRAT, The atmospheric boundary layer, 1992 (eq. 1.11, p. 10)
-L = ( u_star^2 * theta_v ) / ( kappa * g * theta_v_star )</p>
-<p>KUNDU, Fluid mechanics, 1990 (eq 71, chap. 12, p. 462)
-L_M = - u_star^3 / ( kappa * alpha * g * cov(w,T&#8217;) )</p>
-<p>ARYA, Introduction to micrometeorology (eq. 11.1, p. 214)
-L = - u_star^3 / (kappa * (g/T_0) * (H_0/(rho*c_p)) )</p>
-<p>STULL, An introduction to Boundary layer meteorology, 1988 (eq. 5.7b, p. 181)
-L = - ( theta_v * u_star^3 ) / ( kappa <em>g</em> cov(w&#8217;,theta_v&#8217;) )</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pymicra.micro.scales.obukhovLen2">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen2</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>units=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.obukhovLen2" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">obukhovLen</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>notation=None</em>, <em>inplace_units=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.obukhovLen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the Monin-Obukhov Length
 according to:</p>
 <p>GARRAT, The atmospheric boundary layer, 1992 (eq. 1.11, p. 10)
@@ -239,7 +248,7 @@ and L_m is the Monin-Obukhov Length.</p>
 
 <dl class="function">
 <dt id="pymicra.micro.scales.turbulentScales">
-<code class="descclassname">pymicra.micro.scales.</code><code class="descname">turbulentScales</code><span class="sig-paren">(</span><em>data</em>, <em>siteConf</em>, <em>units</em>, <em>notation=None</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>solutes=[]</em>, <em>output_as_df=True</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.turbulentScales" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.scales.</code><code class="descname">turbulentScales</code><span class="sig-paren">(</span><em>data</em>, <em>siteConf</em>, <em>units</em>, <em>notation=None</em>, <em>theta_v_mean=None</em>, <em>theta_v_mean_unit=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>solutes=[]</em>, <em>output_as_df=True</em>, <em>inplace_units=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.turbulentScales" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates characteristic lengths for data</p>
 <p>The names of the variables are retrived out the dictionary. You can update the dictionary
 and change the names by using the notation_defs keyworkd, which is a notation object</p>
@@ -247,13 +256,20 @@ and change the names by using the notation_defs keyworkd, which is a notation ob
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>pandas.DataFrame</em>) &#8211; dataset to be used. It must either be the raw and turbulent data, or the covariances of such data</li>
 <li><strong>siteConf</strong> (<em>pymicra.siteConfig object</em>) &#8211; has the site configurations to calculate the obukhovLen</li>
 <li><strong>units</strong> (<em>dict</em>) &#8211; dict units for the input data</li>
 <li><strong>output_as_df</strong> (<em>boolean</em>) &#8211; True if you want the output to be a one-line pandas.DataFrame. A pd.Series
 will be output if False.</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; whether or not to update the units dict in place</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">depending on return_as_df</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.Series or pandas.Dataframe</p>
 </td>
 </tr>
 </tbody>
@@ -351,7 +367,7 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <span id="pymicra-micro-util-module"></span><h2>pymicra.micro.util module<a class="headerlink" href="#module-pymicra.micro.util" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.util.eddyCovariance">
-<code class="descclassname">pymicra.micro.util.</code><code class="descname">eddyCovariance</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>wpl=True</em>, <em>get_turbulent_scales=True</em>, <em>site_config=None</em>, <em>output_as_df=True</em>, <em>notation=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>inplace=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.eddyCovariance" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.util.</code><code class="descname">eddyCovariance</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>wpl=True</em>, <em>get_turbulent_scales=True</em>, <em>site_config=None</em>, <em>output_as_df=True</em>, <em>notation=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>inplace_units=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.eddyCovariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get fluxes from the turbulent fluctuations</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -364,7 +380,7 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <li><strong>get_turbulent_scales</strong> (<em>bool</em>) &#8211; whether or not to use getScales to return turbulent scales</li>
 <li><strong>site_config</strong> (<em>pymica.siteConfig</em>) &#8211; siteConfig object to pass to getScales if get_turbulent_scales==True</li>
 <li><strong>notation</strong> (<em>pymicra.Notation</em>) &#8211; object that holds the notation used in the dataframe</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; whether or not to treat the units inplace</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; whether or not to treat the units inplace</li>
 <li><strong>solutes</strong> (<em>list</em>) &#8211; list that holds every solute considered for flux</li>
 </ul>
 </td>
@@ -375,7 +391,7 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 
 <dl class="function">
 <dt id="pymicra.micro.util.preProcess">
-<code class="descclassname">pymicra.micro.util.</code><code class="descname">preProcess</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>use_means=False</em>, <em>rho_air_from_theta_v=True</em>, <em>inplace=True</em>, <em>theta=None</em>, <em>theta_unit=None</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.preProcess" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pymicra.micro.util.</code><code class="descname">preProcess</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>notation=None</em>, <em>use_means=False</em>, <em>expand_temperature=True</em>, <em>rho_air_from_theta_v=True</em>, <em>inplace_units=True</em>, <em>theta=None</em>, <em>theta_unit=None</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.preProcess" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates moist and dry air densities, specific humidity mass density and other
 important variables using the variables provided in the input DataFrame.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -387,7 +403,7 @@ important variables using the variables provided in the input DataFrame.</p>
 <li><strong>units</strong> (<em>dict</em>) &#8211; units dictionary with the columns of data as keys</li>
 <li><strong>notation</strong> (<em>pymicra.notation</em>) &#8211; defining notation used in data</li>
 <li><strong>rho_air_from_theta_v</strong> (<em>bool</em>) &#8211; whether to use theta_v to calculate air density or theta</li>
-<li><strong>inplace</strong> (<em>bool</em>) &#8211; treat units inplace or not</li>
+<li><strong>inplace_units</strong> (<em>bool</em>) &#8211; treat units inplace or not</li>
 <li><strong>theta</strong> (<em>pandas.Series</em>) &#8211; auxiliar theta measurement to be used if rho_air_from_theta_v==False</li>
 <li><strong>theta_unit</strong> (<em>pint.quantity</em>) &#8211; auxiliar theta measurement&#8217;s unit to be used if rho_air_from_theta_v==False</li>
 <li><strong>solutes</strong> (<em>list</em>) &#8211; list of string where each string is a solute to be considered</li>
@@ -431,12 +447,16 @@ important variables using the variables provided in the input DataFrame.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="pymicra.algs.html" title="pymicra.algs package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pymicra.html" >Pymicra&#8217;s auto-generated docs</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-22.
+      Last updated on 2016-07-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

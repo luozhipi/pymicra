@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; Pymicra 0.2.0 documentation</title>
+    <title>Installation &mdash; Pymicra 0.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.0',
+        VERSION:     '0.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Pymicra 0.2.0 documentation" href="index.html" />
-    <link rel="next" title="Getting started" href="tutorial.html" />
+    <link rel="top" title="Pymicra 0.2.1 documentation" href="index.html" />
+    <link rel="next" title="Getting started" href="basics.html" />
     <link rel="prev" title="Introduction" href="intro.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
@@ -45,12 +45,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="tutorial.html" title="Getting started"
+          <a href="basics.html" title="Getting started"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -62,7 +62,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Hands-on tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pymicra.html">Pymicra&#8217;s auto-generated docs</a></li>
 </ul>
 
@@ -87,7 +88,7 @@
   <p class="topless"><a href="intro.html"
                         title="previous chapter">Introduction</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="tutorial.html"
+  <p class="topless"><a href="basics.html"
                         title="next chapter">Getting started</a></p>
         </div>
       </div>
@@ -105,8 +106,8 @@
 Linux. Although the basic steps should be similar for all Linux distributions, you
 should adapt the specific commands to your system in case you are using any other OS.</p>
 </div>
-<p>Most of the required packages already come with python. However, packages that
-generally have to be manually installed beforehand are:</p>
+<p>Most of the required packages already come with python, such as <code class="docutils literal"><span class="pre">datetime</span></code> or
+<code class="docutils literal"><span class="pre">os</span></code>. The packages that may not come as default are:</p>
 <ul class="simple">
 <li>Pandas (recommended 0.17.1)</li>
 <li>Pint (0.7.2)</li>
@@ -114,29 +115,36 @@ generally have to be manually installed beforehand are:</p>
 <li>Scipy</li>
 <li>setuptools (for installation only)</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Version 0.17.1 of Pandas is suggested, but it should work fine with any
+distribution from 0.13 up to 0.17.1. However, version 0.18 upwards is not
+currently supported because of a change in the rolling functions API.</p>
+</div>
 <p>In order to install Pymicra the <code class="docutils literal"><span class="pre">setuptools</span></code> Python package should be
-installed. If you don&#8217;t have it installed already you can install it with
-<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python-setuptools</span></code> or <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">setuptools</span></code>.</p>
-<p>Download the package from the <a class="reference external" href="https://github.com/tomchor/pymicra">Github page</a> and unpack it somewhere. Then open a
-terminal and move to the directory created, whose name should be <code class="docutils literal"><span class="pre">pymicra</span></code>.
-Then run <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>. This should be enough to install the
-package.</p>
-<p>This should successfully install Pymicra. The only
-requirements are Pandas and Pint. Version 0.17 of Pandas is suggested, but it
-should work fine will any distribution from 0.13 up to 0.17.1 (0.18 is not
-supported because of changed in the rolling functions API).</p>
+installed beforehand. If you don&#8217;t have it installed already you can install it
+with <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python-setuptools</span></code> or <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">setuptools</span></code>.</p>
+<p>Once <code class="docutils literal"><span class="pre">setuptools</span></code> is installed, download the package from the <a class="reference external" href="https://github.com/tomchor/pymicra">Github page</a>,
+unpack it somewhere, then run <code class="docutils literal"><span class="pre">setup.py</span></code> on a terminal with the <code class="docutils literal"><span class="pre">install</span></code>
+directive. Assuming the file is downloaded into the Downloads directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/Downloads
+unzip pymicra-master.zip
+cp pymicra-master
+sudo python setup.py install
+</pre></div>
+</div>
+<p>This should successfully install Pymicra. Note that the <code class="docutils literal"><span class="pre">pymicra-master</span></code> may
+be different depending on whether you download directly from the master branch,
+the dev branch or a specific release on github.</p>
 <p>Although fairly general, I have tested the setup program on a limited number of
 computers so far, so it is possible that an error occurs depending on the
-version of some auxiliary packages you have installed. If that happens and the
-installation fails for some reason, please contact me through email or creating
-a github issue detailing your problem and I will improve the setup file.</p>
-<p>In case errors arise, please try to manually install versions 1.11.0 of Numpy
-and 0.17.0 of Scipy and then running <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> again. If
-still installation fails, please create a <a class="reference external" href="https://github.com/tomchor/pymicra/issues">Github issue</a> stating your OS, Python
-version and any relevant information.</p>
-<p>To remove Pymicra, the easiest way is to use pip
-(<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-pip</span></code>) with the command
-<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pymicra</span></code>.</p>
+version of some auxiliary packages you have installed. If that happens, please
+contact me through email or creating a <a class="reference external" href="https://github.com/tomchor/pymicra/issues">Github issue</a> detailing your problem and I
+will try to improve the setup file accordingly. Alternatively, you may also try
+to manually install versions 1.11.0 of Numpy and 0.17.0 of Scipy and then
+running <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> again.</p>
+<p>To remove Pymicra, the easiest way is to use pip (<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span>
+<span class="pre">python-pip</span></code>) with the command <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pymicra</span></code>.</p>
 </div>
 
 
@@ -155,17 +163,17 @@ version and any relevant information.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="tutorial.html" title="Getting started"
+          <a href="basics.html" title="Getting started"
              >next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Pymicra 0.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-22.
+      Last updated on 2016-07-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
