@@ -106,7 +106,12 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#reading-data">Reading data</a></li>
-<li><a class="reference internal" href="#viewing-and-manipulating-data">Viewing and manipulating data</a></li>
+<li><a class="reference internal" href="#viewing-and-manipulating-data">Viewing and manipulating data</a><ul>
+<li><a class="reference internal" href="#printing-and-plotting">Printing and plotting</a></li>
+<li><a class="reference internal" href="#converting-units">Converting units</a></li>
+<li><a class="reference internal" href="#manipulating">Manipulating</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -130,6 +135,10 @@
 <p>This &#8220;Getting started&#8221; tutorial is a brief introduction to Pymicra. This is in
 no way supposed to be a complete representation of everything that can be done
 with Pymicra.</p>
+<p>In this tutorial we use some example data and refer to some example python
+scripts that can be download <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples">here</a>.  Please feel free
+to explore both the example data and the example programs, as well as modify
+the programs for your own learning process!</p>
 <div class="section" id="notation">
 <h2>Notation<a class="headerlink" href="#notation" title="Permalink to this headline">¶</a></h2>
 <p>Pymicra uses a specific notation to name each one of its columns. This notation
@@ -141,12 +150,13 @@ variable is in each column. You can check the default notation with</p>
 <span class="gp">   ...: </span>
 </pre></div>
 </div>
-<p>On the left you see the full name of the variables (which corresponds to a
-notation namespace) and on the right we see the default notation for that
+<p>The output is too long to be reprodued here, but on the left you&#8217;ll see the
+full name of the variables (which corresponds to a notation
+namespace/attribute) and on the right you&#8217;ll see the default notation for that
 variable.</p>
 <p>We recommend to use the default notation for the sake of simplicity, however,
 you can change Pymicra&#8217;s notation at any time by altering the attributes of
-<code class="docutils literal"><span class="pre">pm.notation</span></code>. For example, by the default the notation for the mean is
+<code class="docutils literal"><span class="pre">pm.notation</span></code>. For example, by default the notation for the mean is
 <code class="docutils literal"><span class="pre">'%s_mean'</span></code>, and every variable follows this base notation:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [2]: </span><span class="n">pm</span><span class="o">.</span><span class="n">notation</span><span class="o">.</span><span class="n">mean</span>
 <span class="gh">Out[2]: </span><span class="go">&#39;%s_mean&#39;</span>
@@ -211,8 +221,8 @@ separately.</p>
 <p>The easiest way to read data files is using a <code class="docutils literal"><span class="pre">fileConfig</span></code> object. This object holds
 the configuration of the data files so you can just call this object when reading these files.
 To make it easier, Pymicra prefers to read this configurations from a file. That way
-you can write the configurations for some data files once, store it into a cofiguration file
-and then use it from then on everytime you want to read those data files. That is what
+you can write the configurations for some data files once, store it into a configuration file
+and then use it from then on every time you want to read those data files. That is what
 Pymicra calls a &#8220;file configuration file&#8221;, or &#8220;config file&#8221; for short. From that
 file, Pymicra can create a <code class="docutils literal"><span class="pre">pymicra.fileConfig</span></code> object. Consider, for example, the config
 file below</p>
@@ -227,7 +237,8 @@ file below</p>
 <span class="mi">5</span><span class="p">:</span><span class="s1">&#39;theta_v&#39;</span><span class="p">,</span>
 <span class="mi">6</span><span class="p">:</span><span class="s1">&#39;mrho_h2o&#39;</span><span class="p">,</span>
 <span class="mi">7</span><span class="p">:</span><span class="s1">&#39;mrho_co2&#39;</span><span class="p">,</span>
-<span class="mi">8</span><span class="p">:</span><span class="s1">&#39;p&#39;</span><span class="p">}</span>
+<span class="mi">8</span><span class="p">:</span><span class="s1">&#39;p&#39;</span><span class="p">,</span>
+<span class="mi">9</span><span class="p">:</span><span class="s1">&#39;theta&#39;</span><span class="p">}</span>
 
 <span class="n">units</span><span class="o">=</span><span class="p">{</span>
 <span class="s1">&#39;u&#39;</span><span class="p">:</span><span class="s1">&#39;m/s&#39;</span><span class="p">,</span>
@@ -236,7 +247,8 @@ file below</p>
 <span class="s1">&#39;theta_v&#39;</span><span class="p">:</span><span class="s1">&#39;celsius&#39;</span><span class="p">,</span>
 <span class="s1">&#39;mrho_co2&#39;</span><span class="p">:</span><span class="s1">&#39;mmol/m**3&#39;</span><span class="p">,</span>
 <span class="s1">&#39;mrho_h2o&#39;</span><span class="p">:</span><span class="s1">&#39;mmol/m**3&#39;</span><span class="p">,</span>
-<span class="s1">&#39;p&#39;</span><span class="p">:</span><span class="s1">&#39;kPa&#39;</span>
+<span class="s1">&#39;p&#39;</span><span class="p">:</span><span class="s1">&#39;kPa&#39;</span><span class="p">,</span>
+<span class="s1">&#39;theta&#39;</span><span class="p">:</span><span class="s1">&#39;celsius&#39;</span>
 <span class="p">}</span>
 
 <span class="n">columns_separator</span><span class="o">=</span><span class="s1">&#39;,&#39;</span>
@@ -252,20 +264,23 @@ has to be able to actually be run on python. This has to be true for all
 <code class="docutils literal"><span class="pre">.config</span></code> files.</p>
 <p>Furthermore, the extension of the file does not matter. We adopt the
 <code class="docutils literal"><span class="pre">.config</span></code> extension for clarity, but it could be anything else.</p>
-<p>The previous config file describes the data in the files in the directory
-<code class="docutils literal"><span class="pre">../examples/ex_data/</span></code>. Here&#8217;s an example of one such file for comparison</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.000000</span><span class="p">,</span><span class="mf">4.9060000000000015</span><span class="p">,</span><span class="mf">0.787</span><span class="p">,</span><span class="mf">0.264</span><span class="p">,</span><span class="mf">28.55</span><span class="p">,</span><span class="mf">1365.0</span><span class="p">,</span><span class="mf">14.847</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.344</span><span class="p">,</span><span class="o">-</span><span class="mf">0.34</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.332</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.050000</span><span class="p">,</span><span class="mf">4.893</span><span class="p">,</span><span class="mf">0.903</span><span class="p">,</span><span class="mf">0.524</span><span class="p">,</span><span class="mf">28.56</span><span class="p">,</span><span class="mf">1369.0</span><span class="p">,</span><span class="mf">14.566</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.342</span><span class="p">,</span><span class="o">-</span><span class="mf">0.338</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.100000</span><span class="p">,</span><span class="mf">4.78</span><span class="p">,</span><span class="mf">0.784</span><span class="p">,</span><span class="mf">0.398</span><span class="p">,</span><span class="mf">28.52</span><span class="p">,</span><span class="mf">1358.0</span><span class="p">,</span><span class="mf">14.291</span><span class="p">,</span><span class="mf">98.998</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.341</span><span class="p">,</span><span class="o">-</span><span class="mf">0.34</span><span class="p">,</span><span class="o">-</span><span class="mf">0.334</span><span class="p">,</span><span class="o">-</span><span class="mf">0.332</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.150000</span><span class="p">,</span><span class="mf">4.838</span><span class="p">,</span><span class="mf">0.7909999999999999</span><span class="p">,</span><span class="mf">0.327</span><span class="p">,</span><span class="mf">28.58</span><span class="p">,</span><span class="mf">1353.0</span><span class="p">,</span><span class="mf">14.429</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.345</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.334</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.200000</span><span class="p">,</span><span class="mf">4.873</span><span class="p">,</span><span class="mf">0.787</span><span class="p">,</span><span class="mf">0.409</span><span class="p">,</span><span class="mf">28.56</span><span class="p">,</span><span class="mf">1341.0</span><span class="p">,</span><span class="mf">14.307</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.28</span><span class="p">,</span><span class="o">-</span><span class="mf">0.342</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.33</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.250000</span><span class="p">,</span><span class="mf">4.832</span><span class="p">,</span><span class="mf">0.877</span><span class="p">,</span><span class="mf">0.436</span><span class="p">,</span><span class="mf">28.55</span><span class="p">,</span><span class="mf">1362.0</span><span class="p">,</span><span class="mf">14.518</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.343</span><span class="p">,</span><span class="o">-</span><span class="mf">0.338</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.33</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.300000</span><span class="p">,</span><span class="mf">4.828</span><span class="p">,</span><span class="mf">0.8009999999999999</span><span class="p">,</span><span class="mf">0.354</span><span class="p">,</span><span class="mf">28.57</span><span class="p">,</span><span class="mf">1338.0</span><span class="p">,</span><span class="mf">14.401</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.343</span><span class="p">,</span><span class="o">-</span><span class="mf">0.338</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.33</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.350000</span><span class="p">,</span><span class="mf">4.879</span><span class="p">,</span><span class="mf">0.823</span><span class="p">,</span><span class="mf">0.256</span><span class="p">,</span><span class="mf">28.58</span><span class="p">,</span><span class="mf">1356.0</span><span class="p">,</span><span class="mf">14.23</span><span class="p">,</span><span class="mf">98.982</span><span class="p">,</span><span class="mf">32.28</span><span class="p">,</span><span class="o">-</span><span class="mf">0.341</span><span class="p">,</span><span class="o">-</span><span class="mf">0.337</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.400000</span><span class="p">,</span><span class="mf">4.864</span><span class="p">,</span><span class="mf">0.743</span><span class="p">,</span><span class="mf">0.302</span><span class="p">,</span><span class="mf">28.56</span><span class="p">,</span><span class="mf">1360.0</span><span class="p">,</span><span class="mf">14.375</span><span class="p">,</span><span class="mf">98.998</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.342</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
-<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.450000</span><span class="p">,</span><span class="mf">4.744</span><span class="p">,</span><span class="mf">0.703</span><span class="p">,</span><span class="mf">0.361</span><span class="p">,</span><span class="mf">28.57</span><span class="p">,</span><span class="mf">1371.0</span><span class="p">,</span><span class="mf">14.41</span><span class="p">,</span><span class="mf">99.017</span><span class="p">,</span><span class="mf">32.29</span><span class="p">,</span><span class="o">-</span><span class="mf">0.343</span><span class="p">,</span><span class="o">-</span><span class="mf">0.339</span><span class="p">,</span><span class="o">-</span><span class="mf">0.335</span><span class="p">,</span><span class="o">-</span><span class="mf">0.331</span>
+<p>The previous config file describes the data files in the directory
+<code class="docutils literal"><span class="pre">../examples/ex_data/</span></code>. Here&#8217;s an example of one such file for comparison:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.000000</span><span class="p">,</span><span class="mf">2.375</span><span class="p">,</span><span class="o">-</span><span class="mf">5.206</span><span class="p">,</span><span class="o">-</span><span class="mf">0.103</span><span class="p">,</span><span class="mf">27.06</span><span class="p">,</span><span class="mf">1238.0</span><span class="p">,</span><span class="mf">14.675</span><span class="p">,</span><span class="mf">99.19</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.303</span><span class="p">,</span><span class="o">-</span><span class="mf">0.274</span><span class="p">,</span><span class="o">-</span><span class="mf">0.269</span><span class="p">,</span><span class="o">-</span><span class="mf">0.261</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.050000</span><span class="p">,</span><span class="mf">2.4930000000000003</span><span class="p">,</span><span class="o">-</span><span class="mf">5.098</span><span class="p">,</span><span class="o">-</span><span class="mf">0.018000000000000002</span><span class="p">,</span><span class="mf">27.12</span><span class="p">,</span><span class="mf">1196.0</span><span class="p">,</span><span class="mf">14.409</span><span class="p">,</span><span class="mf">99.199</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.308</span><span class="p">,</span><span class="o">-</span><span class="mf">0.275</span><span class="p">,</span><span class="o">-</span><span class="mf">0.271</span><span class="p">,</span><span class="o">-</span><span class="mf">0.263</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.100000</span><span class="p">,</span><span class="mf">2.263</span><span class="p">,</span><span class="o">-</span><span class="mf">5.114</span><span class="p">,</span><span class="mf">0.014</span><span class="p">,</span><span class="mf">27.11</span><span class="p">,</span><span class="mf">1220.0</span><span class="p">,</span><span class="mf">14.636</span><span class="p">,</span><span class="mf">99.102</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.306</span><span class="p">,</span><span class="o">-</span><span class="mf">0.277</span><span class="p">,</span><span class="o">-</span><span class="mf">0.273</span><span class="p">,</span><span class="o">-</span><span class="mf">0.263</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.150000</span><span class="p">,</span><span class="mf">2.21</span><span class="p">,</span><span class="o">-</span><span class="mf">5.235</span><span class="p">,</span><span class="o">-</span><span class="mf">0.012</span><span class="p">,</span><span class="mf">27.11</span><span class="p">,</span><span class="mf">1238.0</span><span class="p">,</span><span class="mf">14.688</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.308</span><span class="p">,</span><span class="o">-</span><span class="mf">0.277</span><span class="p">,</span><span class="o">-</span><span class="mf">0.273</span><span class="p">,</span><span class="o">-</span><span class="mf">0.264</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.200000</span><span class="p">,</span><span class="mf">2.158</span><span class="p">,</span><span class="o">-</span><span class="mf">5.174</span><span class="p">,</span><span class="o">-</span><span class="mf">0.112</span><span class="p">,</span><span class="mf">27.12</span><span class="p">,</span><span class="mf">1174.0</span><span class="p">,</span><span class="mf">14.476</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.44</span><span class="p">,</span><span class="o">-</span><span class="mf">0.31</span><span class="p">,</span><span class="o">-</span><span class="mf">0.277</span><span class="p">,</span><span class="o">-</span><span class="mf">0.273</span><span class="p">,</span><span class="o">-</span><span class="mf">0.264</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.250000</span><span class="p">,</span><span class="mf">2.334</span><span class="p">,</span><span class="o">-</span><span class="mf">5.279</span><span class="p">,</span><span class="o">-</span><span class="mf">0.092</span><span class="p">,</span><span class="mf">27.1</span><span class="p">,</span><span class="mf">1195.0</span><span class="p">,</span><span class="mf">14.671</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.308</span><span class="p">,</span><span class="o">-</span><span class="mf">0.278</span><span class="p">,</span><span class="o">-</span><span class="mf">0.273</span><span class="p">,</span><span class="o">-</span><span class="mf">0.265</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.300000</span><span class="p">,</span><span class="mf">2.396</span><span class="p">,</span><span class="o">-</span><span class="mf">5.2970000000000015</span><span class="p">,</span><span class="mf">0.005</span><span class="p">,</span><span class="mf">27.15</span><span class="p">,</span><span class="mf">1198.0</span><span class="p">,</span><span class="mf">14.669</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.309</span><span class="p">,</span><span class="o">-</span><span class="mf">0.279</span><span class="p">,</span><span class="o">-</span><span class="mf">0.272</span><span class="p">,</span><span class="o">-</span><span class="mf">0.264</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.350000</span><span class="p">,</span><span class="mf">2.494</span><span class="p">,</span><span class="o">-</span><span class="mf">5.246</span><span class="p">,</span><span class="mf">0.039</span><span class="p">,</span><span class="mf">27.13</span><span class="p">,</span><span class="mf">1197.0</span><span class="p">,</span><span class="mf">14.722</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.44</span><span class="p">,</span><span class="o">-</span><span class="mf">0.311</span><span class="p">,</span><span class="o">-</span><span class="mf">0.279</span><span class="p">,</span><span class="o">-</span><span class="mf">0.273</span><span class="p">,</span><span class="o">-</span><span class="mf">0.264</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.400000</span><span class="p">,</span><span class="mf">2.263</span><span class="p">,</span><span class="o">-</span><span class="mf">5.317</span><span class="p">,</span><span class="o">-</span><span class="mf">0.079</span><span class="p">,</span><span class="mf">27.12</span><span class="p">,</span><span class="mf">1202.0</span><span class="p">,</span><span class="mf">14.709</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.43</span><span class="p">,</span><span class="o">-</span><span class="mf">0.311</span><span class="p">,</span><span class="o">-</span><span class="mf">0.279</span><span class="p">,</span><span class="o">-</span><span class="mf">0.275</span><span class="p">,</span><span class="o">-</span><span class="mf">0.265</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.450000</span><span class="p">,</span><span class="mf">2.135</span><span class="p">,</span><span class="o">-</span><span class="mf">5.176</span><span class="p">,</span><span class="o">-</span><span class="mf">0.036000000000000004</span><span class="p">,</span><span class="mf">27.08</span><span class="p">,</span><span class="mf">1202.0</span><span class="p">,</span><span class="mf">14.731</span><span class="p">,</span><span class="mf">99.154</span><span class="p">,</span><span class="mf">30.44</span><span class="p">,</span><span class="o">-</span><span class="mf">0.314</span><span class="p">,</span><span class="o">-</span><span class="mf">0.279</span><span class="p">,</span><span class="o">-</span><span class="mf">0.275</span><span class="p">,</span><span class="o">-</span><span class="mf">0.267</span>
 </pre></div>
 </div>
+<p>Note that not all columns of this file are described. Columns that are not
+described are also read but are discarded by default. You can change that using
+<code class="docutils literal"><span class="pre">only_named_columns=False</span></code> in the <code class="docutils literal"><span class="pre">timeSeries</span></code> function.</p>
 <p>We obtain the config object with</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">fconfig</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;../examples/lake.config&#39;</span><span class="p">)</span>
 
@@ -276,8 +291,8 @@ has to be able to actually be run on python. This has to be true for all
 </div>
 <p>Each variable defined in this file works as a keyword, since it can also be
 input manually when calling <code class="docutils literal"><span class="pre">pymicra.fileConfig()</span></code>. Thus, for more
-information, you can also use <code class="docutils literal"><span class="pre">help(pymicra.fileConfig</span></code>. Now we explain the
-keywords one by one. In the next section we wil explain how to use this object
+information, you can also use <code class="docutils literal"><span class="pre">help(pymicra.fileConfig)</span></code>. Now we explain the
+keywords one by one. In the next section we will explain how to use this object
 for reading a data file.</p>
 <div class="section" id="description">
 <h3>description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
@@ -369,79 +384,79 @@ this should always be true.</p>
 <p>To read a data file or a list of data files we use the function <code class="docutils literal"><span class="pre">timeSeries</span></code> along with
 a config file. Let us use the config file defined in the previous subsection with one of the data
 file it describes:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;../examples/ex_data/20131108-1300.csv&#39;</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;../examples/ex_data/20131108-1000.csv&#39;</span>
 
 <span class="gp">In [22]: </span><span class="n">fconfig</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;../examples/lake.config&#39;</span><span class="p">)</span>
 
 <span class="gp">In [23]: </span><span class="n">data</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="gp">In [24]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">                             u      v      w  theta_v  mrho_h2o  mrho_co2       p</span>
-<span class="go">%Y-%m-%d%H:%M:%S.%f                                                              </span>
-<span class="go">2013-11-08 13:00:00.000  4.906  0.787  0.264    28.55      1365    14.847  98.982</span>
-<span class="go">2013-11-08 13:00:00.050  4.893  0.903  0.524    28.56      1369    14.566  98.982</span>
-<span class="go">2013-11-08 13:00:00.100  4.780  0.784  0.398    28.52      1358    14.291  98.998</span>
-<span class="go">2013-11-08 13:00:00.150  4.838  0.791  0.327    28.58      1353    14.429  98.982</span>
-<span class="go">2013-11-08 13:00:00.200  4.873  0.787  0.409    28.56      1341    14.307  98.982</span>
-<span class="go">2013-11-08 13:00:00.250  4.832  0.877  0.436    28.55      1362    14.518  98.982</span>
-<span class="go">2013-11-08 13:00:00.300  4.828  0.801  0.354    28.57      1338    14.401  98.982</span>
-<span class="go">2013-11-08 13:00:00.350  4.879  0.823  0.256    28.58      1356    14.230  98.982</span>
-<span class="go">2013-11-08 13:00:00.400  4.864  0.743  0.302    28.56      1360    14.375  98.998</span>
-<span class="go">2013-11-08 13:00:00.450  4.744  0.703  0.361    28.57      1371    14.410  99.017</span>
-<span class="go">...                        ...    ...    ...      ...       ...       ...     ...</span>
-<span class="go">2013-11-08 13:59:59.500  5.504  0.513  0.459    29.47      1212    14.437  98.868</span>
-<span class="go">2013-11-08 13:59:59.550  5.511  0.408  0.471    29.47      1197    14.369  98.903</span>
-<span class="go">2013-11-08 13:59:59.600  5.392 -0.012  0.257    29.50      1181    14.123  98.851</span>
-<span class="go">2013-11-08 13:59:59.650  5.489  0.149  0.313    29.46      1242    14.340  98.877</span>
-<span class="go">2013-11-08 13:59:59.700  5.492  0.275  0.374    29.46      1261    14.544  98.877</span>
-<span class="go">2013-11-08 13:59:59.750  5.442  0.136  0.352    29.47      1206    14.480  98.877</span>
-<span class="go">2013-11-08 13:59:59.800  5.321  0.206  0.374    29.48      1241    14.484  98.877</span>
-<span class="go">2013-11-08 13:59:59.850  5.361  0.233  0.490    29.48      1231    14.660  98.903</span>
-<span class="go">2013-11-08 13:59:59.900  5.329  0.155  0.201    29.49      1221    15.022  98.877</span>
-<span class="go">2013-11-08 13:59:59.950  5.461  0.045  0.219    29.46      1221    14.181  98.887</span>
+<span class="go">                             u      v      w  theta_v  mrho_h2o  mrho_co2       p  theta</span>
+<span class="go">Timestamp                                                                               </span>
+<span class="go">2013-11-08 10:00:00.000  2.375 -5.206 -0.103    27.06      1238    14.675  99.190  30.43</span>
+<span class="go">2013-11-08 10:00:00.050  2.493 -5.098 -0.018    27.12      1196    14.409  99.199  30.43</span>
+<span class="go">2013-11-08 10:00:00.100  2.263 -5.114  0.014    27.11      1220    14.636  99.102  30.43</span>
+<span class="go">2013-11-08 10:00:00.150  2.210 -5.235 -0.012    27.11      1238    14.688  99.154  30.43</span>
+<span class="go">2013-11-08 10:00:00.200  2.158 -5.174 -0.112    27.12      1174    14.476  99.154  30.44</span>
+<span class="go">2013-11-08 10:00:00.250  2.334 -5.279 -0.092    27.10      1195    14.671  99.154  30.43</span>
+<span class="go">2013-11-08 10:00:00.300  2.396 -5.297  0.005    27.15      1198    14.669  99.154  30.43</span>
+<span class="go">2013-11-08 10:00:00.350  2.494 -5.246  0.039    27.13      1197    14.722  99.154  30.44</span>
+<span class="go">2013-11-08 10:00:00.400  2.263 -5.317 -0.079    27.12      1202    14.709  99.154  30.43</span>
+<span class="go">2013-11-08 10:00:00.450  2.135 -5.176 -0.036    27.08      1202    14.731  99.154  30.44</span>
+<span class="go">...                        ...    ...    ...      ...       ...       ...     ...    ...</span>
+<span class="go">2013-11-08 10:59:59.500  4.951 -4.584  0.420    28.03      1261    14.772  99.102  32.08</span>
+<span class="go">2013-11-08 10:59:59.550  5.057 -4.436  0.492    28.00      1181    14.718  99.138  32.07</span>
+<span class="go">2013-11-08 10:59:59.600  5.145 -4.424  0.409    28.10      1216    14.889  99.112  32.08</span>
+<span class="go">2013-11-08 10:59:59.650  5.282 -4.038  0.448    28.03      1198    14.485  99.112  32.06</span>
+<span class="go">2013-11-08 10:59:59.700  5.065 -4.453  0.424    28.11      1184    14.578  99.138  32.07</span>
+<span class="go">2013-11-08 10:59:59.750  5.262 -4.703  0.126    27.98      1264    14.929  99.138  32.08</span>
+<span class="go">2013-11-08 10:59:59.800  5.323 -4.882  0.242    27.95      1229    14.258  99.138  32.07</span>
+<span class="go">2013-11-08 10:59:59.850  5.344 -5.119  0.457    27.96      1198    14.962  99.102  32.07</span>
+<span class="go">2013-11-08 10:59:59.900  5.281 -5.261  0.599    28.09      1231    14.615  99.112  32.07</span>
+<span class="go">2013-11-08 10:59:59.950  5.235 -4.801  0.362    28.02      1211    14.682  99.164  32.08</span>
 
-<span class="go">[72000 rows x 7 columns]</span>
+<span class="go">[72000 rows x 8 columns]</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal"><span class="pre">data</span></code> is a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code> object which contains the whole data available in the
-datafile with each columns being a variable. Since we indicated that we wanted to parse the dates
+datafile with each column being a variable. Since we indicated that we wanted to parse the dates
 with the option <code class="docutils literal"><span class="pre">parse_dates=True</span></code>, each row has its respective timestamp.
 If, otherwise, we were to ignore the dates, the result would be a integer-indexed dataset:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [25]: </span><span class="n">data2</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 <span class="gp">In [26]: </span><span class="k">print</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
-<span class="go">           u      v      w  theta_v  mrho_h2o  mrho_co2       p</span>
-<span class="go">0      4.906  0.787  0.264    28.55      1365    14.847  98.982</span>
-<span class="go">1      4.893  0.903  0.524    28.56      1369    14.566  98.982</span>
-<span class="go">2      4.780  0.784  0.398    28.52      1358    14.291  98.998</span>
-<span class="go">3      4.838  0.791  0.327    28.58      1353    14.429  98.982</span>
-<span class="go">4      4.873  0.787  0.409    28.56      1341    14.307  98.982</span>
-<span class="go">5      4.832  0.877  0.436    28.55      1362    14.518  98.982</span>
-<span class="go">6      4.828  0.801  0.354    28.57      1338    14.401  98.982</span>
-<span class="go">7      4.879  0.823  0.256    28.58      1356    14.230  98.982</span>
-<span class="go">8      4.864  0.743  0.302    28.56      1360    14.375  98.998</span>
-<span class="go">9      4.744  0.703  0.361    28.57      1371    14.410  99.017</span>
-<span class="go">...      ...    ...    ...      ...       ...       ...     ...</span>
-<span class="go">71990  5.504  0.513  0.459    29.47      1212    14.437  98.868</span>
-<span class="go">71991  5.511  0.408  0.471    29.47      1197    14.369  98.903</span>
-<span class="go">71992  5.392 -0.012  0.257    29.50      1181    14.123  98.851</span>
-<span class="go">71993  5.489  0.149  0.313    29.46      1242    14.340  98.877</span>
-<span class="go">71994  5.492  0.275  0.374    29.46      1261    14.544  98.877</span>
-<span class="go">71995  5.442  0.136  0.352    29.47      1206    14.480  98.877</span>
-<span class="go">71996  5.321  0.206  0.374    29.48      1241    14.484  98.877</span>
-<span class="go">71997  5.361  0.233  0.490    29.48      1231    14.660  98.903</span>
-<span class="go">71998  5.329  0.155  0.201    29.49      1221    15.022  98.877</span>
-<span class="go">71999  5.461  0.045  0.219    29.46      1221    14.181  98.887</span>
+<span class="go">           u      v      w  theta_v  mrho_h2o  mrho_co2       p  theta</span>
+<span class="go">0      2.375 -5.206 -0.103    27.06      1238    14.675  99.190  30.43</span>
+<span class="go">1      2.493 -5.098 -0.018    27.12      1196    14.409  99.199  30.43</span>
+<span class="go">2      2.263 -5.114  0.014    27.11      1220    14.636  99.102  30.43</span>
+<span class="go">3      2.210 -5.235 -0.012    27.11      1238    14.688  99.154  30.43</span>
+<span class="go">4      2.158 -5.174 -0.112    27.12      1174    14.476  99.154  30.44</span>
+<span class="go">5      2.334 -5.279 -0.092    27.10      1195    14.671  99.154  30.43</span>
+<span class="go">6      2.396 -5.297  0.005    27.15      1198    14.669  99.154  30.43</span>
+<span class="go">7      2.494 -5.246  0.039    27.13      1197    14.722  99.154  30.44</span>
+<span class="go">8      2.263 -5.317 -0.079    27.12      1202    14.709  99.154  30.43</span>
+<span class="go">9      2.135 -5.176 -0.036    27.08      1202    14.731  99.154  30.44</span>
+<span class="go">...      ...    ...    ...      ...       ...       ...     ...    ...</span>
+<span class="go">71990  4.951 -4.584  0.420    28.03      1261    14.772  99.102  32.08</span>
+<span class="go">71991  5.057 -4.436  0.492    28.00      1181    14.718  99.138  32.07</span>
+<span class="go">71992  5.145 -4.424  0.409    28.10      1216    14.889  99.112  32.08</span>
+<span class="go">71993  5.282 -4.038  0.448    28.03      1198    14.485  99.112  32.06</span>
+<span class="go">71994  5.065 -4.453  0.424    28.11      1184    14.578  99.138  32.07</span>
+<span class="go">71995  5.262 -4.703  0.126    27.98      1264    14.929  99.138  32.08</span>
+<span class="go">71996  5.323 -4.882  0.242    27.95      1229    14.258  99.138  32.07</span>
+<span class="go">71997  5.344 -5.119  0.457    27.96      1198    14.962  99.102  32.07</span>
+<span class="go">71998  5.281 -5.261  0.599    28.09      1231    14.615  99.112  32.07</span>
+<span class="go">71999  5.235 -4.801  0.362    28.02      1211    14.682  99.164  32.08</span>
 
-<span class="go">[72000 rows x 7 columns]</span>
+<span class="go">[72000 rows x 8 columns]</span>
 </pre></div>
 </div>
 <p>And, as mentioned, this way is a lot faster:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [27]: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">   ....: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="go">1 loops, best of 3: 132 ms per loop</span>
-<span class="go">1 loops, best of 3: 710 ms per loop</span>
+<span class="go">10 loops, best of 3: 123 ms per loop</span>
+<span class="go">1 loops, best of 3: 641 ms per loop</span>
 </pre></div>
 </div>
 </div>
@@ -451,109 +466,314 @@ If, otherwise, we were to ignore the dates, the result would be a integer-indexe
 that we suggest that the user visit a Pandas tutorial. However, I&#8217;ll explain
 some main ideas here for the sake of completeness and introduce some few ideas specific
 for Pymicra that don&#8217;t exist for general Pandas DataFrames.</p>
-<p>First, for viewing raw data on screen, printing should be enough. Slicing and indexing
-are supported:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [29]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">])</span>
-<span class="go">%Y-%m-%d%H:%M:%S.%f</span>
-<span class="go">2013-11-08 13:00:00.000    4.906</span>
-<span class="go">2013-11-08 13:00:00.050    4.893</span>
-<span class="go">2013-11-08 13:00:00.100    4.780</span>
-<span class="go">2013-11-08 13:00:00.150    4.838</span>
-<span class="go">2013-11-08 13:00:00.200    4.873</span>
-<span class="go">2013-11-08 13:00:00.250    4.832</span>
-<span class="go">2013-11-08 13:00:00.300    4.828</span>
-<span class="go">2013-11-08 13:00:00.350    4.879</span>
-<span class="go">2013-11-08 13:00:00.400    4.864</span>
-<span class="go">2013-11-08 13:00:00.450    4.744</span>
+<div class="section" id="printing-and-plotting">
+<h3>Printing and plotting<a class="headerlink" href="#printing-and-plotting" title="Permalink to this headline">¶</a></h3>
+<p>First, for viewing raw data on screen there&#8217;s printing. Slicing and indexing
+are supported by Pandas, but without support for units:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [29]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">])</span>
+<span class="go">Timestamp</span>
+<span class="go">2013-11-08 10:00:00.000    27.06</span>
+<span class="go">2013-11-08 10:00:00.050    27.12</span>
+<span class="go">2013-11-08 10:00:00.100    27.11</span>
+<span class="go">2013-11-08 10:00:00.150    27.11</span>
+<span class="go">2013-11-08 10:00:00.200    27.12</span>
+<span class="go">2013-11-08 10:00:00.250    27.10</span>
 <span class="go">                           ...  </span>
-<span class="go">2013-11-08 13:59:59.500    5.504</span>
-<span class="go">2013-11-08 13:59:59.550    5.511</span>
-<span class="go">2013-11-08 13:59:59.600    5.392</span>
-<span class="go">2013-11-08 13:59:59.650    5.489</span>
-<span class="go">2013-11-08 13:59:59.700    5.492</span>
-<span class="go">2013-11-08 13:59:59.750    5.442</span>
-<span class="go">2013-11-08 13:59:59.800    5.321</span>
-<span class="go">2013-11-08 13:59:59.850    5.361</span>
-<span class="go">2013-11-08 13:59:59.900    5.329</span>
-<span class="go">2013-11-08 13:59:59.950    5.461</span>
-<span class="go">Name: u, dtype: float64</span>
-
-<span class="gp">In [30]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">])</span>
-<span class="go">%Y-%m-%d%H:%M:%S.%f</span>
-<span class="go">2013-11-08 13:00:00.000    28.55</span>
-<span class="go">2013-11-08 13:00:00.050    28.56</span>
-<span class="go">2013-11-08 13:00:00.100    28.52</span>
-<span class="go">2013-11-08 13:00:00.150    28.58</span>
-<span class="go">2013-11-08 13:00:00.200    28.56</span>
-<span class="go">2013-11-08 13:00:00.250    28.55</span>
-<span class="go">2013-11-08 13:00:00.300    28.57</span>
-<span class="go">2013-11-08 13:00:00.350    28.58</span>
-<span class="go">2013-11-08 13:00:00.400    28.56</span>
-<span class="go">2013-11-08 13:00:00.450    28.57</span>
-<span class="go">                           ...  </span>
-<span class="go">2013-11-08 13:59:59.500    29.47</span>
-<span class="go">2013-11-08 13:59:59.550    29.47</span>
-<span class="go">2013-11-08 13:59:59.600    29.50</span>
-<span class="go">2013-11-08 13:59:59.650    29.46</span>
-<span class="go">2013-11-08 13:59:59.700    29.46</span>
-<span class="go">2013-11-08 13:59:59.750    29.47</span>
-<span class="go">2013-11-08 13:59:59.800    29.48</span>
-<span class="go">2013-11-08 13:59:59.850    29.48</span>
-<span class="go">2013-11-08 13:59:59.900    29.49</span>
-<span class="go">2013-11-08 13:59:59.950    29.46</span>
+<span class="go">2013-11-08 10:59:59.700    28.11</span>
+<span class="go">2013-11-08 10:59:59.750    27.98</span>
+<span class="go">2013-11-08 10:59:59.800    27.95</span>
+<span class="go">2013-11-08 10:59:59.850    27.96</span>
+<span class="go">2013-11-08 10:59:59.900    28.09</span>
+<span class="go">2013-11-08 10:59:59.950    28.02</span>
 <span class="go">Name: theta_v, dtype: float64</span>
 
-<span class="gp">In [31]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]])</span>
+<span class="gp">In [30]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]])</span>
 <span class="go">                             u      v      w</span>
-<span class="go">%Y-%m-%d%H:%M:%S.%f                         </span>
-<span class="go">2013-11-08 13:00:00.000  4.906  0.787  0.264</span>
-<span class="go">2013-11-08 13:00:00.050  4.893  0.903  0.524</span>
-<span class="go">2013-11-08 13:00:00.100  4.780  0.784  0.398</span>
-<span class="go">2013-11-08 13:00:00.150  4.838  0.791  0.327</span>
-<span class="go">2013-11-08 13:00:00.200  4.873  0.787  0.409</span>
-<span class="go">2013-11-08 13:00:00.250  4.832  0.877  0.436</span>
-<span class="go">2013-11-08 13:00:00.300  4.828  0.801  0.354</span>
-<span class="go">2013-11-08 13:00:00.350  4.879  0.823  0.256</span>
-<span class="go">2013-11-08 13:00:00.400  4.864  0.743  0.302</span>
-<span class="go">2013-11-08 13:00:00.450  4.744  0.703  0.361</span>
+<span class="go">Timestamp                                   </span>
+<span class="go">2013-11-08 10:00:00.000  2.375 -5.206 -0.103</span>
+<span class="go">2013-11-08 10:00:00.050  2.493 -5.098 -0.018</span>
+<span class="go">2013-11-08 10:00:00.100  2.263 -5.114  0.014</span>
+<span class="go">2013-11-08 10:00:00.150  2.210 -5.235 -0.012</span>
+<span class="go">2013-11-08 10:00:00.200  2.158 -5.174 -0.112</span>
+<span class="go">2013-11-08 10:00:00.250  2.334 -5.279 -0.092</span>
 <span class="go">...                        ...    ...    ...</span>
-<span class="go">2013-11-08 13:59:59.500  5.504  0.513  0.459</span>
-<span class="go">2013-11-08 13:59:59.550  5.511  0.408  0.471</span>
-<span class="go">2013-11-08 13:59:59.600  5.392 -0.012  0.257</span>
-<span class="go">2013-11-08 13:59:59.650  5.489  0.149  0.313</span>
-<span class="go">2013-11-08 13:59:59.700  5.492  0.275  0.374</span>
-<span class="go">2013-11-08 13:59:59.750  5.442  0.136  0.352</span>
-<span class="go">2013-11-08 13:59:59.800  5.321  0.206  0.374</span>
-<span class="go">2013-11-08 13:59:59.850  5.361  0.233  0.490</span>
-<span class="go">2013-11-08 13:59:59.900  5.329  0.155  0.201</span>
-<span class="go">2013-11-08 13:59:59.950  5.461  0.045  0.219</span>
+<span class="go">2013-11-08 10:59:59.700  5.065 -4.453  0.424</span>
+<span class="go">2013-11-08 10:59:59.750  5.262 -4.703  0.126</span>
+<span class="go">2013-11-08 10:59:59.800  5.323 -4.882  0.242</span>
+<span class="go">2013-11-08 10:59:59.850  5.344 -5.119  0.457</span>
+<span class="go">2013-11-08 10:59:59.900  5.281 -5.261  0.599</span>
+<span class="go">2013-11-08 10:59:59.950  5.235 -4.801  0.362</span>
 
 <span class="go">[72000 rows x 3 columns]</span>
 
-<span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;2013-11-08 13:15:00&#39;</span><span class="p">])</span>
-<span class="go">                             u      v      w  theta_v  mrho_h2o  mrho_co2       p</span>
-<span class="go">%Y-%m-%d%H:%M:%S.%f                                                              </span>
-<span class="go">2013-11-08 13:15:00.000  6.389  1.531  0.028    28.53      1311    14.686  98.946</span>
-<span class="go">2013-11-08 13:15:00.050  6.163  1.728 -0.043    28.53      1314    14.768  98.946</span>
-<span class="go">2013-11-08 13:15:00.100  6.450  1.822 -0.071    28.51      1306    14.823  98.946</span>
-<span class="go">2013-11-08 13:15:00.150  6.725  1.816  0.234    28.54      1306    14.752  98.946</span>
-<span class="go">2013-11-08 13:15:00.200  6.661  1.753  0.261    28.52      1312    14.454  98.946</span>
-<span class="go">2013-11-08 13:15:00.250  6.498  1.946  0.295    28.51      1297    14.560  98.894</span>
-<span class="go">2013-11-08 13:15:00.300  6.295  1.805  0.178    28.54      1301    14.533  98.956</span>
-<span class="go">2013-11-08 13:15:00.350  6.248  1.606  0.266    28.51      1305    14.542  98.956</span>
-<span class="go">2013-11-08 13:15:00.400  6.193  1.441  0.207    28.52      1302    14.512  98.929</span>
-<span class="go">2013-11-08 13:15:00.450  6.221  1.473  0.064    28.57      1275    14.429  98.956</span>
-<span class="go">2013-11-08 13:15:00.500  5.792  1.289  0.277    28.49      1300    14.620  98.929</span>
-<span class="go">2013-11-08 13:15:00.550  6.175  1.229  0.580    28.55      1295    14.723  98.946</span>
-<span class="go">2013-11-08 13:15:00.600  5.786  1.292  0.611    28.53      1273    14.633  98.946</span>
-<span class="go">2013-11-08 13:15:00.650  5.876  0.928  0.765    28.51      1293    15.056  98.946</span>
-<span class="go">2013-11-08 13:15:00.700  5.885  1.167  0.674    28.54      1272    14.359  98.956</span>
-<span class="go">2013-11-08 13:15:00.750  5.690  1.188  0.648    28.52      1301    14.753  98.998</span>
-<span class="go">2013-11-08 13:15:00.800  5.906  1.220  0.715    28.54      1305    14.582  98.956</span>
-<span class="go">2013-11-08 13:15:00.850  5.992  1.104  0.628    28.54      1294    14.581  98.929</span>
-<span class="go">2013-11-08 13:15:00.900  5.969  1.569  0.716    28.52      1271    14.333  98.956</span>
-<span class="go">2013-11-08 13:15:00.950  6.090  1.085  0.325    28.46      1298    14.608  98.956</span>
+<span class="gp">In [31]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;20131108 10:15:00.000&#39;</span><span class="p">:</span><span class="s1">&#39;20131108 10:17:00.000&#39;</span><span class="p">])</span>
+<span class="go">                             u      v      w  theta_v  mrho_h2o  mrho_co2       p  theta</span>
+<span class="go">Timestamp                                                                               </span>
+<span class="go">2013-11-08 10:15:00.000  2.634 -4.351  0.107    27.30      1229    15.002  99.128  30.80</span>
+<span class="go">2013-11-08 10:15:00.050  2.869 -4.249  0.040    27.44      1175    14.751  99.164  30.80</span>
+<span class="go">2013-11-08 10:15:00.100  3.320 -4.326 -0.079    27.26      1159    14.689  99.138  30.80</span>
+<span class="go">2013-11-08 10:15:00.150  2.759 -4.339 -0.007    27.24      1170    14.715  99.190  30.80</span>
+<span class="go">2013-11-08 10:15:00.200  2.748 -4.128 -0.038    27.21      1174    14.681  99.190  30.80</span>
+<span class="go">2013-11-08 10:15:00.250  3.149 -4.074 -0.387    27.20      1190    14.662  99.173  30.80</span>
+<span class="go">...                        ...    ...    ...      ...       ...       ...     ...    ...</span>
+<span class="go">2013-11-08 10:17:00.700  3.910 -4.698 -0.366    27.27      1170    14.592  99.128  30.85</span>
+<span class="go">2013-11-08 10:17:00.750  3.824 -4.535 -0.313    27.33      1165    14.492  99.164  30.85</span>
+<span class="go">2013-11-08 10:17:00.800  3.758 -4.353 -0.116    27.28      1103    14.495  99.164  30.85</span>
+<span class="go">2013-11-08 10:17:00.850  3.761 -4.454 -0.010    27.28      1128    14.611  99.164  30.85</span>
+<span class="go">2013-11-08 10:17:00.900  3.546 -4.766 -0.433    27.28      1131    14.709  99.147  30.85</span>
+<span class="go">2013-11-08 10:17:00.950  3.238 -4.601 -0.378    27.29      1130    14.809  99.147  30.85</span>
+
+<span class="go">[2420 rows x 8 columns]</span>
 </pre></div>
+</div>
+<p>Note that Pandas &#8220;guesses&#8221; if the argument you pass (<code class="docutils literal"><span class="pre">'theta_v'</span></code> or
+<code class="docutils literal"><span class="pre">'2013-11-08</span> <span class="pre">10:15:00'</span></code> etc.) is a column indexer or a row indexer. To use
+these unambiguously, use the <code class="docutils literal"><span class="pre">.loc</span></code> method as</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2013-11-08 10:15:00.000&#39;</span><span class="p">:</span><span class="s1">&#39;2013-11-08 10:17:00.000&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">]])</span>
+<span class="go">                             u      v      w</span>
+<span class="go">Timestamp                                   </span>
+<span class="go">2013-11-08 10:15:00.000  2.634 -4.351  0.107</span>
+<span class="go">2013-11-08 10:15:00.050  2.869 -4.249  0.040</span>
+<span class="go">2013-11-08 10:15:00.100  3.320 -4.326 -0.079</span>
+<span class="go">2013-11-08 10:15:00.150  2.759 -4.339 -0.007</span>
+<span class="go">2013-11-08 10:15:00.200  2.748 -4.128 -0.038</span>
+<span class="go">2013-11-08 10:15:00.250  3.149 -4.074 -0.387</span>
+<span class="go">...                        ...    ...    ...</span>
+<span class="go">2013-11-08 10:17:00.700  3.910 -4.698 -0.366</span>
+<span class="go">2013-11-08 10:17:00.750  3.824 -4.535 -0.313</span>
+<span class="go">2013-11-08 10:17:00.800  3.758 -4.353 -0.116</span>
+<span class="go">2013-11-08 10:17:00.850  3.761 -4.454 -0.010</span>
+<span class="go">2013-11-08 10:17:00.900  3.546 -4.766 -0.433</span>
+<span class="go">2013-11-08 10:17:00.950  3.238 -4.601 -0.378</span>
+
+<span class="go">[2420 rows x 3 columns]</span>
+</pre></div>
+</div>
+<p>This method is actually preferred  and you can find more information on this topic <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/indexing.html">here</a>.</p>
+<p>To view these data with units, you can use the <code class="docutils literal"><span class="pre">.with_units()</span></code> method. Note that, although this method returns
+a Pandas DataFrame, it is not meant for calculations. Currently the DataFrame it returns is meant for
+visualization purposes only! The previous output would like this using units:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [33]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">)[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">])</span>
+<span class="go">                         &lt;degC&gt;</span>
+<span class="go">Timestamp                      </span>
+<span class="go">2013-11-08 10:00:00.000   27.06</span>
+<span class="go">2013-11-08 10:00:00.050   27.12</span>
+<span class="go">2013-11-08 10:00:00.100   27.11</span>
+<span class="go">2013-11-08 10:00:00.150   27.11</span>
+<span class="go">2013-11-08 10:00:00.200   27.12</span>
+<span class="go">2013-11-08 10:00:00.250   27.10</span>
+<span class="go">...                         ...</span>
+<span class="go">2013-11-08 10:59:59.700   28.11</span>
+<span class="go">2013-11-08 10:59:59.750   27.98</span>
+<span class="go">2013-11-08 10:59:59.800   27.95</span>
+<span class="go">2013-11-08 10:59:59.850   27.96</span>
+<span class="go">2013-11-08 10:59:59.900   28.09</span>
+<span class="go">2013-11-08 10:59:59.950   28.02</span>
+
+<span class="go">[72000 rows x 1 columns]</span>
+
+<span class="gp">In [34]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">)[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]])</span>
+<span class="go">                                       u                v                w</span>
+<span class="go">                        &lt;meter / second&gt; &lt;meter / second&gt; &lt;meter / second&gt;</span>
+<span class="go">Timestamp                                                                 </span>
+<span class="go">2013-11-08 10:00:00.000            2.375           -5.206           -0.103</span>
+<span class="go">2013-11-08 10:00:00.050            2.493           -5.098           -0.018</span>
+<span class="go">2013-11-08 10:00:00.100            2.263           -5.114            0.014</span>
+<span class="go">2013-11-08 10:00:00.150            2.210           -5.235           -0.012</span>
+<span class="go">2013-11-08 10:00:00.200            2.158           -5.174           -0.112</span>
+<span class="go">2013-11-08 10:00:00.250            2.334           -5.279           -0.092</span>
+<span class="go">...                                  ...              ...              ...</span>
+<span class="go">2013-11-08 10:59:59.700            5.065           -4.453            0.424</span>
+<span class="go">2013-11-08 10:59:59.750            5.262           -4.703            0.126</span>
+<span class="go">2013-11-08 10:59:59.800            5.323           -4.882            0.242</span>
+<span class="go">2013-11-08 10:59:59.850            5.344           -5.119            0.457</span>
+<span class="go">2013-11-08 10:59:59.900            5.281           -5.261            0.599</span>
+<span class="go">2013-11-08 10:59:59.950            5.235           -4.801            0.362</span>
+
+<span class="go">[72000 rows x 3 columns]</span>
+
+<span class="gp">In [35]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">)[</span><span class="s1">&#39;2013-11-08 10:15:00&#39;</span><span class="p">])</span>
+<span class="go">                                       u                v                w theta_v  \</span>
+<span class="go">                        &lt;meter / second&gt; &lt;meter / second&gt; &lt;meter / second&gt;  &lt;degC&gt;   </span>
+<span class="go">Timestamp                                                                            </span>
+<span class="go">2013-11-08 10:15:00.000            2.634           -4.351            0.107   27.30   </span>
+<span class="go">2013-11-08 10:15:00.050            2.869           -4.249            0.040   27.44   </span>
+<span class="go">2013-11-08 10:15:00.100            3.320           -4.326           -0.079   27.26   </span>
+<span class="go">2013-11-08 10:15:00.150            2.759           -4.339           -0.007   27.24   </span>
+<span class="go">2013-11-08 10:15:00.200            2.748           -4.128           -0.038   27.21   </span>
+<span class="go">2013-11-08 10:15:00.250            3.149           -4.074           -0.387   27.20   </span>
+<span class="go">...                                  ...              ...              ...     ...   </span>
+<span class="go">2013-11-08 10:15:00.700            3.057           -4.090           -0.230   27.28   </span>
+<span class="go">2013-11-08 10:15:00.750            3.386           -4.169           -0.082   27.21   </span>
+<span class="go">2013-11-08 10:15:00.800            3.731           -4.180            0.291   27.42   </span>
+<span class="go">2013-11-08 10:15:00.850            3.676           -4.100            0.021   27.29   </span>
+<span class="go">2013-11-08 10:15:00.900            3.796           -4.390            0.170   27.24   </span>
+<span class="go">2013-11-08 10:15:00.950            3.294           -3.322            0.560   27.50   </span>
+
+<span class="go">                                        mrho_h2o                 mrho_co2            p  theta  </span>
+<span class="go">                        &lt;millimole / meter ** 3&gt; &lt;millimole / meter ** 3&gt; &lt;kilopascal&gt; &lt;degC&gt;  </span>
+<span class="go">Timestamp                                                                                      </span>
+<span class="go">2013-11-08 10:15:00.000                     1229                   15.002       99.128   30.8  </span>
+<span class="go">2013-11-08 10:15:00.050                     1175                   14.751       99.164   30.8  </span>
+<span class="go">2013-11-08 10:15:00.100                     1159                   14.689       99.138   30.8  </span>
+<span class="go">2013-11-08 10:15:00.150                     1170                   14.715       99.190   30.8  </span>
+<span class="go">2013-11-08 10:15:00.200                     1174                   14.681       99.190   30.8  </span>
+<span class="go">2013-11-08 10:15:00.250                     1190                   14.662       99.173   30.8  </span>
+<span class="go">...                                          ...                      ...          ...    ...  </span>
+<span class="go">2013-11-08 10:15:00.700                     1151                   14.758       99.164   30.8  </span>
+<span class="go">2013-11-08 10:15:00.750                     1195                   14.318       99.164   30.8  </span>
+<span class="go">2013-11-08 10:15:00.800                     1172                   14.369       99.164   30.8  </span>
+<span class="go">2013-11-08 10:15:00.850                     1173                   14.687       99.164   30.8  </span>
+<span class="go">2013-11-08 10:15:00.900                     1153                   14.442       99.164   30.8  </span>
+<span class="go">2013-11-08 10:15:00.950                     1176                   14.724       99.208   30.8  </span>
+
+<span class="go">[20 rows x 8 columns]</span>
+</pre></div>
+</div>
+<p>We can also plot the data on screen so we can view it interactively. This can be done directly
+from the DataFrame with</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [36]: </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="gp">In [37]: </span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f640b09bd50&gt;</span>
+
+<span class="gp">In [38]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/uvw_plot_basics.png" src="_images/uvw_plot_basics.png" />
+<p>Using the <code class="docutils literal"><span class="pre">plt.show()</span></code> command, the plot above would plot interactively. If
+we had used <code class="docutils literal"><span class="pre">plt.savefig('figure.png')</span></code> instead, it would have saved the
+figure as png. For more on plotting, you can checkout Pandas&#8217;s <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/visualization.html">visualization
+guide</a> and
+find out ways to make this plot look nicer, how to render it with LaTeX and
+some more tricks.</p>
+<p>Pymicra also has an <code class="docutils literal"><span class="pre">.xplot</span></code> method, which brings a little more options to
+Pandas&#8217;s <code class="docutils literal"><span class="pre">.plot()</span></code> method.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">give xplot examples</p>
+</div>
+</div>
+<div class="section" id="converting-units">
+<h3>Converting units<a class="headerlink" href="#converting-units" title="Permalink to this headline">¶</a></h3>
+<p>You can manually convert between units using the contents from <cite>Manipulating</cite>
+and the Pint package. But Pymicra has a very useful method to do this called <code class="docutils literal"><span class="pre">.convert_cols</span></code> (more exist,
+but let&#8217;s focus on this one).</p>
+<p>Let&#8217;s, for example, convert some units:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="n">conversions</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;p&#39;</span><span class="p">:</span><span class="s1">&#39;pascal&#39;</span><span class="p">,</span> <span class="s1">&#39;mrho_h2o&#39;</span><span class="p">:</span><span class="s1">&#39;mole/m^3&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_v&#39;</span><span class="p">:</span><span class="s1">&#39;kelvin&#39;</span><span class="p">}</span>
+
+<span class="gp">In [40]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">(</span><span class="n">conversions</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace_units</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+<span class="go">(                             u      v      w  theta_v  mrho_h2o  mrho_co2      p  theta</span>
+<span class="go">Timestamp                                                                              </span>
+<span class="go">2013-11-08 10:00:00.000  2.375 -5.206 -0.103   300.21     1.238    14.675  99190  30.43</span>
+<span class="go">2013-11-08 10:00:00.050  2.493 -5.098 -0.018   300.27     1.196    14.409  99199  30.43</span>
+<span class="go">2013-11-08 10:00:00.100  2.263 -5.114  0.014   300.26     1.220    14.636  99102  30.43</span>
+<span class="go">2013-11-08 10:00:00.150  2.210 -5.235 -0.012   300.26     1.238    14.688  99154  30.43</span>
+<span class="go">2013-11-08 10:00:00.200  2.158 -5.174 -0.112   300.27     1.174    14.476  99154  30.44</span>
+<span class="go">2013-11-08 10:00:00.250  2.334 -5.279 -0.092   300.25     1.195    14.671  99154  30.43</span>
+<span class="go">...                        ...    ...    ...      ...       ...       ...    ...    ...</span>
+<span class="go">2013-11-08 10:59:59.700  5.065 -4.453  0.424   301.26     1.184    14.578  99138  32.07</span>
+<span class="go">2013-11-08 10:59:59.750  5.262 -4.703  0.126   301.13     1.264    14.929  99138  32.08</span>
+<span class="go">2013-11-08 10:59:59.800  5.323 -4.882  0.242   301.10     1.229    14.258  99138  32.07</span>
+<span class="go">2013-11-08 10:59:59.850  5.344 -5.119  0.457   301.11     1.198    14.962  99102  32.07</span>
+<span class="go">2013-11-08 10:59:59.900  5.281 -5.261  0.599   301.24     1.231    14.615  99112  32.07</span>
+<span class="go">2013-11-08 10:59:59.950  5.235 -4.801  0.362   301.17     1.211    14.682  99164  32.08</span>
+
+<span class="go">[72000 rows x 8 columns], {&#39;theta_v&#39;: &lt;Unit(&#39;kelvin&#39;)&gt;, &#39;p&#39;: &lt;Unit(&#39;pascal&#39;)&gt;, &#39;mrho_h2o&#39;: &lt;Unit(&#39;mole / meter ** 3&#39;)&gt;})</span>
+</pre></div>
+</div>
+<p>Note that the units dictionary is updated automatically if the
+<code class="docutils literal"><span class="pre">inplace_units</span></code> keyword is true. The default is false for safety reasons, but
+passing this keyword as true is much simpler and compact:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [41]: </span><span class="n">conversions</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;theta&#39;</span><span class="p">:</span><span class="s1">&#39;kelvin&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_v&#39;</span><span class="p">:</span><span class="s1">&#39;kelvin&#39;</span><span class="p">}</span>
+
+<span class="gp">In [42]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convert_cols</span><span class="p">(</span><span class="n">conversions</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">inplace_units</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="gp">In [43]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">))</span>
+<span class="go">                                       u                v                w  theta_v  \</span>
+<span class="go">                        &lt;meter / second&gt; &lt;meter / second&gt; &lt;meter / second&gt; &lt;kelvin&gt;   </span>
+<span class="go">Timestamp                                                                             </span>
+<span class="go">2013-11-08 10:00:00.000            2.375           -5.206           -0.103   300.21   </span>
+<span class="go">2013-11-08 10:00:00.050            2.493           -5.098           -0.018   300.27   </span>
+<span class="go">2013-11-08 10:00:00.100            2.263           -5.114            0.014   300.26   </span>
+<span class="go">2013-11-08 10:00:00.150            2.210           -5.235           -0.012   300.26   </span>
+<span class="go">2013-11-08 10:00:00.200            2.158           -5.174           -0.112   300.27   </span>
+<span class="go">2013-11-08 10:00:00.250            2.334           -5.279           -0.092   300.25   </span>
+<span class="go">...                                  ...              ...              ...      ...   </span>
+<span class="go">2013-11-08 10:59:59.700            5.065           -4.453            0.424   301.26   </span>
+<span class="go">2013-11-08 10:59:59.750            5.262           -4.703            0.126   301.13   </span>
+<span class="go">2013-11-08 10:59:59.800            5.323           -4.882            0.242   301.10   </span>
+<span class="go">2013-11-08 10:59:59.850            5.344           -5.119            0.457   301.11   </span>
+<span class="go">2013-11-08 10:59:59.900            5.281           -5.261            0.599   301.24   </span>
+<span class="go">2013-11-08 10:59:59.950            5.235           -4.801            0.362   301.17   </span>
+
+<span class="go">                                        mrho_h2o                 mrho_co2            p    theta  </span>
+<span class="go">                        &lt;millimole / meter ** 3&gt; &lt;millimole / meter ** 3&gt; &lt;kilopascal&gt; &lt;kelvin&gt;  </span>
+<span class="go">Timestamp                                                                                        </span>
+<span class="go">2013-11-08 10:00:00.000                     1238                   14.675       99.190   303.58  </span>
+<span class="go">2013-11-08 10:00:00.050                     1196                   14.409       99.199   303.58  </span>
+<span class="go">2013-11-08 10:00:00.100                     1220                   14.636       99.102   303.58  </span>
+<span class="go">2013-11-08 10:00:00.150                     1238                   14.688       99.154   303.58  </span>
+<span class="go">2013-11-08 10:00:00.200                     1174                   14.476       99.154   303.59  </span>
+<span class="go">2013-11-08 10:00:00.250                     1195                   14.671       99.154   303.58  </span>
+<span class="go">...                                          ...                      ...          ...      ...  </span>
+<span class="go">2013-11-08 10:59:59.700                     1184                   14.578       99.138   305.22  </span>
+<span class="go">2013-11-08 10:59:59.750                     1264                   14.929       99.138   305.23  </span>
+<span class="go">2013-11-08 10:59:59.800                     1229                   14.258       99.138   305.22  </span>
+<span class="go">2013-11-08 10:59:59.850                     1198                   14.962       99.102   305.22  </span>
+<span class="go">2013-11-08 10:59:59.900                     1231                   14.615       99.112   305.22  </span>
+<span class="go">2013-11-08 10:59:59.950                     1211                   14.682       99.164   305.23  </span>
+
+<span class="go">[72000 rows x 8 columns]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulating">
+<h3>Manipulating<a class="headerlink" href="#manipulating" title="Permalink to this headline">¶</a></h3>
+<p>Manipulating data is pretty intuitive with Pandas. For example</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [44]: </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;rho_air&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">287.058</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">])</span>
+
+<span class="gp">In [45]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;rho_air&#39;</span><span class="p">])</span>
+<span class="go">Timestamp</span>
+<span class="go">2013-11-08 10:00:00.000    0.001151</span>
+<span class="go">2013-11-08 10:00:00.050    0.001151</span>
+<span class="go">2013-11-08 10:00:00.100    0.001150</span>
+<span class="go">2013-11-08 10:00:00.150    0.001150</span>
+<span class="go">2013-11-08 10:00:00.200    0.001150</span>
+<span class="go">2013-11-08 10:00:00.250    0.001150</span>
+<span class="go">                             ...   </span>
+<span class="go">2013-11-08 10:59:59.700    0.001146</span>
+<span class="go">2013-11-08 10:59:59.750    0.001147</span>
+<span class="go">2013-11-08 10:59:59.800    0.001147</span>
+<span class="go">2013-11-08 10:59:59.850    0.001147</span>
+<span class="go">2013-11-08 10:59:59.900    0.001146</span>
+<span class="go">2013-11-08 10:59:59.950    0.001147</span>
+<span class="go">Name: rho_air, dtype: float64</span>
+</pre></div>
+</div>
+<p>If, however, you&#8217;re not familiar with Pandas and prefer to just stick with what
+you know, you can get Numpy arrays from columns using the <code class="docutils literal"><span class="pre">.values</span></code>
+attribute:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [46]: </span><span class="n">P</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="gp">In [47]: </span><span class="n">Tv</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="gp">In [48]: </span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Tv</span><span class="p">))</span>
+<span class="go">&lt;type &#39;numpy.ndarray&#39;&gt;</span>
+
+<span class="gp">In [49]: </span><span class="n">rho_air</span> <span class="o">=</span> <span class="n">P</span><span class="o">/</span><span class="p">(</span><span class="mf">287.058</span><span class="o">*</span><span class="n">Tv</span><span class="p">)</span>
+
+<span class="gp">In [50]: </span><span class="k">print</span><span class="p">(</span><span class="n">rho_air</span><span class="p">)</span>
+<span class="go">[ 0.00115099  0.00115087  0.00114978 ...,  0.00114654  0.00114616</span>
+<span class="go">  0.00114702]</span>
+
+<span class="gp">In [51]: </span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">rho_air</span><span class="p">))</span>
+<span class="go">&lt;type &#39;numpy.ndarray&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Doing that you can step out of Pandas and do your own calculations using your
+own Python or Numpy code. This is pretty advantageous if you have a lot of routines
+that are already written in your own way.</p>
 </div>
 </div>
 </div>
@@ -584,7 +804,7 @@ are supported:</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-07-29.
+      Last updated on 2016-08-04.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
