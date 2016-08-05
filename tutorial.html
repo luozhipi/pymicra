@@ -218,7 +218,7 @@ density, you can calculate it yourself by extracting Numpy arrays using the
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;rho_air&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">my_rho_air_calculation</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">water_density</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Next we calculate the fluctuations. The way to do that is with the <code class="docutils literal"><span class="pre">detrend</span></code>
+<p>Next we calculate the fluctuations. The way to do that is with the <code class="docutils literal"><span class="pre">detrend()</span></code>
 function/method.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="n">ddata</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">])</span>
 
@@ -296,16 +296,46 @@ number of observations in window required to have a value.</p>
 </div>
 <div class="section" id="creating-a-site-configuration-file">
 <h2>Creating a site configuration file<a class="headerlink" href="#creating-a-site-configuration-file" title="Permalink to this headline">¶</a></h2>
-<p>In order o use some micrometeorological function, we need a site configuration
+<p>In order to use some micrometeorological function, we need a site configuration
 object, or site object. This object tells Pymicra how the instruments are organized
 and how is experimental site (vegetation, roughness length etc.). This object is created
-with the <code class="docutils literal"><span class="pre">siteConfig()</span></code> call and the easiest way is to use it with a site config file.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">description</span>         <span class="o">=</span> <span class="s2">&quot;Site configurations for the lake&quot;</span>
+with the <code class="docutils literal"><span class="pre">siteConfig()</span></code> call and the easiest way is to use it with a site config file. This
+is like a <code class="docutils literal"><span class="pre">fileConfig</span></code> file, but simpler and for the micrometeorological aspects of the site.
+Consider this example of a site config file, saved at <code class="docutils literal"><span class="pre">../examples/lake.site</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">description</span>         <span class="o">=</span> <span class="s2">&quot;Site configurations for the lake island&quot;</span>
 
 <span class="n">measurement_height</span>  <span class="o">=</span> <span class="mf">2.75</span>  <span class="c1"># m</span>
-<span class="n">canopy_height</span>       <span class="o">=</span> <span class="mf">0.0</span>   <span class="c1"># m</span>
-<span class="n">displacement_height</span> <span class="o">=</span> <span class="mf">0.0</span>   <span class="c1"># m</span>
+<span class="n">canopy_height</span>       <span class="o">=</span> <span class="mf">0.1</span>   <span class="c1"># m</span>
+<span class="n">displacement_height</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># m</span>
 <span class="n">roughness_length</span>    <span class="o">=</span> <span class="o">.</span><span class="mi">01</span>   <span class="c1"># m</span>
+</pre></div>
+</div>
+<p>As in the case of <code class="docutils literal"><span class="pre">fileConfig</span></code>, the description is optional, but is handy for
+organization purposes and printing on screen.</p>
+<p>The <code class="docutils literal"><span class="pre">measurement_height</span></code> keyword is the general measurement height to be used
+in the calculation, generally taken as the sonic anemometer height (in meters).</p>
+<p>The <code class="docutils literal"><span class="pre">canopy_height</span></code> keyword is what it sounds like. Should be the mean canopy
+height in meters. The <code class="docutils literal"><span class="pre">displacement_height</span></code> is the zero-plane displacement
+height. If it is not given, it&#8217;ll be calculated as 2/3 of the mean canopy
+height.</p>
+<p>The <code class="docutils literal"><span class="pre">roughness_length</span></code> is the roughness length in meters.</p>
+<p>The creation of the site config object is done as</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="n">siteconf</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">siteConfig</span><span class="p">(</span><span class="s1">&#39;../examples/lake.site&#39;</span><span class="p">)</span>
+
+<span class="gp">In [14]: </span><span class="k">print</span><span class="p">(</span><span class="n">siteconf</span><span class="p">)</span>
+<span class="go">&lt;pymicra.siteConfig&gt; object</span>
+<span class="go">Site configurations for the lake island</span>
+<span class="gt">----</span>
+<span class="n">altitude</span>               <span class="bp">None</span>
+<span class="n">canopy_height</span>           <span class="mf">0.1</span>
+<span class="n">displacement_height</span>    <span class="mf">0.05</span>
+<span class="n">from_file</span>              <span class="bp">None</span>
+<span class="n">instruments_height</span>     <span class="bp">None</span>
+<span class="n">latitude</span>               <span class="bp">None</span>
+<span class="n">longitude</span>              <span class="bp">None</span>
+<span class="n">measurement_height</span>     <span class="mf">2.75</span>
+<span class="n">roughness_length</span>       <span class="mf">0.01</span>
+<span class="ne">dtype</span>: object
 </pre></div>
 </div>
 </div>
@@ -315,9 +345,7 @@ with the <code class="docutils literal"><span class="pre">siteConfig()</span></c
 use the <code class="docutils literal"><span class="pre">eddyCovariance</span></code> function along with the <code class="docutils literal"><span class="pre">get_turbulent_scales</span></code>
 keyword (which is true by default). Again, it is recommended that you carefully
 check the output of this function before moving on:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="n">siteconf</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">siteConfig</span><span class="p">(</span><span class="s1">&#39;../examples/lake.site&#39;</span><span class="p">)</span>
-
-<span class="gp">In [14]: </span><span class="n">results</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">eddyCovariance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">site_config</span><span class="o">=</span><span class="n">siteconf</span><span class="p">,</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [15]: </span><span class="n">results</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">eddyCovariance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">site_config</span><span class="o">=</span><span class="n">siteconf</span><span class="p">,</span>
 <span class="gp">   ....: </span>    <span class="n">get_turbulent_scales</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">wpl</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">solutes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;co2&#39;</span><span class="p">])</span>
 <span class="gp">   ....: </span>
 <span class="go">Beginning Eddy Covariance method...</span>
@@ -337,7 +365,7 @@ check the output of this function before moving on:</p>
 <span class="go">Done with Eddy Covariance.</span>
 
 
-<span class="gp">In [15]: </span><span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="gp">In [16]: </span><span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 <span class="go">tau            &lt;kilogram / meter / second ** 2&gt;     1.957307e-01</span>
 <span class="go">H              &lt;watt / meter ** 2&gt;                  5.083720e+01</span>
 <span class="go">Hv             &lt;watt / meter ** 2&gt;                  7.453761e+01</span>
@@ -350,7 +378,7 @@ check the output of this function before moving on:</p>
 <span class="go">mrho_h2o_star  &lt;millimole / meter ** 3&gt;             1.697195e+01</span>
 <span class="go">mrho_co2_star  &lt;millimole / meter ** 3&gt;             6.415643e-04</span>
 <span class="go">Lo             &lt;meter&gt;                             -8.342964e+01</span>
-<span class="go">zeta           &lt;dimensionless&gt;                     -3.296191e-02</span>
+<span class="go">zeta           &lt;dimensionless&gt;                     -3.236260e-02</span>
 <span class="go">q_star         &lt;dimensionless&gt;                      2.663024e-04</span>
 <span class="go">conc_co2_star  &lt;dimensionless&gt;                      2.459169e-08</span>
 <span class="go">dtype: float64</span>
@@ -363,6 +391,31 @@ you&#8217;re in doubt of which unit the outputs are coming, just check <code cla
 directly or with the <code class="docutils literal"><span class="pre">.with_units()</span></code> method.</p>
 <p>Check out the example to get fluxes of many files <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples/get_fluxes.py">here</a> and
 download the example data <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples/ex_data">here</a>.</p>
+<p>The output of this file is</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>                                                 <span class="n">tau</span>                   <span class="n">H</span>                  <span class="n">Hv</span>                                 <span class="n">E</span>                  <span class="n">LE</span>  \
+                    <span class="o">&lt;</span><span class="n">kilogram</span> <span class="o">/</span> <span class="n">meter</span> <span class="o">/</span> <span class="n">second</span> <span class="o">**</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">watt</span> <span class="o">/</span> <span class="n">meter</span> <span class="o">**</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">watt</span> <span class="o">/</span> <span class="n">meter</span> <span class="o">**</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">millimole</span> <span class="o">/</span> <span class="n">meter</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">second</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">watt</span> <span class="o">/</span> <span class="n">meter</span> <span class="o">**</span> <span class="mi">2</span><span class="o">&gt;</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">10</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.195731</span>           <span class="mf">50.837195</span>           <span class="mf">74.537609</span>                          <span class="mf">7.007486</span>          <span class="mf">306.392623</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">12</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.070182</span>           <span class="o">-</span><span class="mf">7.116972</span>           <span class="mf">14.737946</span>                          <span class="mf">6.647450</span>          <span class="mf">290.331014</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">13</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.059115</span>           <span class="o">-</span><span class="mf">3.325774</span>           <span class="mf">12.743194</span>                          <span class="mf">4.875838</span>          <span class="mf">212.906974</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">16</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.017075</span>          <span class="o">-</span><span class="mf">13.847040</span>           <span class="o">-</span><span class="mf">4.131275</span>                          <span class="mf">2.961474</span>          <span class="mf">128.982980</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">17</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.003284</span>           <span class="o">-</span><span class="mf">5.557620</span>           <span class="o">-</span><span class="mf">2.525949</span>                          <span class="mf">0.931213</span>           <span class="mf">40.576805</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">18</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.026564</span>           <span class="o">-</span><span class="mf">6.632330</span>           <span class="o">-</span><span class="mf">2.782190</span>                          <span class="mf">1.184226</span>           <span class="mf">51.654208</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">19</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>                         <span class="mf">0.044550</span>          <span class="o">-</span><span class="mf">14.860873</span>          <span class="o">-</span><span class="mf">11.991508</span>                          <span class="mf">0.925637</span>           <span class="mf">40.476446</span>
+
+                              <span class="n">u_star</span> <span class="n">theta_v_star</span> <span class="n">theta_star</span>            <span class="n">mrho_h2o_star</span>          <span class="n">Lo</span>            <span class="n">zeta</span>          <span class="n">q_star</span>
+                    <span class="o">&lt;</span><span class="n">meter</span> <span class="o">/</span> <span class="n">second</span><span class="o">&gt;</span>     <span class="o">&lt;</span><span class="n">kelvin</span><span class="o">&gt;</span>   <span class="o">&lt;</span><span class="n">kelvin</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">millimole</span> <span class="o">/</span> <span class="n">meter</span> <span class="o">**</span> <span class="mi">3</span><span class="o">&gt;</span>     <span class="o">&lt;</span><span class="n">meter</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">dimensionless</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">dimensionless</span><span class="o">&gt;</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">10</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.412886</span>     <span class="mf">0.156686</span>   <span class="mf">0.106865</span>                <span class="mf">16.971952</span>  <span class="o">-</span><span class="mf">83.429641</span>       <span class="o">-</span><span class="mf">0.032363</span>        <span class="mf">0.000266</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">12</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.247697</span>     <span class="mf">0.051834</span>  <span class="o">-</span><span class="mf">0.025031</span>                <span class="mf">26.837060</span>  <span class="o">-</span><span class="mf">90.992476</span>       <span class="o">-</span><span class="mf">0.029673</span>        <span class="mf">0.000423</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">13</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.227652</span>     <span class="mf">0.048903</span>  <span class="o">-</span><span class="mf">0.012763</span>                <span class="mf">21.417958</span>  <span class="o">-</span><span class="mf">81.621514</span>       <span class="o">-</span><span class="mf">0.033080</span>        <span class="mf">0.000338</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">16</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.122980</span>    <span class="o">-</span><span class="mf">0.029651</span>  <span class="o">-</span><span class="mf">0.099383</span>                <span class="mf">24.080946</span>   <span class="mf">39.583979</span>        <span class="mf">0.068209</span>        <span class="mf">0.000384</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">17</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.053951</span>    <span class="o">-</span><span class="mf">0.041353</span>  <span class="o">-</span><span class="mf">0.090986</span>                <span class="mf">17.260443</span>    <span class="mf">5.463569</span>        <span class="mf">0.494182</span>        <span class="mf">0.000276</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">18</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.153328</span>    <span class="o">-</span><span class="mf">0.016003</span>  <span class="o">-</span><span class="mf">0.038149</span>                 <span class="mf">7.723494</span>  <span class="mf">113.854892</span>        <span class="mf">0.023714</span>        <span class="mf">0.000123</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">08</span> <span class="mi">19</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>         <span class="mf">0.198083</span>    <span class="o">-</span><span class="mf">0.053132</span>  <span class="o">-</span><span class="mf">0.065846</span>                 <span class="mf">4.672974</span>   <span class="mf">56.961515</span>        <span class="mf">0.047400</span>        <span class="mf">0.000074</span>
+</pre></div>
+</div>
+<p>Note that the date parsing when reading the file comes is handy now, although
+there are computationally faster ways to do it other than setting
+<code class="docutils literal"><span class="pre">parse_dates=True</span></code> in the <code class="docutils literal"><span class="pre">timeSeries()</span></code> call.</p>
 </div>
 <div class="section" id="obtaining-the-spectra">
 <h2>Obtaining the spectra<a class="headerlink" href="#obtaining-the-spectra" title="Permalink to this headline">¶</a></h2>
