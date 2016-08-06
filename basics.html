@@ -136,9 +136,12 @@
 no way supposed to be a complete representation of everything that can be done
 with Pymicra.</p>
 <p>In this tutorial we use some example data and refer to some example python
-scripts that can be download <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples">here</a>.  Please feel free
-to explore both the example data and the example programs, as well as modify
-the programs for your own learning process!</p>
+scripts that can be download <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples">here</a>. These data and
+scripts are from a measurement campaign in a very small island (about 20 meters
+accross) in a large artificial lake. At the time of these measurements the
+island was almost completely immersed into about 5 cm of water. Please feel
+free to explore both the example data and the example programs, as well as
+modify the programs for your own learning process!</p>
 <div class="section" id="notation">
 <h2>Notation<a class="headerlink" href="#notation" title="Permalink to this headline">¶</a></h2>
 <p>Pymicra uses a specific notation to name each one of its columns. This notation
@@ -455,8 +458,8 @@ If, otherwise, we were to ignore the dates, the result would be a integer-indexe
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [27]: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">   ....: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="go">1 loops, best of 3: 154 ms per loop</span>
-<span class="go">1 loops, best of 3: 723 ms per loop</span>
+<span class="go">10 loops, best of 3: 121 ms per loop</span>
+<span class="go">1 loops, best of 3: 663 ms per loop</span>
 </pre></div>
 </div>
 </div>
@@ -529,7 +532,7 @@ are supported by Pandas, but without support for units:</p>
 <p>Note that Pandas &#8220;guesses&#8221; if the argument you pass (<code class="docutils literal"><span class="pre">'theta_v'</span></code> or
 <code class="docutils literal"><span class="pre">'2013-11-08</span> <span class="pre">10:15:00'</span></code> etc.) is a column indexer or a row indexer. To use
 these unambiguously, use the <code class="docutils literal"><span class="pre">.loc</span></code> method as</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2013-11-08 10:15:00.000&#39;</span><span class="p">:</span><span class="s1">&#39;2013-11-08 10:17:00.000&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">]])</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2013-11-08 10:15:00.000&#39;</span><span class="p">:</span><span class="s1">&#39;2013-11-08 10:17:00.000000000&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">]])</span>
 <span class="go">                             u      v      w</span>
 <span class="go">Timestamp                                   </span>
 <span class="go">2013-11-08 10:15:00.000  2.634 -4.351  0.107</span>
@@ -635,7 +638,7 @@ from the DataFrame with</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [36]: </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="gp">In [37]: </span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7eff16ab4150&gt;</span>
+<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f33a3757d90&gt;</span>
 
 <span class="gp">In [38]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -804,7 +807,7 @@ that are already written in your own way.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-08-04.
+      Last updated on 2016-08-05.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

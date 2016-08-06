@@ -185,13 +185,7 @@ show the user exactly what it is doing:</p>
 <span class="go">theta_v   &lt;kelvin&gt;                    3.007943e+02</span>
 <span class="go">mrho_h2o  &lt;millimole / meter ** 3&gt;    1.169865e+03</span>
 <span class="go">mrho_co2  &lt;millimole / meter ** 3&gt;    1.466232e+01</span>
-<span class="go">p         &lt;kilopascal&gt;                9.913677e+01</span>
-<span class="go">theta     &lt;kelvin&gt;                    3.044213e+02</span>
-<span class="go">rho_h2o   &lt;kilogram / meter ** 3&gt;     2.107547e-02</span>
-<span class="go">rho_air   &lt;kilogram / meter ** 3&gt;     1.148149e+00</span>
-<span class="go">rho_dry   &lt;kilogram / meter ** 3&gt;     1.127073e+00</span>
-<span class="go">mrho_dry  &lt;mole / meter ** 3&gt;         3.891223e+01</span>
-<span class="go">q         &lt;dimensionless&gt;             1.835686e-02</span>
+<span class="go">                                          ...     </span>
 <span class="go">r_h2o     &lt;dimensionless&gt;             1.870102e-02</span>
 <span class="go">mr_h2o    &lt;dimensionless&gt;             3.006698e-02</span>
 <span class="go">rho_co2   &lt;kilogram / meter ** 3&gt;     6.452812e-04</span>
@@ -229,11 +223,7 @@ function/method.</p>
 <span class="go">theta_v&#39;   &lt;kelvin&gt;                   -3.421680e-05</span>
 <span class="go">mrho_h2o&#39;  &lt;millimole / meter ** 3&gt;   -7.917622e-04</span>
 <span class="go">mrho_co2&#39;  &lt;millimole / meter ** 3&gt;    2.996904e-06</span>
-<span class="go">rho_h2o&#39;   &lt;kilogram / meter ** 3&gt;    -1.426702e-08</span>
-<span class="go">rho_air&#39;   &lt;kilogram / meter ** 3&gt;     1.506704e-07</span>
-<span class="go">rho_dry&#39;   &lt;kilogram / meter ** 3&gt;     1.648373e-07</span>
-<span class="go">mrho_dry&#39;  &lt;mole / meter ** 3&gt;         5.689934e-06</span>
-<span class="go">q&#39;         &lt;dimensionless&gt;            -1.480115e-08</span>
+<span class="go">                                           ...     </span>
 <span class="go">r_h2o&#39;     &lt;dimensionless&gt;            -1.535592e-08</span>
 <span class="go">mr_h2o&#39;    &lt;dimensionless&gt;            -2.468290e-08</span>
 <span class="go">rho_co2&#39;   &lt;kilogram / meter ** 3&gt;     1.318839e-10</span>
@@ -269,21 +259,7 @@ number of observations in window required to have a value.</p>
 <span class="go">theta_v    &lt;kelvin&gt;                    3.007943e+02</span>
 <span class="go">mrho_h2o   &lt;millimole / meter ** 3&gt;    1.169865e+03</span>
 <span class="go">mrho_co2   &lt;millimole / meter ** 3&gt;    1.466232e+01</span>
-<span class="go">p          &lt;kilopascal&gt;                9.913677e+01</span>
-<span class="go">theta      &lt;kelvin&gt;                    3.044213e+02</span>
-<span class="go">rho_h2o    &lt;kilogram / meter ** 3&gt;     2.107547e-02</span>
-<span class="go">rho_air    &lt;kilogram / meter ** 3&gt;     1.148149e+00</span>
-<span class="go">rho_dry    &lt;kilogram / meter ** 3&gt;     1.127073e+00</span>
-<span class="go">mrho_dry   &lt;mole / meter ** 3&gt;         3.891223e+01</span>
-<span class="go">q          &lt;dimensionless&gt;             1.835686e-02</span>
 <span class="go">                                           ...     </span>
-<span class="go">mrho_h2o&#39;  &lt;millimole / meter ** 3&gt;   -7.917622e-04</span>
-<span class="go">mrho_co2&#39;  &lt;millimole / meter ** 3&gt;    2.996904e-06</span>
-<span class="go">rho_h2o&#39;   &lt;kilogram / meter ** 3&gt;    -1.426702e-08</span>
-<span class="go">rho_air&#39;   &lt;kilogram / meter ** 3&gt;     1.506704e-07</span>
-<span class="go">rho_dry&#39;   &lt;kilogram / meter ** 3&gt;     1.648373e-07</span>
-<span class="go">mrho_dry&#39;  &lt;mole / meter ** 3&gt;         5.689934e-06</span>
-<span class="go">q&#39;         &lt;dimensionless&gt;            -1.480115e-08</span>
 <span class="go">r_h2o&#39;     &lt;dimensionless&gt;            -1.535592e-08</span>
 <span class="go">mr_h2o&#39;    &lt;dimensionless&gt;            -2.468290e-08</span>
 <span class="go">rho_co2&#39;   &lt;kilogram / meter ** 3&gt;     1.318839e-10</span>
@@ -302,11 +278,11 @@ and how is experimental site (vegetation, roughness length etc.). This object is
 with the <code class="docutils literal"><span class="pre">siteConfig()</span></code> call and the easiest way is to use it with a site config file. This
 is like a <code class="docutils literal"><span class="pre">fileConfig</span></code> file, but simpler and for the micrometeorological aspects of the site.
 Consider this example of a site config file, saved at <code class="docutils literal"><span class="pre">../examples/lake.site</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">description</span>         <span class="o">=</span> <span class="s2">&quot;Site configurations for the lake island&quot;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">description</span>         <span class="o">=</span> <span class="s2">&quot;Site configurations for the lake&quot;</span>
 
 <span class="n">measurement_height</span>  <span class="o">=</span> <span class="mf">2.75</span>  <span class="c1"># m</span>
-<span class="n">canopy_height</span>       <span class="o">=</span> <span class="mf">0.1</span>   <span class="c1"># m</span>
-<span class="n">displacement_height</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># m</span>
+<span class="n">canopy_height</span>       <span class="o">=</span> <span class="mf">0.0</span>   <span class="c1"># m</span>
+<span class="n">displacement_height</span> <span class="o">=</span> <span class="mf">0.0</span>   <span class="c1"># m</span>
 <span class="n">roughness_length</span>    <span class="o">=</span> <span class="o">.</span><span class="mi">01</span>   <span class="c1"># m</span>
 </pre></div>
 </div>
@@ -324,11 +300,11 @@ height.</p>
 
 <span class="gp">In [14]: </span><span class="k">print</span><span class="p">(</span><span class="n">siteconf</span><span class="p">)</span>
 <span class="go">&lt;pymicra.siteConfig&gt; object</span>
-<span class="go">Site configurations for the lake island</span>
+<span class="go">Site configurations for the lake</span>
 <span class="gt">----</span>
 <span class="n">altitude</span>               <span class="bp">None</span>
-<span class="n">canopy_height</span>           <span class="mf">0.1</span>
-<span class="n">displacement_height</span>    <span class="mf">0.05</span>
+<span class="n">canopy_height</span>             <span class="mi">0</span>
+<span class="n">displacement_height</span>       <span class="mi">0</span>
 <span class="n">from_file</span>              <span class="bp">None</span>
 <span class="n">instruments_height</span>     <span class="bp">None</span>
 <span class="n">latitude</span>               <span class="bp">None</span>
@@ -372,13 +348,11 @@ check the output of this function before moving on:</p>
 <span class="go">E              &lt;millimole / meter ** 2 / second&gt;    7.007486e+00</span>
 <span class="go">LE             &lt;watt / meter ** 2&gt;                  3.063926e+02</span>
 <span class="go">F_co2          &lt;millimole / meter ** 2 / second&gt;    2.648931e-04</span>
-<span class="go">u_star         &lt;meter / second&gt;                     4.128863e-01</span>
-<span class="go">theta_v_star   &lt;kelvin&gt;                             1.566857e-01</span>
-<span class="go">theta_star     &lt;kelvin&gt;                             1.068650e-01</span>
+<span class="go">                                                        ...     </span>
 <span class="go">mrho_h2o_star  &lt;millimole / meter ** 3&gt;             1.697195e+01</span>
 <span class="go">mrho_co2_star  &lt;millimole / meter ** 3&gt;             6.415643e-04</span>
 <span class="go">Lo             &lt;meter&gt;                             -8.342964e+01</span>
-<span class="go">zeta           &lt;dimensionless&gt;                     -3.236260e-02</span>
+<span class="go">zeta           &lt;dimensionless&gt;                     -3.296191e-02</span>
 <span class="go">q_star         &lt;dimensionless&gt;                      2.663024e-04</span>
 <span class="go">conc_co2_star  &lt;dimensionless&gt;                      2.459169e-08</span>
 <span class="go">dtype: float64</span>
@@ -419,8 +393,9 @@ there are computationally faster ways to do it other than setting
 </div>
 <div class="section" id="obtaining-the-spectra">
 <h2>Obtaining the spectra<a class="headerlink" href="#obtaining-the-spectra" title="Permalink to this headline">¶</a></h2>
-<p>Using Numpy&#8217;s fast Fourier transform implementation, Pymicra is also able to extract
-spectra, co-spectra and quadratures.</p>
+<p>Using Numpy&#8217;s fast Fourier transform implementation, Pymicra is also able to
+extract spectra, co-spectra and quadratures.</p>
+<p>We begin normally with out data:</p>
 </div>
 </div>
 
@@ -450,7 +425,7 @@ spectra, co-spectra and quadratures.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-08-04.
+      Last updated on 2016-08-05.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

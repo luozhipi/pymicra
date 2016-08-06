@@ -16,6 +16,7 @@ function:
 .. ipython:: python
    :suppress:
 
+   import pymicra as pm
    pm.notation = pm.Notation()
 
 .. ipython:: python
@@ -194,6 +195,9 @@ there are computationally faster ways to do it other than setting
 Obtaining the spectra
 ---------------------
 
-Using Numpy's fast Fourier transform implementation, Pymicra is also able to extract
-spectra, co-spectra and quadratures.
+Using Numpy's fast Fourier transform implementation, Pymicra is also able to
+extract spectra, co-spectra and quadratures.
+
+We begin normally with out data:
+
 
