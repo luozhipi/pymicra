@@ -136,7 +136,7 @@
 no way supposed to be a complete representation of everything that can be done
 with Pymicra.</p>
 <p>In this tutorial we use some example data and refer to some example python
-scripts that can be download <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples">here</a>. These data and
+scripts that can be downloaded <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples">here</a>. These data and
 scripts are from a measurement campaign in a very small island (about 20 meters
 across) in a large artificial lake. At the time of these measurements the
 island was almost completely immersed into about 5 cm of water. Please feel
@@ -326,7 +326,7 @@ Python&#8217;s <a class="reference external" href="https://docs.python.org/2/lib
 which themselves are the 1989 version default C standard format dates, which is
 common in many platforms.</p>
 <p>This is useful only in case you want to index your data by timestamp, which is
-a huge advantage in some cases (check out what Pandas can do with
+a huge advantage in some cases (check out what <a class="reference external" href="http://pandas.pydata.org/">Pandas</a> can do with
 <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">timestamp-indexed data</a>) but Pymicra
 can also work well without this. If you don&#8217;t wish to work with timestamps and
 want to work only by line number in each file, you can ignore these columns and
@@ -460,8 +460,8 @@ were to ignore the dates, the result would be a integer-indexed dataset:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [27]: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">   ....: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="go">10 loops, best of 3: 138 ms per loop</span>
-<span class="go">1 loops, best of 3: 721 ms per loop</span>
+<span class="go">1 loops, best of 3: 139 ms per loop</span>
+<span class="go">1 loops, best of 3: 713 ms per loop</span>
 </pre></div>
 </div>
 </div>
@@ -645,7 +645,7 @@ from the DataFrame with</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [36]: </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="gp">In [37]: </span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f5ba7ce7510&gt;</span>
+<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f9b13847c50&gt;</span>
 
 <span class="gp">In [38]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -667,7 +667,7 @@ Pandas&#8217;s <code class="docutils literal"><span class="pre">.plot()</span></
 <div class="section" id="converting-units">
 <h3>Converting units<a class="headerlink" href="#converting-units" title="Permalink to this headline">¶</a></h3>
 <p>You can manually convert between units using the contents from <cite>Manipulating</cite>
-and the Pint package. But Pymicra has a very useful method to do this called <code class="docutils literal"><span class="pre">.convert_cols</span></code> (more exist,
+and the <a class="reference external" href="https://pint.readthedocs.io/en/0.7.2/">Pint</a> package. But Pymicra has a very useful method to do this called <code class="docutils literal"><span class="pre">.convert_cols</span></code> (more exist,
 but let&#8217;s focus on this one).</p>
 <p>Let&#8217;s, for example, convert some units:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="n">conversions</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;p&#39;</span><span class="p">:</span><span class="s1">&#39;pascal&#39;</span><span class="p">,</span> <span class="s1">&#39;mrho_h2o&#39;</span><span class="p">:</span><span class="s1">&#39;mole/m^3&#39;</span><span class="p">,</span> <span class="s1">&#39;theta_v&#39;</span><span class="p">:</span><span class="s1">&#39;kelvin&#39;</span><span class="p">}</span>
@@ -762,7 +762,7 @@ passing this keyword as true is much simpler and compact:</p>
 </pre></div>
 </div>
 <p>If, however, you&#8217;re not familiar with Pandas and prefer to just stick with what
-you know, you can get Numpy arrays from columns using the <code class="docutils literal"><span class="pre">.values</span></code>
+you know, you can get <a class="reference external" href="http://www.numpy.org/">Numpy</a> arrays from columns using the <code class="docutils literal"><span class="pre">.values</span></code>
 attribute:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [46]: </span><span class="n">P</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 

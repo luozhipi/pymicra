@@ -210,7 +210,7 @@ see if it&#8217;s doing what you think it&#8217;s doing and to analyse its calcu
 logic. By doing that you can have a better idea of what it does without having
 to check the code, and how to prevent it from doing some calculations you don&#8217;t
 want. For example, if you&#8217;re not happy with the way it calculates moist air
-density, you can calculate it yourself by extracting Numpy arrays using the
+density, you can calculate it yourself by extracting <a href="#id2"><span class="problematic" id="id3">Numpy_</span></a> arrays using the
 <code class="docutils literal"><span class="pre">.values</span></code> method:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">P</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
@@ -501,7 +501,7 @@ extract spectra, co-spectra and quadratures.</p>
 </div>
 <p>We can plot it with the raw points, but it&#8217;s hard to see anything</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [26]: </span><span class="n">spectra</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loglog</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="gh">Out[26]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb76df2b390&gt;</span>
+<span class="gh">Out[26]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f7d8e748290&gt;</span>
 
 <span class="gp">In [27]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -509,7 +509,7 @@ extract spectra, co-spectra and quadratures.</p>
 <img alt="_images/spectra.png" src="_images/spectra.png" />
 <p>The best option it to apply a binning procedure before plotting it:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [28]: </span><span class="n">spectra</span><span class="o">.</span><span class="n">binned</span><span class="p">(</span><span class="n">bins_number</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loglog</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="gh">Out[28]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb754023c10&gt;</span>
+<span class="gh">Out[28]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f7d8e31bad0&gt;</span>
 
 <span class="gp">In [29]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -519,73 +519,39 @@ extract spectra, co-spectra and quadratures.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [30]: </span><span class="n">crspectra</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">crossSpectra</span><span class="p">(</span><span class="n">ddata</span><span class="p">[[</span><span class="s2">&quot;q&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;theta_v&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;w&#39;&quot;</span><span class="p">]],</span> <span class="n">frequency</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">anti_aliasing</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="gp">In [31]: </span><span class="k">print</span><span class="p">(</span><span class="n">crspectra</span><span class="p">)</span>
-<span class="go">                                     X_q&#39;_theta_v&#39;                                  X_q&#39;_w&#39;  \</span>
-<span class="go">Frequency                                                                                     </span>
-<span class="go">0.000000                    (3.64642595549e-09+0j)                   (4.42997418716e-10+0j)   </span>
-<span class="go">0.000278       (0.0431404707606-0.00656843186362j)    (-0.00601159315561+0.00764344401803j)   </span>
-<span class="go">0.000556       (0.00909424097384+0.0067955652924j)       (0.00662015331717-0.012703253092j)   </span>
-<span class="go">0.000833       (0.0496067630364+0.00817412807977j)   (-0.000691711708511+0.00755242279564j)   </span>
-<span class="go">0.001111      (0.00484104482788+0.00258139013139j)        (-0.002261508595+0.002958157248j)   </span>
-<span class="go">0.001389    (-0.00252062835328+0.000352653072163j)    (0.00237400427977+0.000536610998917j)   </span>
-<span class="go">0.001667     (0.000581530584633-0.00191814143306j)     (0.00147491034621+0.00152581825106j)   </span>
-<span class="go">0.001944   (-0.000488827031498+0.000764070372007j)   (0.000136221918826+6.77467074179e-05j)   </span>
-<span class="go">0.002222      (0.00687873261507+0.00344445084207j)      (0.0029147646648-0.00147566764488j)   </span>
-<span class="go">0.002500   (-3.20032027175e-05+0.000211020463093j)    (0.000959520700828-0.00086587049931j)   </span>
-<span class="go">0.002778      (0.00914484576834+0.00412639808728j)     (0.00130655515532-0.00170561742482j)   </span>
-<span class="go">0.003056       (0.00297280641473-0.0106406599447j)     (0.00220624778578+0.00567444669839j)   </span>
-<span class="go">0.003333       (0.0149860509294+0.00329056839565j)   (-0.00259518294404-0.000725287626379j)   </span>
-<span class="go">0.003611     (0.00339758185817+0.000604514115291j)   (-0.000827847258403+0.00297355512566j)   </span>
-<span class="go">0.003889     (0.00466685976134+0.000776798595543j)    (-0.00282762037168-0.00222452651306j)   </span>
-<span class="go">...                                            ...                                      ...   </span>
-<span class="go">9.996111   (-3.00966155446e-07-2.09964207749e-07j)  (-7.46261459459e-07+1.34881230785e-06j)   </span>
-<span class="go">9.996389    (9.86724075233e-07-2.75125913256e-06j)     (-1.47663445849e-06-2.71710633e-07j)   </span>
-<span class="go">9.996667   (-1.20756421484e-06+9.41878022718e-07j)  (-1.60728034798e-06-1.61932245965e-07j)   </span>
-<span class="go">9.996944   (-1.85202902306e-08-6.15032063274e-07j)   (1.28907886822e-06+2.79374256215e-07j)   </span>
-<span class="go">9.997222   (-3.02777208846e-07+1.81456590353e-07j)  (-4.11844312729e-07-4.47580373048e-08j)   </span>
-<span class="go">9.997500    (1.86261188261e-07+2.21641762612e-08j)   (1.17248477329e-06-7.01784908781e-08j)   </span>
-<span class="go">9.997778    (8.74534442357e-08-1.94132607794e-07j)    (3.5863011104e-07-1.03520888491e-06j)   </span>
-<span class="go">9.998056    (4.80097791895e-07-1.34733818884e-07j)   (5.52736731063e-07-3.98018175528e-07j)   </span>
-<span class="go">9.998333     (1.6826867691e-07+3.01393754479e-07j)  (-1.86557075023e-07+9.81927620647e-08j)   </span>
-<span class="go">9.998611   (-4.96402326019e-07-3.31429269153e-07j)  (-6.41016999642e-07-4.06693785042e-07j)   </span>
-<span class="go">9.998889   (-7.93045719726e-07+1.08504506495e-06j)      (5.2007159701e-07+7.169547693e-07j)   </span>
-<span class="go">9.999167    (2.70012075766e-07-6.29925739168e-08j)     (-1.2874391849e-06-4.174494327e-07j)   </span>
-<span class="go">9.999444   (-6.28929385556e-07+1.26376757642e-07j)  (-2.21335092292e-06+1.02519591583e-06j)   </span>
-<span class="go">9.999722    (3.37062730718e-07-2.34723066532e-08j)  (-4.19929617984e-08+1.65355300419e-07j)   </span>
-<span class="go">10.000000                   (7.27769346786e-07+0j)                   (3.52033674659e-07+0j)   </span>
-
-<span class="go">                                     X_theta_v&#39;_w&#39;  </span>
-<span class="go">Frequency                                           </span>
-<span class="go">0.000000                    (1.02410628187e-06+0j)  </span>
-<span class="go">0.000278           (-7.46848648027+7.00299465568j)  </span>
-<span class="go">0.000556          (-0.675807329418-4.15292805414j)  </span>
-<span class="go">0.000833           (0.343598570049+4.76543160858j)  </span>
-<span class="go">0.001111          (-0.308491706877+1.87768027935j)  </span>
-<span class="go">0.001389           (-4.66760091614-1.76385631957j)  </span>
-<span class="go">0.001667         (-0.539460590207+0.968980525892j)  </span>
-<span class="go">0.001944         (-0.0350721992609-0.32456401482j)  </span>
-<span class="go">0.002222          (0.531848998543-0.717463373178j)  </span>
-<span class="go">0.002500          (-0.134770968914-0.11036069695j)  </span>
-<span class="go">0.002778          (0.174648858167-0.746549794061j)  </span>
-<span class="go">0.003056           (-2.27048661708+1.70198460404j)  </span>
-<span class="go">0.003333           (-1.7999953421-0.101584385679j)  </span>
-<span class="go">0.003611          (-0.158533980555+1.65594753145j)  </span>
-<span class="go">0.003889          (-1.58369821003-0.868571842093j)  </span>
-<span class="go">...                                            ...  </span>
-<span class="go">9.996111   (-5.40229561034e-05-0.000518664207694j)  </span>
-<span class="go">9.996389   (-6.12221317164e-05-0.000373701153871j)  </span>
-<span class="go">9.996667     (0.00044654723968+0.000426829311903j)  </span>
-<span class="go">9.996944   (-0.000103618431941+0.000417045830281j)  </span>
-<span class="go">9.997222    (0.000375703825302+0.000284523744964j)  </span>
-<span class="go">9.997500    (0.000652725368031-0.000117577128686j)  </span>
-<span class="go">9.997778      (0.00074660164755-6.7197272793e-05j)  </span>
-<span class="go">9.998056     (0.00109099384549-0.000398836704681j)  </span>
-<span class="go">9.998333   (-7.66709753361e-06+0.000310390782787j)  </span>
-<span class="go">9.998611    (0.000590483357437-1.37756359355e-05j)  </span>
-<span class="go">9.998889    (9.29734160856e-05-0.000288183813551j)  </span>
-<span class="go">9.999167   (-0.000337151474966-0.000203359800886j)  </span>
-<span class="go">9.999444     (0.00045149636163-0.000108322082259j)  </span>
-<span class="go">9.999722   (-7.98050818792e-05+0.000242259733087j)  </span>
-<span class="go">10.000000                   (0.000551496430587+0j)  </span>
+<span class="go">                                     X_q&#39;_theta_v&#39;                                  X_q&#39;_w&#39;                            X_theta_v&#39;_w&#39;</span>
+<span class="go">Frequency                                                                                                                           </span>
+<span class="go">0.000000                    (3.64642595549e-09+0j)                   (4.42997418716e-10+0j)                   (1.02410628187e-06+0j)</span>
+<span class="go">0.000278       (0.0431404707606-0.00656843186362j)    (-0.00601159315561+0.00764344401803j)          (-7.46848648027+7.00299465568j)</span>
+<span class="go">0.000556       (0.00909424097384+0.0067955652924j)       (0.00662015331717-0.012703253092j)         (-0.675807329418-4.15292805414j)</span>
+<span class="go">0.000833       (0.0496067630364+0.00817412807977j)   (-0.000691711708511+0.00755242279564j)          (0.343598570049+4.76543160858j)</span>
+<span class="go">0.001111      (0.00484104482788+0.00258139013139j)        (-0.002261508595+0.002958157248j)         (-0.308491706877+1.87768027935j)</span>
+<span class="go">0.001389    (-0.00252062835328+0.000352653072163j)    (0.00237400427977+0.000536610998917j)          (-4.66760091614-1.76385631957j)</span>
+<span class="go">0.001667     (0.000581530584633-0.00191814143306j)     (0.00147491034621+0.00152581825106j)        (-0.539460590207+0.968980525892j)</span>
+<span class="go">0.001944   (-0.000488827031498+0.000764070372007j)   (0.000136221918826+6.77467074179e-05j)        (-0.0350721992609-0.32456401482j)</span>
+<span class="go">0.002222      (0.00687873261507+0.00344445084207j)      (0.0029147646648-0.00147566764488j)         (0.531848998543-0.717463373178j)</span>
+<span class="go">0.002500   (-3.20032027175e-05+0.000211020463093j)    (0.000959520700828-0.00086587049931j)         (-0.134770968914-0.11036069695j)</span>
+<span class="go">0.002778      (0.00914484576834+0.00412639808728j)     (0.00130655515532-0.00170561742482j)         (0.174648858167-0.746549794061j)</span>
+<span class="go">0.003056       (0.00297280641473-0.0106406599447j)     (0.00220624778578+0.00567444669839j)          (-2.27048661708+1.70198460404j)</span>
+<span class="go">0.003333       (0.0149860509294+0.00329056839565j)   (-0.00259518294404-0.000725287626379j)          (-1.7999953421-0.101584385679j)</span>
+<span class="go">0.003611     (0.00339758185817+0.000604514115291j)   (-0.000827847258403+0.00297355512566j)         (-0.158533980555+1.65594753145j)</span>
+<span class="go">0.003889     (0.00466685976134+0.000776798595543j)    (-0.00282762037168-0.00222452651306j)         (-1.58369821003-0.868571842093j)</span>
+<span class="go">...                                            ...                                      ...                                      ...</span>
+<span class="go">9.996111   (-3.00966155446e-07-2.09964207749e-07j)  (-7.46261459459e-07+1.34881230785e-06j)  (-5.40229561034e-05-0.000518664207694j)</span>
+<span class="go">9.996389    (9.86724075233e-07-2.75125913256e-06j)     (-1.47663445849e-06-2.71710633e-07j)  (-6.12221317164e-05-0.000373701153871j)</span>
+<span class="go">9.996667   (-1.20756421484e-06+9.41878022718e-07j)  (-1.60728034798e-06-1.61932245965e-07j)    (0.00044654723968+0.000426829311903j)</span>
+<span class="go">9.996944   (-1.85202902306e-08-6.15032063274e-07j)   (1.28907886822e-06+2.79374256215e-07j)  (-0.000103618431941+0.000417045830281j)</span>
+<span class="go">9.997222   (-3.02777208846e-07+1.81456590353e-07j)  (-4.11844312729e-07-4.47580373048e-08j)   (0.000375703825302+0.000284523744964j)</span>
+<span class="go">9.997500    (1.86261188261e-07+2.21641762612e-08j)   (1.17248477329e-06-7.01784908781e-08j)   (0.000652725368031-0.000117577128686j)</span>
+<span class="go">9.997778    (8.74534442357e-08-1.94132607794e-07j)    (3.5863011104e-07-1.03520888491e-06j)     (0.00074660164755-6.7197272793e-05j)</span>
+<span class="go">9.998056    (4.80097791895e-07-1.34733818884e-07j)   (5.52736731063e-07-3.98018175528e-07j)    (0.00109099384549-0.000398836704681j)</span>
+<span class="go">9.998333     (1.6826867691e-07+3.01393754479e-07j)  (-1.86557075023e-07+9.81927620647e-08j)  (-7.66709753361e-06+0.000310390782787j)</span>
+<span class="go">9.998611   (-4.96402326019e-07-3.31429269153e-07j)  (-6.41016999642e-07-4.06693785042e-07j)   (0.000590483357437-1.37756359355e-05j)</span>
+<span class="go">9.998889   (-7.93045719726e-07+1.08504506495e-06j)      (5.2007159701e-07+7.169547693e-07j)   (9.29734160856e-05-0.000288183813551j)</span>
+<span class="go">9.999167    (2.70012075766e-07-6.29925739168e-08j)     (-1.2874391849e-06-4.174494327e-07j)  (-0.000337151474966-0.000203359800886j)</span>
+<span class="go">9.999444   (-6.28929385556e-07+1.26376757642e-07j)  (-2.21335092292e-06+1.02519591583e-06j)    (0.00045149636163-0.000108322082259j)</span>
+<span class="go">9.999722    (3.37062730718e-07-2.34723066532e-08j)  (-4.19929617984e-08+1.65355300419e-07j)  (-7.98050818792e-05+0.000242259733087j)</span>
+<span class="go">10.000000                   (7.27769346786e-07+0j)                   (3.52033674659e-07+0j)                   (0.000551496430587+0j)</span>
 
 <span class="go">[36001 rows x 3 columns]</span>
 </pre></div>
@@ -600,7 +566,7 @@ in the resulting plot.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="n">cospectra</span> <span class="o">=</span> <span class="n">crspectra</span><span class="p">[[</span><span class="s2">r&quot;X_q&#39;_w&#39;&quot;</span><span class="p">,</span> <span class="s2">r&quot;X_theta_v&#39;_w&#39;&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">cospectra</span><span class="p">()</span>
 
 <span class="gp">In [33]: </span><span class="n">cospectra</span><span class="o">.</span><span class="n">binned</span><span class="p">(</span><span class="n">bins_number</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loglog</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="gh">Out[33]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb76bdbaf10&gt;</span>
+<span class="gh">Out[33]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f7da6d36290&gt;</span>
 
 <span class="gp">In [34]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -613,7 +579,7 @@ different.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [35]: </span><span class="n">Og</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">spectral</span><span class="o">.</span><span class="n">Ogive</span><span class="p">(</span><span class="n">cospectra</span><span class="p">)</span>
 
 <span class="gp">In [36]: </span><span class="p">(</span><span class="n">Og</span><span class="o">/</span><span class="n">Og</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">logx</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gh">Out[36]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb7641936d0&gt;</span>
+<span class="gh">Out[36]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f7d8e5bd1d0&gt;</span>
 
 <span class="gp">In [37]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
