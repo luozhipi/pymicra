@@ -138,7 +138,7 @@ with Pymicra.</p>
 <p>In this tutorial we use some example data and refer to some example python
 scripts that can be download <a class="reference external" href="https://github.com/tomchor/pymicra/tree/master/examples">here</a>. These data and
 scripts are from a measurement campaign in a very small island (about 20 meters
-accross) in a large artificial lake. At the time of these measurements the
+across) in a large artificial lake. At the time of these measurements the
 island was almost completely immersed into about 5 cm of water. Please feel
 free to explore both the example data and the example programs, as well as
 modify the programs for your own learning process!</p>
@@ -153,7 +153,7 @@ variable is in each column. You can check the default notation with</p>
 <span class="gp">   ...: </span>
 </pre></div>
 </div>
-<p>The output is too long to be reprodued here, but on the left you&#8217;ll see the
+<p>The output is too long to be reproduced here, but on the left you&#8217;ll see the
 full name of the variables (which corresponds to a notation
 namespace/attribute) and on the right you&#8217;ll see the default notation for that
 variable.</p>
@@ -300,7 +300,8 @@ for reading a data file.</p>
 <div class="section" id="description">
 <h3>description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
 <p>The description is optional. It&#8217;s a string that serves only to better identify
-the config file you&#8217;re dealing with. It might useful for storage purposes.</p>
+the config file you&#8217;re dealing with. It might useful for storage purposes and useful
+when printing the config object.</p>
 </div>
 <div class="section" id="variables">
 <h3>variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
@@ -421,10 +422,11 @@ file it describes:</p>
 <span class="go">[72000 rows x 8 columns]</span>
 </pre></div>
 </div>
-<p>Note that <code class="docutils literal"><span class="pre">data</span></code> is a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code> object which contains the whole data available in the
-datafile with each column being a variable. Since we indicated that we wanted to parse the dates
-with the option <code class="docutils literal"><span class="pre">parse_dates=True</span></code>, each row has its respective timestamp.
-If, otherwise, we were to ignore the dates, the result would be a integer-indexed dataset:</p>
+<p>Note that <code class="docutils literal"><span class="pre">data</span></code> is a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code> object which contains the whole
+data available in the datafile with each column being a variable. Since we
+indicated that we wanted to parse the dates with the option
+<code class="docutils literal"><span class="pre">parse_dates=True</span></code>, each row has its respective timestamp.  If, otherwise, we
+were to ignore the dates, the result would be a integer-indexed dataset:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [25]: </span><span class="n">data2</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 <span class="gp">In [26]: </span><span class="k">print</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
@@ -454,12 +456,12 @@ If, otherwise, we were to ignore the dates, the result would be a integer-indexe
 <span class="go">[72000 rows x 8 columns]</span>
 </pre></div>
 </div>
-<p>And, as mentioned, this way is a lot faster:</p>
+<p>And, as mentioned, the latter way is a lot faster:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [27]: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">   ....: </span><span class="o">%</span><span class="k">timeit</span> <span class="n">pm</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">fconfig</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="go">10 loops, best of 3: 121 ms per loop</span>
-<span class="go">1 loops, best of 3: 663 ms per loop</span>
+<span class="go">10 loops, best of 3: 138 ms per loop</span>
+<span class="go">1 loops, best of 3: 721 ms per loop</span>
 </pre></div>
 </div>
 </div>
@@ -532,7 +534,7 @@ are supported by Pandas, but without support for units:</p>
 <p>Note that Pandas &#8220;guesses&#8221; if the argument you pass (<code class="docutils literal"><span class="pre">'theta_v'</span></code> or
 <code class="docutils literal"><span class="pre">'2013-11-08</span> <span class="pre">10:15:00'</span></code> etc.) is a column indexer or a row indexer. To use
 these unambiguously, use the <code class="docutils literal"><span class="pre">.loc</span></code> method as</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2013-11-08 10:15:00.000&#39;</span><span class="p">:</span><span class="s1">&#39;2013-11-08 10:17:00.000000000&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">]])</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2013-11-08 10:15:00&#39;</span><span class="p">:</span><span class="s1">&#39;2013-11-08 10:17:00&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">]])</span>
 <span class="go">                             u      v      w</span>
 <span class="go">Timestamp                                   </span>
 <span class="go">2013-11-08 10:15:00.000  2.634 -4.351  0.107</span>
@@ -553,9 +555,8 @@ these unambiguously, use the <code class="docutils literal"><span class="pre">.l
 </pre></div>
 </div>
 <p>This method is actually preferred  and you can find more information on this topic <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/indexing.html">here</a>.</p>
-<p>To view these data with units, you can use the <code class="docutils literal"><span class="pre">.with_units()</span></code> method. Note that, although this method returns
-a Pandas DataFrame, it is not meant for calculations. Currently the DataFrame it returns is meant for
-visualization purposes only! The previous output would like this using units:</p>
+<p>To view these data with units, you can use the <code class="docutils literal"><span class="pre">.with_units()</span></code> method.
+The previous output would look like this using units:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [33]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">with_units</span><span class="p">(</span><span class="n">units</span><span class="p">)[</span><span class="s1">&#39;theta_v&#39;</span><span class="p">])</span>
 <span class="go">                         &lt;degC&gt;</span>
 <span class="go">Timestamp                      </span>
@@ -633,12 +634,18 @@ visualization purposes only! The previous output would like this using units:</p
 <span class="go">[20 rows x 8 columns]</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that, although this method returns
+a Pandas DataFrame, it is not meant for calculations. Currently the DataFrame it returns is meant for
+visualization purposes only!</p>
+</div>
 <p>We can also plot the data on screen so we can view it interactively. This can be done directly
 from the DataFrame with</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span></span><span class="gp">In [36]: </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="gp">In [37]: </span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f33a3757d90&gt;</span>
+<span class="gh">Out[37]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f5ba7ce7510&gt;</span>
 
 <span class="gp">In [38]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -807,7 +814,7 @@ that are already written in your own way.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-08-05.
+      Last updated on 2016-08-06.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>

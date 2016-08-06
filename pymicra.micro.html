@@ -64,7 +64,6 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Hands-on tutorial</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="pymicra.html">Pymicra&#8217;s auto-generated docs</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="pymicra.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra">Pymicra contents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.constants">pymicra.constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.core">pymicra.core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pymicra.html#module-pymicra.data">pymicra.data</a></li>
@@ -99,10 +98,10 @@
   <ul>
 <li><a class="reference internal" href="#">pymicra.micro package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pymicra.micro.functions">pymicra.micro.functions module</a></li>
-<li><a class="reference internal" href="#module-pymicra.micro.scales">pymicra.micro.scales module</a></li>
-<li><a class="reference internal" href="#module-pymicra.micro.spectral">pymicra.micro.spectral module</a></li>
-<li><a class="reference internal" href="#module-pymicra.micro.util">pymicra.micro.util module</a></li>
+<li><a class="reference internal" href="#module-pymicra.micro.functions">pymicra.micro.functions</a></li>
+<li><a class="reference internal" href="#module-pymicra.micro.scales">pymicra.micro.scales</a></li>
+<li><a class="reference internal" href="#module-pymicra.micro.spectral">pymicra.micro.spectral</a></li>
+<li><a class="reference internal" href="#module-pymicra.micro.util">pymicra.micro.util</a></li>
 <li><a class="reference internal" href="#module-pymicra.micro">Module contents</a></li>
 </ul>
 </li>
@@ -125,7 +124,7 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pymicra.micro.functions">
-<span id="pymicra-micro-functions-module"></span><h2>pymicra.micro.functions module<a class="headerlink" href="#module-pymicra.micro.functions" title="Permalink to this headline">¶</a></h2>
+<span id="pymicra-micro-functions"></span><h2>pymicra.micro.functions<a class="headerlink" href="#module-pymicra.micro.functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.functions.Psi">
 <code class="descclassname">pymicra.micro.functions.</code><code class="descname">Psi</code><span class="sig-paren">(</span><em>zeta</em>, <em>x='tau'</em>, <em>zeta0=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.functions.Psi" title="Permalink to this definition">¶</a></dt>
@@ -208,7 +207,7 @@ of scalar fluctuations and their implications for scalar similarity, Water Resou
 
 </div>
 <div class="section" id="module-pymicra.micro.scales">
-<span id="pymicra-micro-scales-module"></span><h2>pymicra.micro.scales module<a class="headerlink" href="#module-pymicra.micro.scales" title="Permalink to this headline">¶</a></h2>
+<span id="pymicra-micro-scales"></span><h2>pymicra.micro.scales<a class="headerlink" href="#module-pymicra.micro.scales" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.scales.MonObuLen">
 <code class="descclassname">pymicra.micro.scales.</code><code class="descname">MonObuLen</code><span class="sig-paren">(</span><em>theta_v_star</em>, <em>theta_v_mean</em>, <em>u_star</em>, <em>g=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.scales.MonObuLen" title="Permalink to this definition">¶</a></dt>
@@ -278,7 +277,7 @@ will be output if False.</li>
 
 </div>
 <div class="section" id="module-pymicra.micro.spectral">
-<span id="pymicra-micro-spectral-module"></span><h2>pymicra.micro.spectral module<a class="headerlink" href="#module-pymicra.micro.spectral" title="Permalink to this headline">¶</a></h2>
+<span id="pymicra-micro-spectral"></span><h2>pymicra.micro.spectral<a class="headerlink" href="#module-pymicra.micro.spectral" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.spectral.Ogive">
 <code class="descclassname">pymicra.micro.spectral.</code><code class="descname">Ogive</code><span class="sig-paren">(</span><em>df</em>, <em>no_nan=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.Ogive" title="Permalink to this definition">¶</a></dt>
@@ -298,6 +297,12 @@ will be output if False.</li>
 <code class="descclassname">pymicra.micro.spectral.</code><code class="descname">correctLag</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.correctLag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identifies and correct lags between data, assuming the
 vertical wind velocity has lag 0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymicra.micro.spectral.cospectra">
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">cospectra</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.cospectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets cospectra from cross-spectrum</p>
 </dd></dl>
 
 <dl class="function">
@@ -357,6 +362,12 @@ based on the response-time T. Quadrature must be analytically zero!</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="pymicra.micro.spectral.quadrature">
+<code class="descclassname">pymicra.micro.spectral.</code><code class="descname">quadrature</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.quadrature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets quadrature from cross-spectrum</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="pymicra.micro.spectral.recspeAux">
 <code class="descclassname">pymicra.micro.spectral.</code><code class="descname">recspeAux</code><span class="sig-paren">(</span><em>df</em>, <em>T</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.spectral.recspeAux" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to make hfc_zeroQuad work in a pandas.DataFrame</p>
@@ -384,7 +395,7 @@ a dataframe with spectra</p>
 
 </div>
 <div class="section" id="module-pymicra.micro.util">
-<span id="pymicra-micro-util-module"></span><h2>pymicra.micro.util module<a class="headerlink" href="#module-pymicra.micro.util" title="Permalink to this headline">¶</a></h2>
+<span id="pymicra-micro-util"></span><h2>pymicra.micro.util<a class="headerlink" href="#module-pymicra.micro.util" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pymicra.micro.util.eddyCovariance">
 <code class="descclassname">pymicra.micro.util.</code><code class="descname">eddyCovariance</code><span class="sig-paren">(</span><em>data</em>, <em>units</em>, <em>wpl=True</em>, <em>get_turbulent_scales=True</em>, <em>site_config=None</em>, <em>output_as_df=True</em>, <em>notation=None</em>, <em>theta_fluct_from_theta_v=True</em>, <em>inplace_units=True</em>, <em>solutes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#pymicra.micro.util.eddyCovariance" title="Permalink to this definition">¶</a></dt>
@@ -476,7 +487,7 @@ important variables using the variables provided in the input DataFrame.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Tomás Chor.
-      Last updated on 2016-08-04.
+      Last updated on 2016-08-06.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
